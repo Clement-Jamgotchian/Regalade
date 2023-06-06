@@ -1,0 +1,115 @@
+@use '../../styles/vars';
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: vars.$text;
+
+  &-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin: 20px 0px;
+    border-bottom: 1px solid vars.$text;
+  }
+  &-burger {
+    display: none;
+  }
+
+  &-link > a {
+    margin-right: 20px;
+    padding: 5px;
+  }
+  &-utilsLink {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 300px;
+    a {
+      margin-left: 20px;
+    }
+    p {
+      margin: 0;
+    }
+    &-logo {
+      width: 40px;
+    }
+  }
+  &-form {
+    display: flex;
+    border: 1px solid vars.$text;
+    border-radius: 5px;
+    width: 50%;
+    justify-content: space-between;
+
+    &-input {
+      border: none;
+      width: 100%;
+      padding-left: 10px;
+      background-color: transparent;
+    }
+    &-button {
+      width: 20px;
+      border: none;
+      background-image: url('../../assets/images/loupe.png');
+      background-color: transparent;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-right: 10px;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: vars.$text;
+}
+
+@media (max-width: 991px) {
+  .Header {
+    &-link {
+      display: none;
+    }
+    &-burger{
+        display: flex;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .Header {
+    &-utilsLink {
+      p {
+        display: none;
+      }
+    }
+  }
+}
+@media (max-width: 575px) {
+  .Header {
+    &-nav {
+      justify-content: center;
+    }
+    &-link {
+      display: none;
+    }
+    &-utilsLink {
+      display: none;
+    }
+    &-form {
+      width: 90%;
+      border-radius: 30px;
+      &-input {
+        border-radius: 30px;
+      }
+    }
+  }
+}
+.test{
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+}
