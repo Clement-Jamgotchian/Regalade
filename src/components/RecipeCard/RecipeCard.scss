@@ -1,0 +1,92 @@
+@use 'src/styles/vars';
+
+.RecipeCard {
+    max-width: 100%;
+    min-width: 200px;
+    margin: 8rem 1rem 1rem;
+    position: relative;
+    border: none;
+    color: #ffffff;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0%,rgba(0, 0, 0, 0.5) 100%);
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:hover &--title {
+        color: vars.$primaryButton;
+    }
+
+    &--body {
+        position: relative;
+        padding-top: 50%;
+    }
+
+    &--favorite {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: #ffffff;
+    }
+
+    &--favorite__active {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: vars.$primaryButton;
+    }
+
+    &--cart {
+        position: absolute;
+        right: 5%;
+        margin-top: 5px;
+    }
+        
+    &--img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        display: block;
+        border-radius: 0.375rem;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &--rating {
+        svg {
+            color: vars.$primaryButton;
+        }
+    }
+
+    &--content svg {
+        margin-right: 5px;
+    }
+
+    &--content svg:last-child {
+        margin-left: 5px;
+    }
+
+}
+
+
+@media (max-width: vars.$layout-breakpoint-small) {
+    .RecipeCard {
+        color: vars.$text;
+        background: #ffffff;
+
+        &--img {
+            position: absolute;
+            max-width: 80%;
+            border-radius: 100%;
+            margin: auto;
+            transform: translateY(-50%);
+            left: 10%;
+            z-index: 1;
+        }
+    
+        &--content {
+        display: none;
+        }
+    }
+  }
