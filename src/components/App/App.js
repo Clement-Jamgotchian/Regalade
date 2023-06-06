@@ -1,22 +1,15 @@
+import { Col, Container, Row } from 'react-bootstrap';
 import './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          hello
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <p>Lu</p>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
