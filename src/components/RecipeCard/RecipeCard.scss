@@ -1,9 +1,9 @@
 @use 'src/styles/vars';
 
 .RecipeCard {
-    max-width: 100%;
+    max-width: 350px;
     min-width: 200px;
-    margin: 8rem 1rem 1rem;
+    margin: 9rem 1rem 1rem;
     position: relative;
     border: none;
     color: #ffffff;
@@ -38,8 +38,12 @@
 
     &--cart {
         position: absolute;
-        right: 5%;
+        right: 1rem;
         margin-top: 5px;
+        background: vars.$secondaryButton;
+        padding: 0.5rem 0.5rem 0.5rem 0.4rem;
+        border-radius: 50%;
+        color: #ffffff;
     }
         
     &--img {
@@ -74,14 +78,19 @@
     .RecipeCard {
         color: vars.$text;
         background: #ffffff;
+        max-width: 100%;
+
+        &--favorite, &--favorite__active {
+            display: none;
+        }
 
         &--img {
             position: absolute;
-            max-width: 80%;
+            max-width: 70%;
             border-radius: 100%;
             margin: auto;
             transform: translateY(-50%);
-            left: 10%;
+            left: 15%;
             z-index: 1;
         }
     
