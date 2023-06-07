@@ -2,7 +2,7 @@
 
 // React components
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
 // Bootstrap components
@@ -14,6 +14,9 @@ import {
   faStar, faStarHalfStroke, faCartPlus, faChartSimple, faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar, faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+
+// Import Redux actions
+import { addRecipeToList } from '../../actions/list';
 
 // Styles import
 import './RecipeCard.scss';
@@ -34,13 +37,28 @@ function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
 }
 
 // If user is logged in, we show the cart icon
-function CartIcon({ isLoggedIn }) {
+function CartIcon({ isLoggedIn, addToList }) {
   if (isLoggedIn) {
-    return <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />;
+    return (
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
+        <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
+      </button>
+    );
   }
 }
 
 function RecipeCard({ recipe }) {
+  // TODO
+  // Fonction d'ajout aux favoris
+  // Fonction d'ajout au panier
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const [favorite, setFavorite] = useState(recipe.favorite);
+
+  const toggleFavorite = () => {
+    setFavorite(!favorite);
+  };
+
   // Function to show fill stars depends on rating
   function getStars(starsRating) {
     const stars = [];
@@ -60,29 +78,16 @@ function RecipeCard({ recipe }) {
     return stars;
   }
 
-  // TODO
-  // Fonction d'ajout aux favoris
-  // Fonction d'ajout au panier
-
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const [favorite, setFavorite] = useState(recipe.favorite);
-
-  const toggleFavorite = () => {
-    setFavorite(!favorite);
-  };
-
   return (
     <Card className="RecipeCard">
-
       <FavoriteIcon
         isLoggedIn={isLoggedIn}
         isFavorite={favorite}
         toggleFavorite={toggleFavorite}
       />
-
       <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
       <Card.Body className="RecipeCard--body">
-        <CartIcon isLoggedIn={isLoggedIn} />
+        <CartIcon isLoggedIn={isLoggedIn} addToList={() => dispatch(addRecipeToList(recipe))} />
         <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
         <Card.Text className="RecipeCard--rating">
           {getStars(recipe.rating)}
@@ -107,6 +112,7 @@ FavoriteIcon.propTypes = {
 
 CartIcon.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  addToList: PropTypes.func.isRequired,
 };
 
 RecipeCard.propTypes = {
