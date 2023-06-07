@@ -1,0 +1,230 @@
+@use 'src/styles/vars';
+
+.container {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.formSign {
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-color: vars.$backGround;
+    text-align: center;
+    
+    &-container {
+        margin: 0 auto;
+        width: 250px;
+        height: 200px;
+        position: relative;
+        perspective: 1500px;
+    }
+
+
+    &-carousel {
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        top: -100px;
+        position: absolute;
+        transform-style: preserve-3d;
+        transition: transform 1s;
+
+        &-in, &-up {
+            display: block;
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            margin: 2em auto;
+            border-radius: 6px;
+            padding: 2em;
+            transition: transform 1s;
+            background-color: vars.$primaryButton;
+            box-shadow: 2px 2px 6px 2px rgba(27, 27, 27, 0.359);
+        }
+
+        &-in {
+            background-color: vars.$secondaryButton;
+        }
+
+        
+ 
+    }
+    
+
+    &-input {
+        display: flex;
+        margin: 2em auto;
+        width: 15em;
+        height: 2em;
+        border: none;
+        border-radius: 2px;
+        background-color: rgba(211, 211, 211, 0.258);
+        color: white;
+        border-bottom: 1px solid vars.$backGround;
+
+    }
+
+    &-input:focus-visible {
+        border: none;
+        outline: none;
+    }
+
+    &-input::placeholder {
+        color: vars.$text;
+        font-size: small;
+    }
+
+    &-submit {
+        display: flex;
+        padding: 0.5em 2em;
+        border: none;
+        
+        border-radius: 2px;
+        text-align: center;
+        margin: 1em auto;
+    }
+
+    &-signupButton, &-signinButton {
+        color: vars.$text;
+        display: flex;
+        color: rgb(53, 53, 53);
+        position: absolute;
+        top: 0px;
+        right: 0;
+        padding: 0.5em 2em;
+        cursor: pointer;
+        background: vars.$accent;
+        border: none;
+        border-radius: 0px 6px 0px 3px;
+        box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+-webkit-box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+-moz-box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.541);
+        border-left: 1px solid rgba(0, 0, 0, 0.541);
+        transition: 1s;
+      }
+}
+
+// Movment in homepage ingredient
+
+.item {
+    position: absolute;
+    top: 200px;
+    left : 70%;
+    
+    width: 200px;
+    height: 200px;
+}
+
+// ingredient movment separate
+.tomate {
+    animation: Alternate1 infinite 3s ease-in-out;
+    animation-delay: -500ms;
+}
+.pomme {
+    animation: Alternate2 infinite 3s ease-in-out;
+    animation-delay: -600ms;
+}
+.huile {
+    animation: Alternate3 infinite 3s ease-in-out;
+    animation-delay: -200ms;
+}
+.concombre {
+    animation: Alternate4 infinite 3s ease-in-out;
+    animation-delay: -200ms;
+}
+.pain {
+    animation: Alternate5 infinite 3s ease-in-out;
+    animation-delay: -800ms;
+}
+.trancheTomate {
+    animation: Alternate6 infinite 3s ease-in-out;
+    animation-delay: -200ms;
+}
+
+.jus{
+    width: 100px;
+}
+
+@keyframes Alternate1 {
+    0% {
+        transform: translateX(-5em) translateY(5em);
+    }
+    50% {
+        transform: translateX(-10em) translateY(0em) scale(1.4);
+    }
+    100% {
+        transform: translateX(-5em) translateY(5em);
+    }
+
+}
+
+@keyframes Alternate2 {
+    0% {
+        transform: translateX(4em) translateY(0em);
+    }
+    50% {
+        transform: translateX(10em) translateY(0em) scale(1.4);
+    }
+    100% {
+        transform: translateX(4em) translateY(0em);
+    }
+
+}
+
+@keyframes Alternate3 {
+    0% {
+        transform: translateX(0em) translateY(2em);
+    }
+    50% {
+        transform: translateX(2em) translateY(-0em) scale(1.4);
+    }
+    100% {
+        transform: translateX(0em) translateY(2em);
+    }
+
+}
+
+@keyframes Alternate4 {
+    0% {
+        transform: translateX(0em) translateY(0em);
+    }
+    50% {
+        transform: translateX(0em) translateY(-4em) scale(1.4);
+    }
+    100% {
+        transform: translateX(0em) translateY(0em);
+    }
+
+}
+
+@keyframes Alternate5 {
+    0% {
+        transform: translateX(-1em) translateY(0em);
+    }
+    50% {
+        transform: translateX(-2em) translateY(-1em) scale(1.4);
+    }
+    100% {
+        transform: translateX(-1em) translateY(0em);
+    }
+
+}
+
+@keyframes Alternate6 {
+    0% {
+        transform: translateX(-1em) translateY(0em);
+    }
+    50% {
+        transform: translateX(-4em) translateY(-1em) scale(1.4);
+    }
+    100% {
+        transform: translateX(-1em) translateY(0em);
+    }
+
+}
