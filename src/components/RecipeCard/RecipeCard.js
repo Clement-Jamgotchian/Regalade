@@ -1,12 +1,10 @@
 /* eslint-disable no-plusplus */
 
 // React components
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-
-// Bootstrap components
+import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,9 +18,12 @@ import { addRecipeToList } from '../../actions/list';
 
 // Styles import
 import './RecipeCard.scss';
+import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
 // If user is logged in, we show the favorite icon,
 // active or not depends if added on favorite list or not
+// faHeart : filled heart
+// farHeart : empty heart
 function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
@@ -48,18 +49,23 @@ function CartIcon({ isLoggedIn, addToList }) {
 }
 
 function RecipeCard({ recipe }) {
-  // TODO
-  // Fonction d'ajout aux favoris
-  // Fonction d'ajout au panier
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const [favorite, setFavorite] = useState(recipe.favorite);
+  const [favorite, setFavorite] = useState(false);
 
   const toggleFavorite = () => {
     setFavorite(!favorite);
+    if (favorite) {
+      dispatch(removeRecipeFromFavorites(recipe));
+    } else {
+      dispatch(addRecipeToFavorites(recipe));
+    }
   };
 
   // Function to show fill stars depends on rating
+  // faStar : filled star
+  // faStarHalfStroke : half-filled star
+  // farStart : empty star
   function getStars(starsRating) {
     const stars = [];
     // For each integer, we show a full star
@@ -67,7 +73,7 @@ function RecipeCard({ recipe }) {
       if (i <= starsRating) {
         stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
       }
-      // If rating is decimal, we show a half star
+      // If rating is decimal, we show a half-filled star
       if (/^[1-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i) {
         stars.push(<FontAwesomeIcon key="half" icon={faStarHalfStroke} />);
         // We show other empty stars to have a total of 5 stars
@@ -117,6 +123,7 @@ CartIcon.propTypes = {
 
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     favorite: PropTypes.bool.isRequired,
     picture: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -128,7 +135,7 @@ RecipeCard.propTypes = {
 
 RecipeCard.defaultProps = {
   recipe: ({
-    favorite: true,
+    id: -1,
     picture: 'https://picsum.photos/200',
     title: 'Titre par défaut',
     rating: 3.5,
