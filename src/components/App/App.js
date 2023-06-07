@@ -7,14 +7,7 @@ function App() {
     <Container>
       <Row>
         <Col>
-          <RecipeCard
-            favorite="true"
-            picture="https://picsum.photos/200"
-            title="Tartiflette"
-            rating="1.2"
-            time="30 min"
-            difficulty="Facile"
-          />
+          <RecipeCard />
         </Col>
       </Row>
     </Container>
