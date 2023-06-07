@@ -1,4 +1,5 @@
 import './Header.scss';
+import { useState } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 
 import logoMain from '../../assets/images/logoMain.png';
@@ -6,6 +7,50 @@ import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 
 function Header() {
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(false);
+
+  const movingUpSearchbar = () => {
+    const searchbar = document.querySelector('.Header-form');
+    const containerHeader = document.querySelector('.container-header');
+    const header = document.querySelector('.Header');
+    const input = document.querySelector('input');
+    const buttonSearch = document.querySelector('.Header-form-button');
+
+    if (showTopBtn === true && screenWidth === true) {
+      header.append(searchbar);
+      searchbar.classList.add('small-searchbar');
+      input.classList.add('none');
+      buttonSearch.classList.add('small-button');
+    } else {
+      searchbar.classList.remove('small-searchbar');
+      buttonSearch.classList.remove('small-button');
+      input.classList.remove('none');
+      containerHeader.append(searchbar);
+    }
+  };
+
+  const handleScrollSearchbar = () => {
+    if (window.scrollY > 200) {
+      setShowTopBtn(true);
+    } else {
+      setShowTopBtn(false);
+    }
+    movingUpSearchbar();
+  };
+
+  const handleWidthDimension = () => {
+    if (window.innerWidth < 600) {
+      setScreenWidth(true);
+    } else {
+      setScreenWidth(false);
+    }
+    movingUpSearchbar();
+  };
+
+  window.addEventListener('scroll', handleScrollSearchbar);
+  window.addEventListener('resize', handleWidthDimension);
+
   return (
     <div className="container-header">
       <Navbar
@@ -18,7 +63,6 @@ function Header() {
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
-          // bg="primary"
         />
         <Navbar.Brand href="#home" className="Header-logoMain">
           <img
@@ -55,9 +99,13 @@ function Header() {
       <form className="Header-form">
         <input className="Header-form-input" />
         <button
-          type="button"
+          type="submit"
           aria-label="search bar"
           className="Header-form-button"
+          onClick={() => {
+            // submitInputSearch();
+            toggleSearchbar();
+          }}
         />
       </form>
     </div>

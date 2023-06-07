@@ -1,8 +1,12 @@
 @use '../../styles/vars';
 
 .container-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   background-color: vars.$backGround;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 .Header {
   justify-content: center;
@@ -32,7 +36,7 @@
   &-form {
     display: flex;
     border: 1px solid vars.$text;
-    border-radius: 5px;
+    border-radius: 30px;
     width: 90%;
     justify-content: space-between;
     margin: 20px auto;
@@ -110,6 +114,7 @@
     }
     &-form {
       width: 50%;
+      border-radius: 10px;
     }
   }
 }
@@ -129,4 +134,17 @@
       display: block;
     }
   }
+}
+
+.none{
+  display: none;
+}
+.small-searchbar{
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+}
+.small-button{
+  margin: 0;
 }
