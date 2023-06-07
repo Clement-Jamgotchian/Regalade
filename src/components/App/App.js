@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 
 function App() {
   return (
-    <Container>
+    <Container fluid className="App">
       <Header />
       <Row>
         <Col>

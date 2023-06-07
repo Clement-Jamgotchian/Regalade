@@ -1,49 +1,41 @@
 @use '../../styles/vars';
 
+.container-header{
+  background-color: vars.$backGround;
+  padding: 0 10px;
+}
 .Header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   color: vars.$text;
+  background-color: vars.$backGround;
+  border-bottom: 1px solid ;
 
-  &-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    margin: 20px 0px;
-    border-bottom: 1px solid vars.$text;
-  }
-  &-burger {
-    display: none;
-  }
-
-  &-link > a {
-    margin-right: 20px;
-    padding: 5px;
-  }
   &-utilsLink {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 300px;
-    a {
-      margin-left: 20px;
-    }
+    display: none;
+
     p {
-      margin: 0;
+      display: none;
     }
+
     &-logo {
-      width: 40px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &-logoMain {
+    margin-right: 0;
+    padding: 0;
+    img {
+      width: 130px;
     }
   }
   &-form {
     display: flex;
     border: 1px solid vars.$text;
     border-radius: 5px;
-    width: 50%;
+    width: 90%;
     justify-content: space-between;
+    margin: 20px auto;
 
     &-input {
       border: none;
@@ -62,54 +54,79 @@
       margin-right: 10px;
     }
   }
-}
-
-a {
-  text-decoration: none;
-  color: vars.$text;
-}
-
-@media (max-width: 991px) {
-  .Header {
-    &-link {
-      display: none;
-    }
-    &-burger{
-        display: flex;
+  &-burger {
+    display: none;
+    text-align: center;
+    padding: 0;
+    color: vars.$primaryButton;
+    width: 35px;
+  }
+  &-link{
+    a{
+      font-family: 'Lato', sans-serif !important;
+      color: vars.$text;
     }
   }
 }
-@media (max-width: 767px) {
+@media (min-width: 990px) {
   .Header {
-    &-utilsLink {
-      p {
-        display: none;
+    justify-content: space-between;
+    &-logoMain {
+      display: flex;
+      order: 2;
+      flex-grow: 1;
+      justify-content: center;
+      img {
+        width: 180px;
+      margin-right: 90px;
+
       }
     }
-  }
-}
-@media (max-width: 575px) {
-  .Header {
-    &-nav {
-      justify-content: center;
+    &-utilsLink {
+      order: 3;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: flex-end;
+      p {
+        display: block;
+        margin-bottom: 0;
+      }
+      &-logo {
+        width: 35px;
+        height: 35px;
+        margin-left: 0px !important;
+      }
     }
     &-link {
-      display: none;
+      flex-grow: 1;
     }
+  }
+}
+
+@media (min-width: 767px) {
+  .Header {
     &-utilsLink {
-      display: none;
+      flex-direction: row;
     }
     &-form {
-      width: 90%;
-      border-radius: 30px;
-      &-input {
-        border-radius: 30px;
-      }
+      width: 50%;
     }
   }
 }
-.test{
-    display: flex;
-    align-items: center;
-    justify-content: center ;
+@media (min-width: 575px) {
+  .Header {
+    justify-content: space-between;
+    &-logoMain{
+      img{
+      margin-left: 40px;
+      }
+    }
+    &-utilsLink {
+      display: flex;
+      flex-direction: row;
+    }
+    &-burger {
+      display: block;
+    }
+  }
 }
