@@ -1,68 +1,124 @@
 @use 'src/styles/vars';
 
-.container {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100vw;
-}
-
 .formSign {
-    margin: 0;
-    padding: 0;
-    background-size: cover;
-    height: 100vh;
+
     width: 100vw;
+    height: 100vh;
+    margin: 0;
     background-color: vars.$backGround;
-    text-align: center;
-    
+
     &-container {
-        margin: 0 auto;
-        width: 250px;
-        height: 200px;
-        position: relative;
-        perspective: 1500px;
-    }
-
-
-    &-carousel {
-        height: 100%;
-        width: 100%;
+        display: none;
         margin: auto;
-        top: -100px;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    &-carousel {
+        display: flex;
         position: absolute;
-        transform-style: preserve-3d;
-        transition: transform 1s;
+        top: -160px;
+        width: 100vw;
+        height: 100vh;
+        margin: 0 auto;
 
         &-in, &-up {
-            display: block;
             position: absolute;
-            width: 300px;
-            height: 400px;
-            margin: 2em auto;
-            border-radius: 6px;
-            padding: 2em;
-            transition: transform 1s;
+            top: 0px;
+            width: 100vw;
+            height: 100%;
+            margin: auto;
+            display: flex;
+            padding: 1em;
             background-color: vars.$primaryButton;
-            box-shadow: 2px 2px 6px 2px rgba(27, 27, 27, 0.359);
-        }
-
+            flex-direction: column;
+            justify-content: center;
+        } 
         &-in {
             background-color: vars.$secondaryButton;
         }
 
-        
- 
+        &-input {
+            margin: auto;
+        }
+    }
+
+
+    
+
+    &-logo {
+        display: flex;
+        margin: auto;
+        margin-bottom: 6em;
+        width: 250px;
+        height: 250px;
+    }
+
+    &-description {
+        width:250px;
+        margin-top: 0px;
+        margin: auto;
+        text-shadow: black 5px 2px 9px;
+        text-align: center;
     }
     
+
+    &-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4em;
+        width: 10em;
+        border-radius: 50px;
+        background-color: vars.$primaryButton;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        color: vars.$text;
+        text-decoration: none;
+        margin: auto;
+    }
+
+    &-cancelButton {
+        background-color: rgba(255, 255, 255, 0);
+        border: none;
+        width: 20px;
+        height: 20px; 
+        position: absolute;
+        top: 0.5em;
+        right: 1.5em;
+        width: 30px;
+        height: 30px;
+
+        &-image {
+            width: 30px;
+            height: 30px;
+        }
+        
+    }
+    
+
+
+
+    &-buttonSign {
+        display: block;
+        width: 10em;
+        height: 2em;
+        margin: 1em auto;
+        margin-top: 3em;
+        border: none;
+        background-color: vars.$backGround;
+        color: vars.$primaryButton;
+    }
 
     &-input {
         display: flex;
         margin: 2em auto;
+        padding-left: 1em;
         width: 15em;
-        height: 2em;
+        height: 3.5em;
         border: none;
-        border-radius: 2px;
+        border-radius: 50px;
         background-color: rgba(211, 211, 211, 0.258);
         color: white;
         border-bottom: 1px solid vars.$backGround;
@@ -77,16 +133,23 @@
     &-input::placeholder {
         color: vars.$text;
         font-size: small;
+        font-weight: 300;
     }
 
     &-submit {
         display: flex;
         padding: 0.5em 2em;
         border: none;
-        
-        border-radius: 2px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
         text-align: center;
-        margin: 1em auto;
+        background-color: vars.$backGroundOpacity;
+        border-radius: 100px 0px 6px 0px;
+        font-size: medium;
+        box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
+-webkit-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
+-moz-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
     }
 
     &-signupButton, &-signinButton {
@@ -95,136 +158,347 @@
         color: rgb(53, 53, 53);
         position: absolute;
         top: 0px;
-        right: 0;
+        left: 0px;
+        width : 200px;
         padding: 0.5em 2em;
         cursor: pointer;
         background: vars.$accent;
         border: none;
-        border-radius: 0px 6px 0px 3px;
-        box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
--webkit-box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
--moz-box-shadow: 3px -3px 12px -1px rgba(0,0,0,0.7) inset;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.541);
-        border-left: 1px solid rgba(0, 0, 0, 0.541);
-        transition: 1s;
+        border-radius: 6px 0px 100px 0px;
+        box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+-webkit-box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+-moz-box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
       }
-}
+      &-signinButton {
+        background-color: #d64a28; 
+      }
+      &-image{
+        display: none;
+      }
 
-// Movment in homepage ingredient
+      &-details {
+        flex-direction: column;
+      }
+
+      
+}
 
 .item {
-    position: absolute;
-    top: 200px;
-    left : 70%;
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .container {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+    }
     
-    width: 200px;
-    height: 200px;
+    .formSign {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        height: 100vh;
+        width: 100vw;
+        background-color: vars.$backGround;
+        text-align: center;
+        font-family: vars.$font;
+    
+        
+        &-container {
+            display: flex;
+            margin: auto;
+            width: 300px;
+            height: 200px;
+            position: relative;
+            perspective: 1500px;
+        }
+    
+    
+        &-carousel {
+            height: 100%;
+            width: 100%;
+            margin: auto;
+            top: -110px;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+    
+            &-in, &-up {
+                display: flex;
+                position: absolute;
+                width: 300px;
+                height: 400px;
+                margin: 2em auto;
+                border-radius: 6px;
+                padding: 1em;
+                transition: transform 1s;
+                background-color: vars.$primaryButton;
+                box-shadow: 2px 2px 6px 2px rgba(27, 27, 27, 0.359);
+                flex-direction: column;
+                justify-content: center;
+            }
+    
+            &-in {
+                background-color: vars.$secondaryButton;
+            }
+    
+            
+     
+        }
+
+        &-image {
+            display: block;
+        }
+        
+    
+        &-input {
+            display: flex;
+            margin: 1em auto;
+            padding-left: 1em;
+            width: 15em;
+            height: 2em;
+            border: none;
+            border-radius: 2px;
+            background-color: rgba(211, 211, 211, 0.258);
+            color: white;
+            border-bottom: 1px solid vars.$backGround;
+    
+        }
+    
+        &-input:focus-visible {
+            border: none;
+            outline: none;
+        }
+    
+        &-input::placeholder {
+            color: vars.$text;
+            font-size: small;
+            font-weight: 300;
+        }
+    
+        &-submit {
+            display: flex;
+            padding: 0.5em 2em;
+            border: none;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            text-align: center;
+            background-color: vars.$backGroundOpacity;
+            border-radius: 100px 0px 6px 0px;
+            font-size: medium;
+            box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
+    -webkit-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
+    -moz-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
+        }
+    
+        &-signupButton, &-signinButton {
+            color: vars.$text;
+            display: flex;
+            color: rgb(53, 53, 53);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding: 0.5em 2em;
+            cursor: pointer;
+            background: vars.$accent;
+            border: none;
+            border-radius: 6px 0px 100px 0px;
+            box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+    -webkit-box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+    -moz-box-shadow: -3px -3px 12px -1px rgba(0,0,0,0.7) inset;
+          }
+    
+          //couleur différente pour le bouton signup
+          &-signupButton {
+            background-color: #d64a28; 
+          }
+    
+          &-description {
+            margin-top: 15em;
+            width: 25em;
+            padding: 1em;
+            margin: auto;
+            margin-top: 25em;
+            text-shadow: black 5px 2px 9px;
+            // box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0);
+          }
+    
+          &-button {
+            color: vars.$text;
+            text-decoration: none;
+            width: 10em;
+            height: 2em;
+            margin: 2em auto;
+            border-radius: 50px;
+            background-color: vars.$primaryButton;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+          }
+    
+        &-buttonSign {
+            display: none;
+        }
+
+        &-cancelButton {
+            display: none;
+        }
+    
+        &-logo {
+            display: none;
+        }
+    
+    }
+    
+    // Movment in homepage ingredient
+    
+    .item {
+        display: block;
+        position: absolute;
+        top: 200px;
+        left : 70%;
+        
+        width: 200px;
+        height: 200px;
+    }
+    
+    // ingredient movment separate
+    .tomate {
+        display: block;
+        animation: Alternate1 infinite 3s ease-in-out;
+        animation-delay: -500ms;
+    }
+    .pomme {
+        animation: Alternate2 infinite 3s ease-in-out;
+        animation-delay: -600ms;
+    }
+    .huile {
+        display: block;
+        animation: Alternate3 infinite 3s ease-in-out;
+        animation-delay: -200ms;
+    }
+    .concombre {
+        display: block;
+        animation: Alternate4 infinite 3s ease-in-out;
+        animation-delay: -200ms;
+    }
+    .pain {
+        display: block;
+        animation: Alternate5 infinite 3s ease-in-out;
+        animation-delay: -800ms;
+    }
+    .trancheTomate {
+        display: block;
+        animation: Alternate6 infinite 3s ease-in-out;
+        animation-delay: -200ms;
+    }
+    
+    .boisson{
+        animation: Alternate7 infinite 3s ease-in-out;
+        animation-delay: -200ms;
+    }
+    
+    @keyframes Alternate1 {
+        0% {
+            transform: translateX(-5em) translateY(9em);
+        }
+        50% {
+            transform: translateX(-18em) translateY(8em) scale(1.8);
+        }
+        100% {
+            transform: translateX(-5em) translateY(9em);
+        }
+    
+    }
+    
+    @keyframes Alternate2 {
+        0% {
+            transform: translateX(4em) translateY(12em);
+        }
+        50% {
+            transform: translateX(17em) translateY(16em) scale(1.8);
+        }
+        100% {
+            transform: translateX(4em) translateY(12em);
+        }
+    
+    }
+    
+    @keyframes Alternate3 {
+        0% {
+            transform: translateX(0em) translateY(6em);
+        }
+        50% {
+            transform: translateX(12em) translateY(2em) scale(1.8);
+        }
+        100% {
+            transform: translateX(0em) translateY(6em);
+        }
+    
+    }
+    
+    @keyframes Alternate4 {
+        0% {
+            transform: translateX(0em) translateY(0em);
+        }
+        50% {
+            transform: translateX(3em) translateY(-6em) scale(1.8);
+        }
+        100% {
+            transform: translateX(0em) translateY(0em);
+        }
+    
+    }
+    
+    @keyframes Alternate5 {
+        0% {
+            transform: translateX(-1em) translateY(5em);
+        }
+        50% {
+            transform: translateX(-2em) translateY(-6em) scale(1.8);
+        }
+        100% {
+            transform: translateX(-1em) translateY(5em);
+        }
+    
+    }
+    
+    @keyframes Alternate6 {
+        0% {
+            transform: translateX(-1em) translateY(12em);
+        }
+        50% {
+            transform: translateX(-18em) translateY(16em) scale(1.8);
+        }
+        100% {
+            transform: translateX(-1em) translateY(12em);
+        }
+    
+    }
+    
+    @keyframes Alternate7 {
+        0% {
+            transform: translateX(0em) translateY(12em);
+        }
+        50% {
+            transform: translateX(0em) translateY(24em) scale(1.8);
+        }
+        100% {
+            transform: translateX(0em) translateY(12em);
+        }
+    
+    }
 }
 
-// ingredient movment separate
-.tomate {
-    animation: Alternate1 infinite 3s ease-in-out;
-    animation-delay: -500ms;
-}
-.pomme {
-    animation: Alternate2 infinite 3s ease-in-out;
-    animation-delay: -600ms;
-}
-.huile {
-    animation: Alternate3 infinite 3s ease-in-out;
-    animation-delay: -200ms;
-}
-.concombre {
-    animation: Alternate4 infinite 3s ease-in-out;
-    animation-delay: -200ms;
-}
-.pain {
-    animation: Alternate5 infinite 3s ease-in-out;
-    animation-delay: -800ms;
-}
-.trancheTomate {
-    animation: Alternate6 infinite 3s ease-in-out;
-    animation-delay: -200ms;
-}
-
-.jus{
-    width: 100px;
-}
-
-@keyframes Alternate1 {
-    0% {
-        transform: translateX(-5em) translateY(5em);
-    }
-    50% {
-        transform: translateX(-10em) translateY(0em) scale(1.4);
-    }
-    100% {
-        transform: translateX(-5em) translateY(5em);
-    }
-
-}
-
-@keyframes Alternate2 {
-    0% {
-        transform: translateX(4em) translateY(0em);
-    }
-    50% {
-        transform: translateX(10em) translateY(0em) scale(1.4);
-    }
-    100% {
-        transform: translateX(4em) translateY(0em);
-    }
-
-}
-
-@keyframes Alternate3 {
-    0% {
-        transform: translateX(0em) translateY(2em);
-    }
-    50% {
-        transform: translateX(2em) translateY(-0em) scale(1.4);
-    }
-    100% {
-        transform: translateX(0em) translateY(2em);
-    }
-
-}
-
-@keyframes Alternate4 {
-    0% {
-        transform: translateX(0em) translateY(0em);
-    }
-    50% {
-        transform: translateX(0em) translateY(-4em) scale(1.4);
-    }
-    100% {
-        transform: translateX(0em) translateY(0em);
-    }
-
-}
-
-@keyframes Alternate5 {
-    0% {
-        transform: translateX(-1em) translateY(0em);
-    }
-    50% {
-        transform: translateX(-2em) translateY(-1em) scale(1.4);
-    }
-    100% {
-        transform: translateX(-1em) translateY(0em);
-    }
-
-}
-
-@keyframes Alternate6 {
-    0% {
-        transform: translateX(-1em) translateY(0em);
-    }
-    50% {
-        transform: translateX(-4em) translateY(-1em) scale(1.4);
-    }
-    100% {
-        transform: translateX(-1em) translateY(0em);
-    }
-
+.container {
+    margin: 0px;
+    padding: 0px;
+    margin-right: 0;
 }
