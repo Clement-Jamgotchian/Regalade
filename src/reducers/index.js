@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-// import recipesReducer from './recipes';
+import headerReducer from './header';
 // import userReducer from './user';
 
 const rootReducer = combineReducers({
-//   recipes: recipesReducer,
+  header: headerReducer,
 //   user: userReducer,
 });
 

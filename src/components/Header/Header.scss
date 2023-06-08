@@ -71,6 +71,19 @@
       color: vars.$text;
     }
   }
+  &-show-button{
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 30px;
+    padding: 14px;
+    margin-right: 10px;
+    background-image: url('../../assets/images/loupe.png');
+    background-color: transparent;
+    background-size: 19px 19px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
 @media (min-width: 990px) {
   .Header {
@@ -139,12 +152,17 @@
 .none{
   display: none;
 }
-.small-searchbar{
-  margin-right: 10px;
-  width: 30px;
-  height: 30px;
-  justify-content: center;
-}
+
 .small-button{
   margin: 0;
+}
+.Small{
+  justify-content: space-between;
+  &-searchbar{
+    margin-right: 10px;
+    width: auto;
+    max-width: 190px;
+    padding: 0 5px;
+    height: 30px;
+  }
 }

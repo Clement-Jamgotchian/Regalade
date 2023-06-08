@@ -1,32 +1,42 @@
 import './Header.scss';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Nav, Navbar } from 'react-bootstrap';
 
 import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
+import { setSearchValue } from '../../actions/header';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [screenWidth, setScreenWidth] = useState(false);
+  const [scrollbarOn, setscrollbarOn] = useState(false);
+  const [searchBarValue, setSearchBarValue] = useState('');
+  const dispatch = useDispatch();
 
   const movingUpSearchbar = () => {
-    const searchbar = document.querySelector('.Header-form');
+    const form = document.querySelector('.Header-form');
     const containerHeader = document.querySelector('.container-header');
     const header = document.querySelector('.Header');
-    const input = document.querySelector('input');
     const buttonSearch = document.querySelector('.Header-form-button');
+    const buttonToggle = document.querySelector('.Header-show-button');
 
     if (showTopBtn === true && screenWidth === true) {
-      header.append(searchbar);
-      searchbar.classList.add('small-searchbar');
-      input.classList.add('none');
+      header.append(buttonToggle);
+      header.append(form);
+      buttonToggle.classList.remove('none');
+      form.classList.add('none');
+      header.classList.add('Small');
+      form.classList.add('Small-searchbar');
       buttonSearch.classList.add('small-button');
     } else {
-      searchbar.classList.remove('small-searchbar');
+      header.classList.remove('Small');
+      buttonToggle.classList.add('none');
+      form.classList.remove('none');
+      form.classList.remove('Small-searchbar');
       buttonSearch.classList.remove('small-button');
-      input.classList.remove('none');
-      containerHeader.append(searchbar);
+      containerHeader.append(form);
     }
   };
 
@@ -46,6 +56,36 @@ function Header() {
       setScreenWidth(false);
     }
     movingUpSearchbar();
+  };
+
+  useLayoutEffect(() => {
+    handleWidthDimension();
+    handleScrollSearchbar();
+  }, []);
+
+  const toggleSearchBar = () => {
+    setscrollbarOn((prevScrollbarOn) => !prevScrollbarOn);
+    const buttonToggle = document.querySelector('.Header-show-button');
+    const form = document.querySelector('.Header-form');
+
+    if (!scrollbarOn) {
+      buttonToggle.classList.add('none');
+      form.classList.remove('none');
+    }
+  };
+
+  const handleSubmitForm = (evt) => {
+    evt.preventDefault();
+    const lowerCaseSearchValue = searchBarValue.toLocaleLowerCase().replace(/([^a-zA-Z0-9]|[0-9])/g, '');
+    dispatch(setSearchValue(lowerCaseSearchValue));
+    if (showTopBtn === true && screenWidth === true) {
+      const buttonToggle = document.querySelector('.Header-show-button');
+      const form = document.querySelector('.Header-form');
+      buttonToggle.classList.remove('none');
+      form.classList.add('none');
+    }
+    setSearchBarValue('');
+    setscrollbarOn(!scrollbarOn);
   };
 
   window.addEventListener('scroll', handleScrollSearchbar);
@@ -96,18 +136,27 @@ function Header() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <form className="Header-form">
-        <input className="Header-form-input" />
+      <form className="Header-form" onSubmit={handleSubmitForm}>
+        <input
+          className="Header-form-input"
+          value={searchBarValue}
+          onChange={(evt) => {
+            setSearchBarValue(evt.target.value);
+          }}
+          required
+        />
         <button
           type="submit"
           aria-label="search bar"
           className="Header-form-button"
-          onClick={() => {
-            // submitInputSearch();
-            toggleSearchbar();
-          }}
         />
       </form>
+      <button
+        className="Header-show-button none"
+        aria-label="show form"
+        type="button"
+        onClick={toggleSearchBar}
+      />
     </div>
   );
 }
