@@ -24,6 +24,10 @@
     &:hover &--title {
         color: vars.$primaryButton;
     }
+    
+    &--title {
+        margin-right: 45px;
+    }
 
     &--body {
         position: relative;
@@ -123,15 +127,20 @@
             transform: translateY(-50%);
             transition: none;
         }
+        &--favorite {
+            color: vars.$primaryButton;
+        }
 
         &--img {
             position: absolute;
-            max-width: 70%;
             border-radius: 100%;
             margin: auto;
             transform: translateY(-50%);
-            left: 15%;
+            left: 0;
+            right: 0;
             z-index: 1;
+            width: 200px;
+            height: 200px;
         }
 
         &--content {

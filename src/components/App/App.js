@@ -1,13 +1,13 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import './App.scss';
-import RecipeCard from '../RecipeCard/RecipeCard';
+import Recipes from '../Recipes/Recipes';
 
 function App() {
   return (
     <Container>
       <Row>
         <Col>
-          <RecipeCard />
+          <Recipes />
         </Col>
       </Row>
     </Container>

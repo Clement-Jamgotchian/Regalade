@@ -136,7 +136,7 @@ RecipeCard.propTypes = {
 RecipeCard.defaultProps = {
   recipe: ({
     id: -1,
-    picture: 'https://picsum.photos/200',
+    picture: 'https://picsum.photos/300/500',
     title: 'Titre par défaut',
     rating: 3.5,
     time: '15 min',
