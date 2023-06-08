@@ -1,15 +1,24 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import './App.scss';
-import RecipeCard from '../RecipeCard/RecipeCard';
+import { Route, Routes } from 'react-router-dom';
+import Recipes from '../Recipes/Recipes';
+import HomepageInscription from '../HomepageInscription/HomepageInscription';
 
 function App() {
   return (
     <Container>
-      <Row>
-        <Col>
-          <RecipeCard />
-        </Col>
-      </Row>
+      <Routes>
+        <Route path="/" element={<HomepageInscription />} />
+        <Route path="/home" element={<Recipes />} />
+        <Route
+          path="*"
+          element={(
+            <div>
+              <h1>404 Page not found</h1>
+            </div>
+            )}
+        />
+      </Routes>
     </Container>
   );
 }

@@ -24,6 +24,10 @@
     &:hover &--title {
         color: vars.$primaryButton;
     }
+    
+    &--title {
+        margin-right: 45px;
+    }
 
     &--body {
         position: relative;
@@ -115,7 +119,7 @@
         background: #ffffff;
         max-width: 100%;
         overflow: visible;
-
+        
         
         &:hover img {
             -ms-transform: translateY(-50%); /* IE 9 */
@@ -123,19 +127,32 @@
             transform: translateY(-50%);
             transition: none;
         }
+        &--favorite {
+            color: vars.$primaryButton;
+        }
 
         &--img {
             position: absolute;
-            max-width: 70%;
             border-radius: 100%;
             margin: auto;
             transform: translateY(-50%);
-            left: 15%;
+            left: 0;
+            right: 0;
             z-index: 1;
+            width: 200px;
+            height: 200px;
         }
 
         &--content {
-        display: none;
+            display: none;
         }
     }
-  }
+}
+@media (max-width: vars.$layout-breakpoint-very-small) {
+    .RecipeCard {
+        &--img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+}
