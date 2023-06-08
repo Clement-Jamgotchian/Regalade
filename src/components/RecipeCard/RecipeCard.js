@@ -8,17 +8,19 @@ import PropTypes from 'prop-types';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faStar, faStarHalfStroke, faCartPlus, faChartSimple, faHeart,
+import { faCartPlus, faChartSimple, faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar, faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
 import { addRecipeToList } from '../../actions/list';
+import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
-import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
+
+// Import local utils
+
 
 // If user is logged in, we show the favorite icon,
 // active or not depends if added on favorite list or not
@@ -62,28 +64,6 @@ function RecipeCard({ recipe }) {
     }
   };
 
-  // Function to show fill stars depends on rating
-  // faStar : filled star
-  // faStarHalfStroke : half-filled star
-  // farStart : empty star
-  function getStars(starsRating) {
-    const stars = [];
-    // For each integer, we show a full star
-    for (let i = 1; i <= 5; i++) {
-      if (i <= starsRating) {
-        stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
-      }
-      // If rating is decimal, we show a half-filled star
-      if (/^[1-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i) {
-        stars.push(<FontAwesomeIcon key="half" icon={faStarHalfStroke} />);
-        // We show other empty stars to have a total of 5 stars
-      } else if (i > Math.ceil(starsRating)) {
-        stars.push(<FontAwesomeIcon key={i} icon={farStar} />);
-      }
-    }
-    return stars;
-  }
-
   return (
     <Card className="RecipeCard">
       <FavoriteIcon
@@ -95,15 +75,16 @@ function RecipeCard({ recipe }) {
       <Card.Body className="RecipeCard--body">
         <CartIcon isLoggedIn={isLoggedIn} addToList={() => dispatch(addRecipeToList(recipe))} />
         <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
+        <Card.Text>{recipe.id}</Card.Text>
         <Card.Text className="RecipeCard--rating">
           {getStars(recipe.rating)}
         </Card.Text>
         <Card.Text className="RecipeCard--content">
           <FontAwesomeIcon icon={farClock} />
-          {recipe.time}
+          {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
           <span> / </span>
           <FontAwesomeIcon icon={faChartSimple} />
-          {recipe.difficulty}
+          {getDifficultyLabel(recipe.difficulty)}
         </Card.Text>
       </Card.Body>
     </Card>
@@ -124,12 +105,12 @@ CartIcon.propTypes = {
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    favorite: PropTypes.bool.isRequired,
-    picture: PropTypes.string.isRequired,
+    picture: PropTypes.string,
     title: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    time: PropTypes.string.isRequired,
-    difficulty: PropTypes.string.isRequired,
+    rating: PropTypes.number,
+    cookingDuration: PropTypes.number.isRequired,
+    setupDuration: PropTypes.number.isRequired,
+    difficulty: PropTypes.number.isRequired,
   }),
 };
 
@@ -139,8 +120,9 @@ RecipeCard.defaultProps = {
     picture: 'https://picsum.photos/300/500',
     title: 'Titre par défaut',
     rating: 3.5,
-    time: '15 min',
-    difficulty: 'Facile',
+    cookingDuration: 15,
+    setupDuration: 20,
+    difficulty: 1,
   }),
 };
 
