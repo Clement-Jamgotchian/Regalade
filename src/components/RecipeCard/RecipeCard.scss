@@ -119,7 +119,7 @@
         background: #ffffff;
         max-width: 100%;
         overflow: visible;
-
+        
         
         &:hover img {
             -ms-transform: translateY(-50%); /* IE 9 */
@@ -144,7 +144,15 @@
         }
 
         &--content {
-        display: none;
+            display: none;
         }
     }
-  }
+}
+@media (max-width: vars.$layout-breakpoint-very-small) {
+    .RecipeCard {
+        &--img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+}

@@ -8,8 +8,7 @@ import PropTypes from 'prop-types';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faChartSimple, faHeart,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faChartSimple, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
@@ -20,7 +19,7 @@ import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/f
 import './RecipeCard.scss';
 
 // Import local utils
-
+import { getStars, getTotalDuration, getDifficultyLabel } from '../../utils/formatRecipeData';
 
 // If user is logged in, we show the favorite icon,
 // active or not depends if added on favorite list or not
