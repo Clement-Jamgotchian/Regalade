@@ -1,15 +1,14 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import './App.scss';
+import Recipes from '../Recipes/Recipes';
 import HomepageInscription from '../HomepageInscription/HomepageInscription';
-
-import RecipeCard from '../RecipeCard/RecipeCard';
 
 function App() {
   return (
     <Container>
       <Row>
         <Col>
-          <RecipeCard />
+          <Recipes />
         </Col>
       </Row>
       <HomepageInscription />
