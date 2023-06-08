@@ -1,5 +1,6 @@
 import './HomepageInscription.scss';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import tomate from '../../assets/tomate.png';
 import trancheTomate from '../../assets/trancheTomate.png';
@@ -56,40 +57,10 @@ function HomepageInscription() {
     <div className="formSign">
       <section className="formSign-container" style={{ display: `${displayCarousel}` }}>
         <div className="formSign-carousel">
-          <form className="formSign-carousel-in" style={{ transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`, zIndex: `${indexIn}` }}>
-            <button type="submit" className="formSign-signinButton" style={{ display: `${displayIn}`, transition: '1s' }} onClick={rotate}>S&apos;inscrire</button>
-            <button type="button" className="formSign-cancelButton" onClick={displayTrigger}><img src={cancel} alt="bouton croix pour fermer" className="formSign-cancelButton-image" /></button>
-            <input
-              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
-              type="text"
-              name="identifiant"
-              placeholder="Identifiant"
-              className="formSign-input"
-              required
-            />
-            <input
-              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
-              type="password"
-              placeholder="Mot de passe"
-              className="formSign-input formSign-in-password"
-              required
-            />
-            <button style={{ display: `${displayIn}`, zIndex: `${indexIn}` }} type="submit" className="formSign-submit">Continuer &#x2794;</button>
-          </form>
-          <div
-            className="formSign-image"
-            style={{ transform: `rotateY(${logoDeg}deg) translateX(-50%)` }}
-          >
-            <img src={tomate} alt="tomate" className="item tomate" />
-            <img src={trancheTomate} alt="trancheTomate" className="item trancheTomate" />
-            <img src={huile} alt="huile" className="item huile" />
-            <img src={pain} alt="pain" className="item pain" />
-            <img src={pomme} alt="pomme" className="item pomme" />
-            <img src={concombre} alt="concombre" className="item concombre" />
-          </div>
           <form className="formSign-carousel-up" style={{ transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)`, zIndex: `${indexUp}` }}>
             <button type="submit" className="formSign-signupButton" style={{ display: `${displayUp}`, zIndex: `${indexUp}` }} onClick={rotate}>Se connecter</button>
             <button type="button" className="formSign-cancelButton" onClick={displayTrigger}><img src={cancel} alt="bouton croix pour fermer" className="formSign-cancelButton-image" /></button>
+            <p className="formSign-carousel-title"> S&apos;inscrire</p>
             <input
               style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
               type="text"
@@ -122,6 +93,38 @@ function HomepageInscription() {
             />
             <button style={{ display: `${displayUp}`, zIndex: `${indexUp}` }} type="submit" className="formSign-submit">Continuer &#x2794;</button>
           </form>
+          <div
+            className="formSign-image"
+            style={{ transform: `rotateY(${logoDeg}deg) translateX(-50%)` }}
+          >
+            <img src={tomate} alt="tomate" className="item tomate" />
+            <img src={trancheTomate} alt="trancheTomate" className="item trancheTomate" />
+            <img src={huile} alt="huile" className="item huile" />
+            <img src={pain} alt="pain" className="item pain" />
+            <img src={pomme} alt="pomme" className="item pomme" />
+            <img src={concombre} alt="concombre" className="item concombre" />
+          </div>
+          <form className="formSign-carousel-in" style={{ transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`, zIndex: `${indexIn}` }}>
+            <button type="submit" className="formSign-signinButton" style={{ display: `${displayIn}`, transition: '1s' }} onClick={rotate}>S&apos;inscrire</button>
+            <button type="button" className="formSign-cancelButton" onClick={displayTrigger}><img src={cancel} alt="bouton croix pour fermer" className="formSign-cancelButton-image" /></button>
+            <p className="formSign-carousel-title"> Se connecter</p>
+            <input
+              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
+              type="text"
+              name="identifiant"
+              placeholder="Identifiant"
+              className="formSign-input"
+              required
+            />
+            <input
+              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
+              type="password"
+              placeholder="Mot de passe"
+              className="formSign-input formSign-in-password"
+              required
+            />
+            <button style={{ display: `${displayIn}`, zIndex: `${indexIn}` }} type="submit" className="formSign-submit">Continuer &#x2794;</button>
+          </form>
         </div>
       </section>
       <section className="formSign-details" style={{ display: `${displayDetails}` }}>
@@ -131,8 +134,8 @@ function HomepageInscription() {
           Des plats délicieux, des astuces pratiques et une cuisine inspirante vous attendent.
           Rejoignez-nous et découvrez le plaisir de cuisiner au quotidien !
         </p>
-        <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter </button>
-        <a href="#top" className="formSign-button">Aller vers le site</a>
+        <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter / S&apos;inscrire</button>
+        <Link to="/home" className="formSign-button">Aller vers le site</Link>
       </section>
     </div>
   );
