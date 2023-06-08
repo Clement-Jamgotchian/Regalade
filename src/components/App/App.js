@@ -1,6 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import './App.scss';
-import HomepageInscription from '../HomepageInscription/HomepageInscription';
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
           <p>Lu</p>
         </Col>
       </Row>
-      <HomepageInscription />
     </Container>
   );
 }
