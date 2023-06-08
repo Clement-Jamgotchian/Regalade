@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-// import recipesReducer from './recipes';
-// import userReducer from './user';
+import userReducer from './user';
+import listReducer from './list';
+import favoritesReducer from './favorites';
 
 const rootReducer = combineReducers({
-//   recipes: recipesReducer,
-//   user: userReducer,
+  user: userReducer,
+  list: listReducer,
+  favorites: favoritesReducer,
 });
 
 export default rootReducer;
