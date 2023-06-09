@@ -16,7 +16,7 @@ function Footer() {
           <Nav.Link eventKey="link-1">Confidentialités</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-2">FAQ</Nav.Link>
+          <Nav.Link href="/faq" eventKey="link-2">FAQ</Nav.Link>
         </Nav.Item>
       </Nav>
       <p className="text-center mt-2">&copy; Régalade</p>

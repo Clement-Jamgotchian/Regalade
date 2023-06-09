@@ -8,14 +8,14 @@ import './Menuphone.scss';
 function Menuphone() {
   return (
     <div className="Menuphone">
-      <a href="/profil">
-        <img alt="logo du profil utilisateur" src={toque} />
+      <a href="/profil/mes-repas">
+        <img alt="logo d'une toque" src={toque} />
       </a>
-      <a href="/profil">
-        <img alt="logo du profil utilisateur" src={plat} />
+      <a href="/profil/mes-favorites">
+        <img alt="logo d'un plat" src={plat} />
       </a>
-      <a href="/profil">
-        <img alt="logo du profil utilisateur" src={caddie} />
+      <a href="/profil/mes-courses">
+        <img alt="icone d'un caddie" src={caddie} />
       </a>
       <a href="/profil">
         <img alt="logo du profil utilisateur" src={user} />

@@ -126,7 +126,7 @@ function Header() {
         </Nav>
         <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
           <Nav className="mr-auto ">
-            <Nav.Link href="/recipes">Recettes</Nav.Link>
+            <Nav.Link href="/home">Recettes</Nav.Link>
             <Nav.Link href="/list">Liste de repas</Nav.Link>
             <Nav.Link href="/fridge">Mon frigo</Nav.Link>
           </Nav>

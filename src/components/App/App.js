@@ -15,7 +15,6 @@ import Menuphone from '../Menuphone/Menuphone';
 // import HomepageInscription from '../HomepageInscription/HomepageInscription';
 // import Loader from '../Loader/Loader';
 
-
 function App() {
   const isLoading = useSelector((state) => state.user.isLoading);
   return (
