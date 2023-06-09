@@ -100,7 +100,7 @@ function Header() {
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
         />
-        <Navbar.Brand href="#home" className="Header-logoMain">
+        <Navbar.Brand href="/home" className="Header-logoMain">
           <img
             src={logoMain}
             alt="logo du site qui est un panier de fruit et légumes"
@@ -108,14 +108,14 @@ function Header() {
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
           <p>Bienvenue Clem</p>
-          <Nav.Link href="#deets">
+          <Nav.Link href="/profil">
             <img
               className="Header-utilsLink-logo"
               src={logoUser}
               alt="logo d'un utilisateur'"
             />
           </Nav.Link>
-          <Nav.Link href="#memes">
+          <Nav.Link href="/list">
             <img
               style={{ marginLeft: '15px' }}
               className="Header-utilsLink-logo"
@@ -126,9 +126,9 @@ function Header() {
         </Nav>
         <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
           <Nav className="mr-auto ">
-            <Nav.Link href="#features">Recettes</Nav.Link>
-            <Nav.Link href="#pricing">Liste de repas</Nav.Link>
-            <Nav.Link href="#pricing">Mon frigo</Nav.Link>
+            <Nav.Link href="/recipes">Recettes</Nav.Link>
+            <Nav.Link href="/list">Liste de repas</Nav.Link>
+            <Nav.Link href="/fridge">Mon frigo</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
