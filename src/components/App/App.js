@@ -3,6 +3,7 @@ import './App.scss';
 import Header from '../Header/Header';
 import Recipes from '../Recipes/Recipes';
 import HomepageInscription from '../HomepageInscription/HomepageInscription';
+import Loader from '../Loader/Loader';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         </Col>
       </Row>
       <HomepageInscription />
+      <Loader />
     </Container>
   );
 }
