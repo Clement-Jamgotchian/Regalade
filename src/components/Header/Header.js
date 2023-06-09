@@ -50,7 +50,7 @@ function Header() {
   };
 
   const handleWidthDimension = () => {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 575) {
       setScreenWidth(true);
     } else {
       setScreenWidth(false);
