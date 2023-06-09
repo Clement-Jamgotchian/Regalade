@@ -8,7 +8,6 @@
     width: 100vw;
     height: 100vh;
     margin: 0;
-    background-color: vars.$backGround;
 
     &-container {
         display: none;
@@ -225,13 +224,6 @@
 }
 
 @media (min-width: 600px) {
-    .container {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-    }
-    
     .formSign {
         display: flex;
         flex-direction: column;
@@ -240,7 +232,6 @@
         background-size: cover;
         height: 100vh;
         width: 100vw;
-        background-color: vars.$backGround;
         text-align: center;
         font-family: vars.$font;
     
@@ -547,10 +538,4 @@
         }
     
     }
-}
-
-.container {
-    margin: 0px;
-    padding: 0px;
-    margin-right: 0;
 }
