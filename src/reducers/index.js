@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   list: listReducer,
   favorites: favoritesReducer,
+  header: headerReducer,
 });
 
 export default rootReducer;

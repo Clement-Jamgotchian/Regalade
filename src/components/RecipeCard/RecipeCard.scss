@@ -148,7 +148,7 @@
         }
     }
 }
-@media (max-width: vars.$layout-breakpoint-very-small) {
+@media (max-width: 360px) {
     .RecipeCard {
         &--img {
             width: 150px;

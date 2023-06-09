@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Recipes from '../Recipes/Recipes';
 import Footer from '../Footer/Footer';
 import HomepageInscription from '../HomepageInscription/HomepageInscription';
+import Loader from '../Loader/Loader';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       </Row>
       <HomepageInscription />
       <Footer />
+      <Loader />
     </Container>
   );
 }
