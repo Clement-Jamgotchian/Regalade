@@ -1,12 +1,7 @@
 import { SET_CONNECTED_USER } from '../actions/actions';
 
 export const initialState = {
-  isLoggedIn: true,
-  connectedUser: false,
-  user: [{
-    email: 'tutu@admin.com',
-    password: 'test',
-  }],
+  isLoggedIn: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -14,7 +9,7 @@ const reducer = (state = initialState, action = {}) => {
     case SET_CONNECTED_USER:
       return {
         ...state,
-        connectedUser: action.payload.connectedUser,
+        isLoggedIn: action.payload.connectedUser,
       };
 
     default:

@@ -73,16 +73,17 @@ function HomepageInscription() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3000/login_check', {
+    axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/login_check', {
       email: email,
       password: password,
     })
       .then((res) => {
-        dispatch(setConnectedUser(res.data));
         console.log(res.data);
-        alert('Bravo tu es connecté');
+        dispatch(setConnectedUser(true));
+        window.location.replace('/home');
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         alert('Mauvais email/password');
       });
   };
@@ -91,15 +92,14 @@ function HomepageInscription() {
     event.preventDefault();
     if (password === confirmPassword) {
       console.log('bon mot de passe');
-      axios.post('http://localhost:3000/users', {
+      axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
         email: email,
         nickname: nickname,
         password: password,
       })
         .then((res) => {
-          dispatch(setConnectedUser(res.data));
           console.log(res.data);
-          alert('Bravo tu es inscrit');
+          dispatch(setConnectedUser(true));
           window.location.replace('/home');
         })
         .catch(() => {
