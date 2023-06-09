@@ -76,7 +76,7 @@ function Header() {
 
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
-    const lowerCaseSearchValue = searchBarValue.toLocaleLowerCase().replace(/([^a-zA-Z0-9]|[0-9])/g, '');
+    const lowerCaseSearchValue = searchBarValue.toLocaleLowerCase().replace(/([^a-zA-Z0-9 ]|[0-9])/g, '');
     dispatch(setSearchValue(lowerCaseSearchValue));
     if (showTopBtn === true && screenWidth === true) {
       const buttonToggle = document.querySelector('.Header-show-button');
@@ -143,7 +143,6 @@ function Header() {
           onChange={(evt) => {
             setSearchBarValue(evt.target.value);
           }}
-          required
         />
         <button
           type="submit"
