@@ -324,7 +324,7 @@
             position: absolute;
             bottom: 0px;
             right: 0px;
-            text-align: center;
+            text-align: end;
             background-color: vars.$backGroundOpacity;
             border-radius: 100px 0px 6px 0px;
             font-size: medium;
@@ -335,7 +335,7 @@
         }
 
         &-submit:hover {
-            text-align: end;
+            width: 70%;
             transition: 0.5s;
         }
 

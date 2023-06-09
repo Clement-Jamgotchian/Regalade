@@ -1,6 +1,8 @@
 export const SET_LOADING_VALUE = 'SET_LOADING_VALUE';
 
+
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
+
 
 export const setLoadingValue = (newLoadValue) => ({
   type: SET_LOADING_VALUE,
@@ -9,6 +11,7 @@ export const setLoadingValue = (newLoadValue) => ({
     newLoadValue: newLoadValue,
   },
 });
+
 
 export const setConnectedUser = (connectedUser) => ({
   type: SET_CONNECTED_USER,
