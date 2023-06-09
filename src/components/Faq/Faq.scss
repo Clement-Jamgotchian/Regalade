@@ -3,6 +3,8 @@
 .faq {
  display: block;
  z-index: -1;
+ max-width: 1200px;
+ margin: auto;
   &-accordion {
     --bs-accordion-active-color: black;
     --bs-accordion-active-bg: #f2542d;

@@ -27,7 +27,7 @@ function Faq() {
             tes disponibilités et tes goûts.
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="1" className="faq-accordion-item">
+        <Accordion.Item eventKey="2" className="faq-accordion-item">
           <Accordion.Header className="faq-accordion-item-header">
             Que faire si je n&apos;ai pas le temps de faire à manger ?
           </Accordion.Header>
@@ -37,7 +37,7 @@ function Faq() {
             tes disponibilités et tes goûts.
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="1" className="faq-accordion-item">
+        <Accordion.Item eventKey="3" className="faq-accordion-item">
           <Accordion.Header className="faq-accordion-item-header">
             Que faire si je n&apos;ai pas le temps de faire à manger ?
           </Accordion.Header>
@@ -47,7 +47,7 @@ function Faq() {
             tes disponibilités et tes goûts.
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="1" className="faq-accordion-item">
+        <Accordion.Item eventKey="4" className="faq-accordion-item">
           <Accordion.Header className="faq-accordion-item-header">
             Que faire si je n&apos;ai pas le temps de faire à manger ?
           </Accordion.Header>
@@ -57,7 +57,7 @@ function Faq() {
             tes disponibilités et tes goûts.
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="1" className="faq-accordion-item">
+        <Accordion.Item eventKey="5" className="faq-accordion-item">
           <Accordion.Header className="faq-accordion-item-header">
             Que faire si je n&apos;ai pas le temps de faire à manger ?
           </Accordion.Header>
