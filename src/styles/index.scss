@@ -1,12 +1,6 @@
 @use '../styles/vars';
 
-
-body {
-  background-color: vars.$backGround;
-  font-family: 'Lato', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+$body-bg: vars.$backGround;
 
 $theme-colors: (
   'primary': vars.$primaryButton,
@@ -14,5 +8,4 @@ $theme-colors: (
   'info': vars.$backGround,
   );
 
-  @import "~bootstrap/dist/css/bootstrap.min.css";
   @import '~bootstrap/scss/bootstrap';
