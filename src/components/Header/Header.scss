@@ -1,12 +1,13 @@
 @use '../../styles/vars';
 
 .container-header{
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100vw;
   background-color: vars.$backGround;
   padding: 0 20px;
+  z-index: 1;
 }
 .Header {
   justify-content: center;
