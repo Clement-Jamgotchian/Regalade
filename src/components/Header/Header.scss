@@ -5,13 +5,14 @@
   top: 0;
   left: 0;
   width: 100vw;
-  background-color: vars.$backGround;
+  background-color: vars.$backGroundFull;
   padding: 0 20px;
+  z-index: 80;
 }
 .Header {
   justify-content: center;
   color: vars.$text;
-  background-color: vars.$backGround;
+  background-color: vars.$backGroundFull;
   border-bottom: 1px solid ;
 
   &-utilsLink {
@@ -46,6 +47,7 @@
       width: 100%;
       padding-left: 10px;
       background-color: transparent;
+      transition: 2s;
     }
     &-input:focus{
       outline: none;
@@ -65,7 +67,7 @@
     display: none;
     text-align: center;
     padding: 0;
-    color: vars.$primaryButton;
+    color: vars.$text;
     width: 35px;
   }
   &-link{
