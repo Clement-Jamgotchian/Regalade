@@ -1,6 +1,7 @@
 import { Container } from 'react-bootstrap';
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Header from '../Header/Header';
 import Recipes from '../Recipes/Recipes';
@@ -9,6 +10,7 @@ import Loader from '../Loader/Loader';
 import Faq from '../Faq/Faq';
 
 function App() {
+  const isLoading = useSelector((state) => state.user.isLoading);
   return (
     <Container fluid className="App">
       <Header />
@@ -22,7 +24,7 @@ function App() {
         />
         <Route path="/faq" element={<Faq />} />
       </Routes>
-      <Loader />
+      {isLoading && <Loader />}
     </Container>
   );
 }
