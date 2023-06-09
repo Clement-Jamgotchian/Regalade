@@ -1,0 +1,171 @@
+@use '../../styles/vars';
+
+.container-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: vars.$backGround;
+  padding: 0 20px;
+}
+.Header {
+  justify-content: center;
+  color: vars.$text;
+  background-color: vars.$backGround;
+  border-bottom: 1px solid ;
+
+  &-utilsLink {
+    display: none;
+
+    p {
+      display: none;
+    }
+
+    &-logo {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &-logoMain {
+    margin-right: 0;
+    padding: 0;
+    img {
+      width: 130px;
+    }
+  }
+  &-form {
+    display: flex;
+    border: 1px solid vars.$text;
+    border-radius: 30px;
+    width: 90%;
+    justify-content: space-between;
+    margin: 20px auto;
+
+    &-input {
+      border: none;
+      width: 100%;
+      padding-left: 10px;
+      background-color: transparent;
+    }
+    &-input:focus{
+      outline: none;
+    }
+    &-button {
+      width: 20px;
+      border: none;
+      background-image: url('../../assets/images/loupe.png');
+      background-color: transparent;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-right: 10px;
+    }
+  }
+  &-burger {
+    display: none;
+    text-align: center;
+    padding: 0;
+    color: vars.$primaryButton;
+    width: 35px;
+  }
+  &-link{
+    a{
+      font-family: 'Lato', sans-serif !important;
+      color: vars.$text;
+    }
+  }
+  &-show-button{
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 30px;
+    padding: 14px;
+    margin-right: 10px;
+    background-image: url('../../assets/images/loupe.png');
+    background-color: transparent;
+    background-size: 19px 19px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+@media (min-width: 990px) {
+  .Header {
+    justify-content: space-between;
+    &-logoMain {
+      display: flex;
+      order: 2;
+      flex-grow: 1;
+      justify-content: center;
+      img {
+        width: 180px;
+      margin-right: 90px;
+
+      }
+    }
+    &-utilsLink {
+      order: 3;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: flex-end;
+      p {
+        display: block;
+        margin-bottom: 0;
+      }
+      &-logo {
+        width: 35px;
+        height: 35px;
+        margin-left: 0px !important;
+      }
+    }
+    &-link {
+      flex-grow: 1;
+    }
+  }
+}
+
+@media (min-width: 767px) {
+  .Header {
+    &-utilsLink {
+      flex-direction: row;
+    }
+    &-form {
+      width: 50%;
+      border-radius: 10px;
+    }
+  }
+}
+@media (min-width: 575px) {
+  .Header {
+    justify-content: space-between;
+    &-logoMain{
+      img{
+      margin-left: 40px;
+      }
+    }
+    &-utilsLink {
+      display: flex;
+      flex-direction: row;
+    }
+    &-burger {
+      display: block;
+    }
+  }
+}
+
+.none{
+  display: none;
+}
+
+.small-button{
+  margin: 0;
+}
+.Small{
+  justify-content: space-between;
+  &-searchbar{
+    margin-right: 10px;
+    width: auto;
+    max-width: 190px;
+    padding: 0 5px;
+    height: 30px;
+  }
+}
