@@ -1,0 +1,9 @@
+@use '../../styles/vars';
+
+.Footer{
+    color: vars.$text;
+    a{
+        font-family: vars.$font;
+        color: vars.$text;
+    }
+}
