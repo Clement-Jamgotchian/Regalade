@@ -50,7 +50,7 @@ function Header() {
   };
 
   const handleWidthDimension = () => {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 575) {
       setScreenWidth(true);
     } else {
       setScreenWidth(false);
@@ -76,7 +76,9 @@ function Header() {
 
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
-    const lowerCaseSearchValue = searchBarValue.toLocaleLowerCase().replace(/([^a-zA-Z0-9 ]|[0-9])/g, '');
+    const lowerCaseSearchValue = searchBarValue
+      .toLocaleLowerCase()
+      .replace(/([^a-zA-Z0-9 ]|[0-9])/g, '');
     dispatch(setSearchValue(lowerCaseSearchValue));
     if (showTopBtn === true && screenWidth === true) {
       const buttonToggle = document.querySelector('.Header-show-button');
@@ -93,13 +95,7 @@ function Header() {
 
   return (
     <div className="container-header">
-      <Navbar
-        collapseOnSelect
-        expand="lg"
-        bg="info"
-        variant="primary"
-        className="Header"
-      >
+      <Navbar collapseOnSelect bg="info" variant="light" expand="lg" className="Header">
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"

@@ -1,0 +1,11 @@
+@use '../../styles/vars';
+
+.Footer{
+    background-color: vars.$backGroundFull;
+    color: vars.$text;
+    z-index: 10;
+    a{
+        font-family: vars.$font;
+        color: vars.$text;
+    }
+}

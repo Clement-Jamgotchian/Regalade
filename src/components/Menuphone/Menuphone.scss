@@ -1,0 +1,26 @@
+@use '../../styles/vars';
+
+.Menuphone{
+    display: flex;
+    position: sticky;
+    bottom: 50px;
+    justify-content: space-around;
+    align-items: center;
+    background-color: vars.$accent;
+    width: 80%;
+    height: 50px;
+    border-radius: 30px;
+    margin: auto;
+    z-index: 50;
+    a{
+        padding: 0 5px;
+        img{
+            width: 35px;
+        }
+    }
+}
+@media (min-width: vars.$layout-breakpoint-small) {
+    .Menuphone{
+        display: none;
+    }
+}
