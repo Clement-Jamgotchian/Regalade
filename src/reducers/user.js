@@ -1,7 +1,8 @@
-import { SET_CONNECTED_USER } from '../actions/actions';
+import { SET_CONNECTED_USER, SET_LOADING_VALUE } from '../actions/user';
 
 export const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -10,6 +11,12 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isLoggedIn: action.payload.connectedUser,
+      };
+
+    case SET_LOADING_VALUE:
+      return {
+        ...state,
+        isLoading: action.payload.newLoadValue,
       };
 
     default:
