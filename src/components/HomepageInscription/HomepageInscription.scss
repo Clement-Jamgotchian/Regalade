@@ -1,19 +1,16 @@
 @use 'src/styles/vars';
 
-.col {
-    display: none;
-}
 .formSign {
 
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     margin: 0;
 
     &-container {
         display: none;
         margin: auto;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
     }
     
     &-carousel {
@@ -176,6 +173,8 @@
         -webkit-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
         -moz-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
         transition: 0.4s;
+        text-decoration: none;
+        color: black;
     }
     &-submit:hover {
         text-align: end;
@@ -230,8 +229,8 @@
         margin: 0;
         padding: 0;
         background-size: cover;
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
         text-align: center;
         font-family: vars.$font;
     
@@ -324,7 +323,7 @@
             position: absolute;
             bottom: 0px;
             right: 0px;
-            text-align: center;
+            text-align: end;
             background-color: vars.$backGroundOpacity;
             border-radius: 100px 0px 6px 0px;
             font-size: medium;
@@ -335,7 +334,7 @@
         }
 
         &-submit:hover {
-            text-align: end;
+            width: 70%;
             transition: 0.5s;
         }
 

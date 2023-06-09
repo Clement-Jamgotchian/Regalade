@@ -1,13 +1,13 @@
-@use 'vars';
+@use '../styles/vars';
 
-$body-bg: vars.$backGround;
 $body-font-family: vars.$font;
+$body-bg: vars.$backGroundFull;
 
 $theme-colors: (
   'primary': vars.$primaryButton,
   'success': vars.$secondaryButton,
   'info': vars.$backGround,
-);
+  );
 
 $pagination-color: vars.$primaryButton;
 $pagination-bg: vars.$backGround;
@@ -26,6 +26,5 @@ $pagination-focus-box-shadow: rgba(vars.$primaryButton, .4);
 $pagination-hover-color: #ffffff;
 $pagination-hover-bg: rgba(vars.$primaryButton, .4); 
 $pagination-hover-border-color: rgba(vars.$primaryButton, .4);
-
 
 @import '~bootstrap/scss/bootstrap';

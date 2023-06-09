@@ -151,7 +151,7 @@
         }
     }
 }
-@media (max-width: vars.$layout-breakpoint-very-small) {
+@media (max-width: 360px) {
     .RecipeCard {
         margin: 6rem 1rem 1rem;
         &--img {
