@@ -3,21 +3,23 @@ import './App.scss';
 import Header from '../Header/Header';
 import Recipes from '../Recipes/Recipes';
 import Footer from '../Footer/Footer';
-import HomepageInscription from '../HomepageInscription/HomepageInscription';
-import Loader from '../Loader/Loader';
+import Menuphone from '../Menuphone/Menuphone';
+// import HomepageInscription from '../HomepageInscription/HomepageInscription';
+// import Loader from '../Loader/Loader';
 
 function App() {
   return (
     <Container fluid className="App">
       <Header />
+      {/* <Loader /> */}
       <Row>
         <Col>
           <Recipes />
         </Col>
       </Row>
-      <HomepageInscription />
+      {/* <HomepageInscription /> */}
+      <Menuphone />
       <Footer />
-      <Loader />
     </Container>
   );
 }

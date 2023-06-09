@@ -13,7 +13,7 @@
   justify-content: center;
   color: vars.$text;
   background-color: vars.$backGroundFull;
-  border-bottom: 1px solid ;
+  border-bottom: 1px solid vars.$accent;
 
   &-utilsLink {
     display: none;
@@ -36,7 +36,7 @@
   }
   &-form {
     display: flex;
-    border: 1px solid vars.$text;
+    border: 1px solid vars.$accent;
     border-radius: 30px;
     width: 90%;
     justify-content: space-between;
@@ -79,7 +79,7 @@
   &-show-button{
     width: 20px;
     height: 20px;
-    border: 1px solid;
+    border: 1px solid vars.$accent;
     border-radius: 30px;
     padding: 14px;
     margin-right: 10px;
