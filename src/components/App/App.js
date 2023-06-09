@@ -10,10 +10,13 @@ import HomepageInscription from '../HomepageInscription/HomepageInscription';
 import Loader from '../Loader/Loader';
 import Faq from '../Faq/Faq';
 
+
 import Footer from '../Footer/Footer';
 import Menuphone from '../Menuphone/Menuphone';
 // import HomepageInscription from '../HomepageInscription/HomepageInscription';
 // import Loader from '../Loader/Loader';
+
+
 
 
 function App() {
