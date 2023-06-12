@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 // React components
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -43,7 +42,6 @@ function PaginatedRecipes() {
     axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes', { mode: 'cors' })
       .then((response) => {
         setTotalRecipes(response.data.length);
-        console.log(totalRecipes);
         setRecipes(response.data.slice(offset, offset + perPage));
         setPageCount(Math.ceil(response.data.length / perPage));
       })
@@ -54,7 +52,6 @@ function PaginatedRecipes() {
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
     const newOffset = (selectedPage * perPage) % totalRecipes;
-    console.log(totalRecipes);
     setOffset(newOffset);
   };
 

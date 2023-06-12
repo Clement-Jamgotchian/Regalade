@@ -14,26 +14,28 @@ import Menuphone from '../Menuphone/Menuphone';
 function App() {
   const isLoading = useSelector((state) => state.user.isLoading);
   return (
-    <Container fluid className="App">
-      <Header />
+    <>
+      <Container className="App">
+        <Header />
 
-      <Routes>
-        <Route path="/" element={<HomepageInscription />} />
-        <Route
-          path="/home"
-          element={
-            <Recipes />
+        <Routes>
+          <Route path="/" element={<HomepageInscription />} />
+          <Route
+            path="/home"
+            element={
+              <Recipes />
             }
-        />
-        <Route path="/faq" element={<Faq />} />
-      </Routes>
+          />
+          <Route path="/faq" element={<Faq />} />
+        </Routes>
 
-      {isLoading && <Loader />}
+        {isLoading && <Loader />}
 
-      <Menuphone />
+        <Menuphone />
+
+      </Container>
       <Footer />
-
-    </Container>
+    </>
   );
 }
 

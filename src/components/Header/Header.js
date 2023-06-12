@@ -95,7 +95,7 @@ function Header() {
 
   return (
     <div className="container-header">
-      <Navbar collapseOnSelect bg="info" variant="light" expand="lg" className="Header">
+      <Navbar collapseOnSelect variant="light" expand="lg" className="Header">
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"

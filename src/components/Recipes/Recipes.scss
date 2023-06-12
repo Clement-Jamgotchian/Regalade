@@ -8,7 +8,6 @@
     justify-content: space-between;
 
     &--content {
-        padding-bottom: 50px;
         width: 100%;
     }
 
@@ -29,7 +28,7 @@
         background: none;
     }
 
-    &--pagination .pagination .page-item:not(:first-child):not(:last-child) .page-link {
+    &--pagination .pagination .page-item .page-link {
         display: block;
         border-radius: 22px;
         text-align: center;
