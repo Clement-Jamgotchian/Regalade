@@ -95,7 +95,13 @@ function Header() {
 
   return (
     <div className="container-header">
-      <Navbar collapseOnSelect bg="info" variant="light" expand="lg" className="Header">
+      <Navbar
+        collapseOnSelect
+        bg="info"
+        variant="light"
+        expand="lg"
+        className="Header"
+      >
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
@@ -124,7 +130,11 @@ function Header() {
             />
           </Nav.Link>
         </Nav>
-        <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          className="Header-link"
+          // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
+        >
           <Nav className="mr-auto ">
             <Nav.Link href="#features">Recettes</Nav.Link>
             <Nav.Link href="#pricing">Liste de repas</Nav.Link>
@@ -133,6 +143,7 @@ function Header() {
         </Navbar.Collapse>
       </Navbar>
       <form className="Header-form" onSubmit={handleSubmitForm}>
+        {/* exemple : {(showTopBtn && screenWidth) && <button type="button">Coucou</button>} */}
         <input
           className="Header-form-input"
           value={searchBarValue}
