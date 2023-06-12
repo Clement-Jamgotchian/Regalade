@@ -96,7 +96,7 @@ function Header() {
 
   return (
     <div className="container-header">
-      <Navbar collapseOnSelect bg="info" variant="light" expand="lg" className="Header">
+      <Navbar collapseOnSelect variant="light" expand="lg" className="Header">
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
@@ -130,7 +130,7 @@ function Header() {
         </Nav>
         <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
           <Nav className="mr-auto ">
-            <Nav.Link href="/recipes">Recettes</Nav.Link>
+            <Nav.Link href="/home">Recettes</Nav.Link>
             <Nav.Link href="/list">Liste de repas</Nav.Link>
             <Nav.Link href="/fridge">Mon frigo</Nav.Link>
           </Nav>
