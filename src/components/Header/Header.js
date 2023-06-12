@@ -1,6 +1,6 @@
 import './Header.scss';
 import { useLayoutEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Navbar } from 'react-bootstrap';
 
 import logoMain from '../../assets/images/logoMain.png';
@@ -13,6 +13,7 @@ function Header() {
   const [screenWidth, setScreenWidth] = useState(false);
   const [scrollbarOn, setscrollbarOn] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
+  const nickname = useSelector((state) => state.user.nickname);
   const dispatch = useDispatch();
 
   const movingUpSearchbar = () => {
@@ -107,7 +108,10 @@ function Header() {
           />
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
-          <p>Bienvenue Clem</p>
+          <p>
+            Bienvenue
+            {nickname}
+          </p>
           <Nav.Link href="/profil">
             <img
               className="Header-utilsLink-logo"
