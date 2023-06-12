@@ -103,7 +103,7 @@ function Header() {
           className="Header-burger"
         />
         <Navbar.Brand className="Header-logoMain">
-          <Link to="/home">
+          <Link to="/">
             <img
               src={logoMain}
               alt="logo du site qui est un panier de fruit et légumes"
@@ -138,7 +138,7 @@ function Header() {
         <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
           <Nav className="mr-auto ">
             <Nav>
-              <Link to="/home" className="nav-link">Recettes</Link>
+              <Link to="/" className="nav-link">Recettes</Link>
             </Nav>
             <Nav>
               <Link to="/list" className="nav-link">Liste de repas</Link>
