@@ -6,9 +6,9 @@ import axios from 'axios';
 
 // Dispatch
 import { useDispatch } from 'react-redux';
-
-import { setConnectedUser, setNewNickname, setTokenUser } from '../../actions/user';
-
+import {
+  setConnectedUser, setInvitedUser, setNewNickname, setTokenUser,
+} from '../../actions/user';
 
 // assets
 import tomate from '../../assets/tomate.png';
@@ -82,6 +82,7 @@ function HomepageInscription() {
       .then((res) => {
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
+        // localStorage.setItem('isLogged', setConnectedUser(true));
         console.log("c'est ok");
       })
       .catch((err) => {
@@ -112,6 +113,10 @@ function HomepageInscription() {
     } else {
       console.log('mauvais mot de passe');
     }
+  };
+
+  const inviteUser = () => {
+    dispatch(setInvitedUser(true));
   };
 
   return (
@@ -266,7 +271,7 @@ function HomepageInscription() {
           Rejoignez-nous et découvrez le plaisir de cuisiner au quotidien !
         </p>
         <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter / S&apos;inscrire</button>
-        <Link to="/home" className="formSign-button">Aller vers le site</Link>
+        <Link to="/" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
       </section>
     </div>
   );

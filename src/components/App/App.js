@@ -14,12 +14,13 @@ import Menuphone from '../Menuphone/Menuphone';
 // import HomepageInscription from '../HomepageInscription/HomepageInscription';
 // import Loader from '../Loader/Loader';
 
-
 function App() {
   const isLoading = useSelector((state) => state.user.isLoading);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isInvitedIn = useSelector((state) => state.user.isInvitedIn);
+  console.log(isLoggedIn);
 
-  if (isLoggedIn) {
+  if (isLoggedIn || isInvitedIn) {
     return (
       <Container fluid className="App">
         <Header />

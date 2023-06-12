@@ -2,16 +2,25 @@ export const SET_LOADING_VALUE = 'SET_LOADING_VALUE';
 
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 
-
 export const SET_TOKEN_USER = 'SET_TOKEN_USER';
 
 export const SET_NICKNAME_USER = 'SET_NICKNAME_USER';
+
+export const SET_INVITED_USER = 'SET_INVITED_USER';
 
 export const setLoadingValue = (newLoadValue) => ({
   type: SET_LOADING_VALUE,
   payload: {
     // eslint-disable-next-line object-shorthand
     newLoadValue: newLoadValue,
+  },
+});
+
+export const setInvitedUser = (newInvitedValue) => ({
+  type: SET_INVITED_USER,
+  payload: {
+    // eslint-disable-next-line object-shorthand
+    invitedUser: newInvitedValue,
   },
 });
 
