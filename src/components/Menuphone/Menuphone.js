@@ -9,13 +9,13 @@ function Menuphone() {
   return (
     <div className="Menuphone">
       <a href="/profil">
-        <img alt="logo du profil utilisateur" src={toque} />
+        <img alt="logo d'une toque" src={toque} />
       </a>
       <a href="/profil">
-        <img alt="logo du profil utilisateur" src={plat} />
+        <img alt="logo d'un plat" src={plat} />
       </a>
       <a href="/profil">
-        <img alt="logo du profil utilisateur" src={caddie} />
+        <img alt="icone d'un caddie" src={caddie} />
       </a>
       <a href="/profil">
         <img alt="logo du profil utilisateur" src={user} />

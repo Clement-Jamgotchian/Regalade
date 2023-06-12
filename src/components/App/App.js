@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 import Header from '../Header/Header';
 import Recipes from '../Recipes/Recipes';
-
 import HomepageInscription from '../HomepageInscription/HomepageInscription';
 import Loader from '../Loader/Loader';
 import Faq from '../Faq/Faq';

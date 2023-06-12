@@ -74,7 +74,6 @@ function RecipeCard({ recipe }) {
       <Card.Body className="RecipeCard--body">
         <CartIcon isLoggedIn={isLoggedIn} addToList={() => dispatch(addRecipeToList(recipe))} />
         <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
-        <Card.Text>{recipe.id}</Card.Text>
         <Card.Text className="RecipeCard--rating">
           {getStars(recipe.rating)}
         </Card.Text>
