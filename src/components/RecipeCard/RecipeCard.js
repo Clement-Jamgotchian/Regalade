@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faChartSimple, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCartPlus, faChartSimple, faHeart, faCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
@@ -50,6 +52,17 @@ function CartIcon({ isLoggedIn, addToList }) {
   }
 }
 
+// If recipe is in the list page, we show the delete icon instead of favorite icon
+function DeleteIcon({ removeFromList }) {
+  if (window.location.pathname === '/list') {
+    return (
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={removeFromList}>
+        <FontAwesomeIcon icon={faCircleXmark} />
+      </button>
+    );
+  }
+}
+
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -63,6 +76,16 @@ function RecipeCard({ recipe }) {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const removeFromList = async (id) => {
+    console.log(id);
+    // await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const toggleFavorite = () => {
@@ -80,6 +103,11 @@ function RecipeCard({ recipe }) {
         isLoggedIn={isLoggedIn}
         isFavorite={favorite}
         toggleFavorite={toggleFavorite}
+      />
+      <DeleteIcon removeFromList={() => {
+        // dispatch(removeFromList(recipe));
+        removeFromList(recipe.id);
+      }}
       />
       <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
       <Card.Body className="RecipeCard--body">
@@ -115,6 +143,10 @@ FavoriteIcon.propTypes = {
 CartIcon.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   addToList: PropTypes.func.isRequired,
+};
+
+DeleteIcon.propTypes = {
+  removeFromList: PropTypes.func.isRequired,
 };
 
 RecipeCard.propTypes = {
