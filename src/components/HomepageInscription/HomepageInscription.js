@@ -6,7 +6,9 @@ import axios from 'axios';
 
 // Dispatch
 import { useDispatch } from 'react-redux';
-import { setConnectedUser } from '../../actions/user';
+
+import { setConnectedUser, setNewNickname, setTokenUser } from '../../actions/user';
+
 
 // assets
 import tomate from '../../assets/tomate.png';
@@ -71,22 +73,22 @@ function HomepageInscription() {
     }
   };
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/login_check', {
       email: email,
       password: password,
     })
       .then((res) => {
-        console.log(res.data);
+        dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
-        window.location.replace('/home');
+        console.log("c'est ok");
       })
       .catch((err) => {
         console.log(err);
         alert('Mauvais email/password');
       });
-  };
+  }
 
   const handleSubmitCreate = (event) => {
     event.preventDefault();
@@ -98,9 +100,10 @@ function HomepageInscription() {
         password: password,
       })
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data.nickname);
+          dispatch(setTokenUser(res.data));
           dispatch(setConnectedUser(true));
-          window.location.replace('/home');
+          dispatch(setNewNickname(res.data.nickname));
         })
         .catch(() => {
           alert('Oups !');
@@ -176,7 +179,6 @@ function HomepageInscription() {
               value={confirmPassword}
               onChange={(event) => {
                 setConfirmPassword(event.target.value);
-                console.log(confirmPassword);
               }}
               required
             />
