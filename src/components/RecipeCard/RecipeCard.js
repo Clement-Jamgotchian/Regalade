@@ -12,6 +12,7 @@ import { faCartPlus, faChartSimple, faHeart } from '@fortawesome/free-solid-svg-
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
+import axios from 'axios';
 import { addRecipeToList } from '../../actions/list';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
@@ -54,6 +55,16 @@ function RecipeCard({ recipe }) {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [favorite, setFavorite] = useState(false);
 
+  const addToList = async (id) => {
+    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const toggleFavorite = () => {
     setFavorite(!favorite);
     if (favorite) {
@@ -72,7 +83,13 @@ function RecipeCard({ recipe }) {
       />
       <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
       <Card.Body className="RecipeCard--body">
-        <CartIcon isLoggedIn={isLoggedIn} addToList={() => dispatch(addRecipeToList(recipe))} />
+        <CartIcon
+          isLoggedIn={isLoggedIn}
+          addToList={() => {
+            dispatch(addRecipeToList(recipe));
+            addToList(recipe.id);
+          }}
+        />
         <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
         <Card.Text className="RecipeCard--rating">
           {getStars(recipe.rating)}

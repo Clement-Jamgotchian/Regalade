@@ -1,8 +1,12 @@
-import { SET_CONNECTED_USER, SET_LOADING_VALUE } from '../actions/user';
+import {
+  SET_CONNECTED_USER, SET_LOADING_VALUE, SET_TOKEN_USER, SET_NICKNAME_USER,
+} from '../actions/user';
 
 export const initialState = {
-  isLoggedIn: true,
+  isLoggedIn: false,
   isLoading: false,
+  tokenUser: '',
+  nicknameUser: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -13,10 +17,22 @@ const reducer = (state = initialState, action = {}) => {
         isLoggedIn: action.payload.connectedUser,
       };
 
+    case SET_NICKNAME_USER:
+      return {
+        ...state,
+        nicknameUser: action.payload.nicknameUser,
+      };
+
     case SET_LOADING_VALUE:
       return {
         ...state,
         isLoading: action.payload.newLoadValue,
+      };
+
+    case SET_TOKEN_USER:
+      return {
+        ...state,
+        tokenUser: action.payload.newTokenValue,
       };
 
     default:
