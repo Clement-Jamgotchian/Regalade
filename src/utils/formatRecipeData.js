@@ -32,12 +32,13 @@ export function getStars(starsRating) {
   for (let i = 1; i <= 5; i++) {
     if (i <= starsRating) {
       stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
-    }
-    // If rating is decimal, we show a half-filled star
-    if (/^[1-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i) {
-      stars.push(<FontAwesomeIcon key="half" icon={faStarHalfStroke} />);
-      // We show other empty stars to have a total of 5 stars
-    } else if (i > Math.ceil(starsRating)) {
+      // If rating is decimal, we show a half-filled star
+      if (/^[0-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i) {
+        stars.push(<FontAwesomeIcon key="half" icon={faStarHalfStroke} />);
+        i++;
+        // We show other empty stars to have a total of 5 stars
+      }
+    } else if (i >= Math.ceil(starsRating) && i <= 5) {
       stars.push(<FontAwesomeIcon key={i} icon={farStar} />);
     }
   }

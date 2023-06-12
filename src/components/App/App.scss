@@ -1,6 +1,9 @@
 @use '../../styles/vars';
 
 .App {
-  text-align: center;
-  background-color: vars.$backGround;
+  // text-align: center;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  // background-color: vars.$backGround;
 }

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // Dispatch
 import { useDispatch } from 'react-redux';
-import { setConnectedUser } from '../../actions/actions';
+import { setConnectedUser } from '../../actions/user';
 
 // assets
 import tomate from '../../assets/tomate.png';
