@@ -3,7 +3,7 @@ import {
 } from '../actions/user';
 
 export const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
   isLoading: false,
   isInvitedIn: false,
   tokenUser: '',

@@ -102,7 +102,7 @@ function HomepageInscription() {
       })
         .then((res) => {
           console.log(res.data.nickname);
-          dispatch(setTokenUser(res.data));
+          dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
           dispatch(setNewNickname(res.data.nickname));
         })

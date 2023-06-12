@@ -11,6 +11,7 @@ import Faq from '../Faq/Faq';
 
 import Footer from '../Footer/Footer';
 import Menuphone from '../Menuphone/Menuphone';
+import RecipeDetails from '../RecipeDetails/RecipeDetail';
 // import HomepageInscription from '../HomepageInscription/HomepageInscription';
 // import Loader from '../Loader/Loader';
 
@@ -18,12 +19,12 @@ function App() {
   const isLoading = useSelector((state) => state.user.isLoading);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const isInvitedIn = useSelector((state) => state.user.isInvitedIn);
-  console.log(isLoggedIn);
 
   if (isLoggedIn || isInvitedIn) {
     return (
       <Container fluid className="App">
         <Header />
+        <Menuphone />
         <Routes>
           <Route
             path="/"
@@ -31,15 +32,14 @@ function App() {
               <Recipes />
               }
           />
+          <Route path="/recette/:id" element={<RecipeDetails />} />
           <Route path="/faq" element={<Faq />} />
         </Routes>
         {isLoading && <Loader />}
 
         {/* <Loader /> */}
         {/* <HomepageInscription /> */}
-        <Menuphone />
         <Footer />
-
       </Container>
     );
   }
