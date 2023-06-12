@@ -146,6 +146,10 @@
             height: 200px;
         }
 
+        &--body {
+            padding-top: 7rem;
+        }
+
         &--content {
             display: none;
         }
@@ -157,6 +161,10 @@
         &--img {
             width: 150px;
             height: 150px;
+        }
+        
+        &--body {
+            padding-top: 5rem;
         }
     }
 }

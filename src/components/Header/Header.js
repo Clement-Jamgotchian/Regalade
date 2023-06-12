@@ -111,17 +111,17 @@ function Header() {
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
           <p>Bienvenue Clem</p>
-          <Nav.Link>
-            <Link to="/profil">
+          <Nav>
+            <Link to="/profil" className="nav-link">
               <img
                 className="Header-utilsLink-logo"
                 src={logoUser}
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link to="/list">
+          </Nav>
+          <Nav>
+            <Link to="/list" className="nav-link">
               <img
                 style={{ marginLeft: '15px' }}
                 className="Header-utilsLink-logo"
@@ -129,19 +129,19 @@ function Header() {
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav.Link>
+          </Nav>
         </Nav>
         <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
           <Nav className="mr-auto ">
-            <Nav.Link>
-              <Link to="/home">Recettes</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="/list">Liste de repas</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="/fridge">Mon frigo</Link>
-            </Nav.Link>
+            <Nav>
+              <Link to="/home" className="nav-link">Recettes</Link>
+            </Nav>
+            <Nav>
+              <Link to="/list" className="nav-link">Liste de repas</Link>
+            </Nav>
+            <Nav>
+              <Link to="/fridge" className="nav-link">Mon frigo</Link>
+            </Nav>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
