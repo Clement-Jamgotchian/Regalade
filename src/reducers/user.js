@@ -1,10 +1,11 @@
 import {
-  SET_CONNECTED_USER, SET_LOADING_VALUE, SET_TOKEN_USER, SET_NICKNAME_USER,
+  SET_CONNECTED_USER, SET_LOADING_VALUE, SET_TOKEN_USER, SET_NICKNAME_USER, SET_INVITED_USER,
 } from '../actions/user';
 
 export const initialState = {
   isLoggedIn: false,
   isLoading: false,
+  isInvitedIn: false,
   tokenUser: '',
   nicknameUser: '',
 };
@@ -15,6 +16,12 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isLoggedIn: action.payload.connectedUser,
+      };
+
+    case SET_INVITED_USER:
+      return {
+        ...state,
+        isInvitedIn: action.payload.invitedUser,
       };
 
     case SET_NICKNAME_USER:
