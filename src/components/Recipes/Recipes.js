@@ -10,6 +10,7 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 
 // Styles import
 import './Recipes.scss';
+import { MyLayout } from '../MyLayout';
 
 function Recipes({ recipes }) {
   if (recipes.length === 0) {
@@ -60,28 +61,30 @@ function PaginatedRecipes() {
   }, [offset]);
 
   return (
-    <div className="Recipes">
-      <Recipes recipes={recipes} />
-      <div className="Recipes--pagination">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel=">"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="<"
-          renderOnZeroPageCount={null}
-          className="pagination"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          activeClassName="active"
-          previousClassName="page-item"
-          nextClassName="page-item"
-          previousLinkClassName="page-link"
-          nextLinkClassName="page-link"
-        />
+    <MyLayout>
+      <div className="Recipes">
+        <Recipes recipes={recipes} />
+        <div className="Recipes--pagination">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+            className="pagination"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            activeClassName="active"
+            previousClassName="page-item"
+            nextClassName="page-item"
+            previousLinkClassName="page-link"
+            nextLinkClassName="page-link"
+          />
+        </div>
       </div>
-    </div>
+    </MyLayout>
   );
 }
 
