@@ -37,7 +37,7 @@ function RecipeDetails() {
     <section className="recipeDetails">
       <section
         className="recipeDetails-header"
-        style={{ background: `url(${picture}) center no-repeat;`, backgroundSize: '100% 100%' }}
+        style={{ backgroundSize: '100% 100%', background: `url(${picture})` }}
       >
         <h1 className="recipeDetails-header-title">{title}</h1>
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />

@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 import './HomepageInscription.scss';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // Dispatch
@@ -22,15 +22,13 @@ import cancel from '../../assets/cancel.png';
 
 function HomepageInscription() {
   // view state
-  const [currDegUp, setCurrDegUp] = useState(0);
-  const [currDegIn, setCurrDegIn] = useState(180);
+  const [currDegUp, setCurrDegUp] = useState(180);
+  const [currDegIn, setCurrDegIn] = useState(0);
   const [logoDeg, setLogoDeg] = useState(0);
-  const [displayUp, setDisplayUp] = useState('');
-  const [displayIn, setDisplayIn] = useState('none');
-  const [displayCarousel, setDisplayCarousel] = useState('');
-  const [displayDetails, setDisplayDetails] = useState('flex');
-  const [indexIn, setIndexIn] = useState(0);
-  const [indexUp, setIndexUp] = useState(10);
+  const [displayUp, setDisplayUp] = useState('none');
+  const [displayIn, setDisplayIn] = useState('');
+  const [displayCarousel, setDisplayCarousel] = useState('flex');
+  const [displayDetails, setDisplayDetails] = useState('');
   const [error, setError] = useState('');
 
   // registration state
@@ -40,25 +38,22 @@ function HomepageInscription() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const rotate = (e) => {
     if (e.target.className === 'formSign-signupButton') {
       setCurrDegUp(180);
-      setCurrDegIn(360);
+      setCurrDegIn(0);
       setLogoDeg(0);
       setDisplayUp('none');
       setDisplayIn('');
-      setIndexUp(0);
-      setIndexIn(10);
     }
     if (e.target.className === 'formSign-signinButton') {
-      setCurrDegUp(0);
+      setCurrDegUp(360);
       setCurrDegIn(180);
       setLogoDeg(0);
       setDisplayUp('');
       setDisplayIn('none');
-      setIndexUp(10);
-      setIndexIn(0);
     }
   };
 
@@ -84,6 +79,7 @@ function HomepageInscription() {
         dispatch(setConnectedUser(true));
         // localStorage.setItem('isLogged', setConnectedUser(true));
         console.log("c'est ok");
+        navigate('/home');
       })
       .catch((err) => {
         console.log(err);
@@ -126,9 +122,9 @@ function HomepageInscription() {
           <form
             className="formSign-carousel-up"
             onSubmit={handleSubmitCreate}
-            style={{ transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)`, zIndex: `${indexUp}` }}
+            style={{ transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)` }}
           >
-            <button type="submit" className="formSign-signupButton" style={{ display: `${displayUp}`, zIndex: `${indexUp}` }} onClick={rotate}>Se connecter</button>
+            <button type="submit" className="formSign-signupButton" style={{ display: `${displayUp}` }} onClick={rotate}>Se connecter</button>
             <button
               type="button"
               className="formSign-cancelButton"
@@ -142,7 +138,7 @@ function HomepageInscription() {
             </button>
             <p className="formSign-carousel-title"> S&apos;inscrire</p>
             <input
-              style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
+              style={{ display: `${displayUp}` }}
               type="text"
               name="nickname"
               placeholder="Identifiant"
@@ -154,7 +150,7 @@ function HomepageInscription() {
               required
             />
             <input
-              style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
+              style={{ display: `${displayUp}` }}
               type="email"
               name="email"
               placeholder="E-mail"
@@ -166,7 +162,7 @@ function HomepageInscription() {
               required
             />
             <input
-              style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
+              style={{ display: `${displayUp}` }}
               type="password"
               placeholder="Mot de passe"
               className="formSign-input formSign-in-password"
@@ -177,7 +173,7 @@ function HomepageInscription() {
               required
             />
             <input
-              style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
+              style={{ display: `${displayUp}` }}
               type="password"
               placeholder="Confirmation de mot de passe"
               className="formSign-input formSign-in-password"
@@ -189,7 +185,7 @@ function HomepageInscription() {
             />
             <p>{error}</p>
             <button
-              style={{ display: `${displayUp}`, zIndex: `${indexUp}` }}
+              style={{ display: `${displayUp}` }}
               type="submit"
               className="formSign-submit"
             >
@@ -210,7 +206,7 @@ function HomepageInscription() {
           <form
             className="formSign-carousel-in"
             onSubmit={handleSubmit}
-            style={{ transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`, zIndex: `${indexIn}` }}
+            style={{ transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)` }}
           >
             <button
               type="submit"
@@ -231,7 +227,7 @@ function HomepageInscription() {
             <button type="button" className="formSign-cancelButton" onClick={displayTrigger}><img src={cancel} alt="bouton croix pour fermer" className="formSign-cancelButton-image" /></button>
             <p className="formSign-carousel-title"> Se connecter</p>
             <input
-              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
+              style={{ display: `${displayIn}` }}
               type="email"
               name="email"
               placeholder="email"
@@ -243,7 +239,7 @@ function HomepageInscription() {
               required
             />
             <input
-              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
+              style={{ display: `${displayIn}` }}
               type="password"
               placeholder="Mot de passe"
               className="formSign-input formSign-in-password"
@@ -254,7 +250,7 @@ function HomepageInscription() {
               required
             />
             <button
-              style={{ display: `${displayIn}`, zIndex: `${indexIn}` }}
+              style={{ display: `${displayIn}` }}
               type="submit"
               className="formSign-submit"
             >
@@ -271,7 +267,7 @@ function HomepageInscription() {
           Rejoignez-nous et découvrez le plaisir de cuisiner au quotidien !
         </p>
         <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter / S&apos;inscrire</button>
-        <Link to="/" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
+        <Link to="/home" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
       </section>
     </div>
   );
