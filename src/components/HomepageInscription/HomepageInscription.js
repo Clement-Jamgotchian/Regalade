@@ -27,8 +27,8 @@ function HomepageInscription() {
   const [logoDeg, setLogoDeg] = useState(0);
   const [displayUp, setDisplayUp] = useState('none');
   const [displayIn, setDisplayIn] = useState('');
-  const [displayCarousel, setDisplayCarousel] = useState('flex');
-  const [displayDetails, setDisplayDetails] = useState('');
+  const [displayCarousel, setDisplayCarousel] = useState('');
+  const [displayDetails, setDisplayDetails] = useState('flex');
   const [error, setError] = useState('');
 
   // registration state
