@@ -1,7 +1,7 @@
-import caddie from '../../assets/images/caddie.png';
-import toque from '../../assets/images/toque.png';
-import plat from '../../assets/images/plat.png';
-import user from '../../assets/images/utilisateur.png';
+import caddie from '../../assets/images/caddieWhite.png';
+import toque from '../../assets/images/toqueWhite.png';
+import plat from '../../assets/images/platWhite.png';
+import user from '../../assets/images/utilisateurWhite.png';
 
 import './Menuphone.scss';
 

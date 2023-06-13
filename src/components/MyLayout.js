@@ -7,8 +7,8 @@ export function MyLayout({ children }) {
   return (
     <>
       <Header />
-      <Menuphone />
       {children}
+      <Menuphone />
       <Footer />
     </>
   );

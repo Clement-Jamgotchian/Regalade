@@ -55,12 +55,24 @@
     &-button {
       width: 20px;
       border: none;
+      padding: 2px;
       background-image: url('../../assets/images/loupe.png');
       background-color: transparent;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       margin-right: 10px;
+      &-close{
+        width: 15px;
+        border: none;
+        padding: 2px;
+        background-image: url('../../assets/images/croix.png');
+        background-color: transparent;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 15px;
+      }
     }
   }
   &-burger {

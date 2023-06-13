@@ -4,11 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 function Footer() {
   return (
     <div className="Footer">
-      <Nav
-        className="justify-content-center"
-        activeKey="/home"
-        bg="info"
-      >
+      <Nav className="justify-content-center" activeKey="/home" bg="info">
         <Nav.Item>
           <Nav.Link href="/home">Mentions légales</Nav.Link>
         </Nav.Item>
