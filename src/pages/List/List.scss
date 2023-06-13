@@ -1,0 +1,27 @@
+.List {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    &--addButton a {
+        text-decoration: none;
+        color: #ffffff;
+        margin-left: 5px;
+    }
+    &--addButton svg {
+        color: #ffffff;
+    }
+
+    &--addButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: end;
+    }
+
+    &--removeAllButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: start;
+    }
+}

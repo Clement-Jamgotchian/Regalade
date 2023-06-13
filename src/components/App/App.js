@@ -12,7 +12,6 @@ import Profil from '../Profil/Profil';
 import { MyLayout } from '../MyLayout';
 
 function App() {
-  const isLoading = useSelector((state) => state.user.isLoading);
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
 
   return (
@@ -87,7 +86,6 @@ function App() {
         <Route path="/recette/:id" element={<RecipeDetails />} />
         <Route path="/faq" element={<Faq />} />
       </Routes>
-      {isLoading && <Loader />}
     </Container>
   );
 }

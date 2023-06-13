@@ -112,23 +112,30 @@ function Header() {
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
         />
-        <Navbar.Brand href="/home" className="Header-logoMain">
-          <img
-            src={logoMain}
-            alt="logo du site qui est un panier de fruit et légumes"
-          />
+        <Navbar.Brand className="Header-logoMain">
+          <Link to="/">
+            <img
+              src={logoMain}
+              alt="logo du site qui est un panier de fruit et légumes"
+            />
+          </Link>
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
           <p>
             Bienvenue
             {nickname}
           </p>
-          <Nav.Link href="/profil">
-            <img
-              className="Header-utilsLink-logo"
-              src={logoUser}
-              alt="logo d'un utilisateur'"
-            />
+          <Nav.Link>
+            <Link to="/profil">
+              <img
+                className="Header-utilsLink-logo"
+                src={logoUser}
+                alt="logo d'un utilisateur'"
+              />
+            </Link>
+          </Nav.Link>
+          <Nav.Link>
+            <Link to="/list" className="nav-link">
           </Nav.Link>
           <Nav.Link>
             <Link to="/list">
@@ -147,9 +154,15 @@ function Header() {
           // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
         >
           <Nav className="mr-auto ">
-            <Nav.Link href="/home">Recettes</Nav.Link>
-            <Nav.Link href="/list">Liste de repas</Nav.Link>
-            <Nav.Link href="/fridge">Mon frigo</Nav.Link>
+            <Nav.Link>
+              <Link to="/">Recettes</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/list">Liste de repas</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/fridge">Mon frigo</Link>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

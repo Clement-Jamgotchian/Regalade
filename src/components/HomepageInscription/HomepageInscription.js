@@ -77,7 +77,9 @@ function HomepageInscription() {
       .then((res) => {
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
+        axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
         // localStorage.setItem('isLogged', setConnectedUser(true));
+
         console.log("c'est ok");
         navigate('/home');
       })
@@ -101,6 +103,7 @@ function HomepageInscription() {
           dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
           dispatch(setNewNickname(res.data.nickname));
+          axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
         })
         .catch(() => {
           alert('Oups !');
