@@ -10,7 +10,7 @@ import Profil from '../Profil/Profil';
 
 function App() {
   return (
-    <Container fluid className="App">
+    <Container className="App">
       <Header />
       {/* <Loader /> */}
       <Row>
