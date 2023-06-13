@@ -18,7 +18,6 @@ import { clearRecipeRemoved, updateRecipesList } from '../../actions/list';
 // Styles import
 import './List.scss';
 import Pagination from '../../components/Pagination/Pagination';
-import Loader from '../../components/Loader/Loader';
 
 function List() {
   const [list, setList] = useState([]);
@@ -50,23 +49,18 @@ function List() {
 
   return (
     <div className="List">
-      {list.length > 0 ? (
-        <>
-          <Stack direction="horizontal" gap={3}>
-            <Button variant="primary" className="List--generateCartButton border">
-              <FontAwesomeIcon icon={faCartArrowDown} />
-              <Link to="/">Générer ma liste de courses</Link>
-            </Button>
-            <Button variant="success" className="List--addButton border ms-auto">
-              <FontAwesomeIcon icon={faPlus} />
-              <Link to="/recettes">Ajouter une recette</Link>
-            </Button>
-          </Stack>
-          <Recipes recipes={list} setRecipes={setList} />
-          <Pagination setRecipes={setList} pageCount={pageCount} />
-        </>
-      )
-        : <Loader />}
+      <Stack direction="horizontal" gap={3}>
+        <Button variant="primary" className="List--generateCartButton border">
+          <FontAwesomeIcon icon={faCartArrowDown} />
+          <Link to="/">Générer ma liste de courses</Link>
+        </Button>
+        <Button variant="success" className="List--addButton border ms-auto">
+          <FontAwesomeIcon icon={faPlus} />
+          <Link to="/recettes">Ajouter une recette</Link>
+        </Button>
+      </Stack>
+      <Recipes recipes={list} setRecipes={setList} />
+      <Pagination setRecipes={setList} pageCount={pageCount} />
     </div>
   );
 }

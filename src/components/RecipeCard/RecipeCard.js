@@ -15,7 +15,7 @@ import {
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { updateRecipesList } from '../../actions/list';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
@@ -51,7 +51,7 @@ function CartIcon({ isLoggedIn, addToList }) {
 
   if (isLoggedIn && !isInPageList) {
     return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={(e) => { e.preventDefault(); addToList(); }}>
         <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
       </button>
     );
@@ -117,26 +117,28 @@ function RecipeCard({ recipe }) {
         removeFromList(recipe.id);
       }}
       />
-      <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
-      <Card.Body className="RecipeCard--body">
-        <CartIcon
-          isLoggedIn={isLoggedIn}
-          addToList={() => {
-            addToList(recipe.id);
-          }}
-        />
-        <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
-        <Card.Text className="RecipeCard--rating">
-          {getStars(recipe.rating)}
-        </Card.Text>
-        <Card.Text className="RecipeCard--content">
-          <FontAwesomeIcon icon={farClock} />
-          {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
-          <span> / </span>
-          <FontAwesomeIcon icon={faChartSimple} />
-          {getDifficultyLabel(recipe.difficulty)}
-        </Card.Text>
-      </Card.Body>
+      <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
+        <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
+        <Card.Body className="RecipeCard--body">
+          <CartIcon
+            isLoggedIn={isLoggedIn}
+            addToList={() => {
+              addToList(recipe.id);
+            }}
+          />
+          <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
+          <Card.Text className="RecipeCard--rating">
+            {getStars(recipe.rating)}
+          </Card.Text>
+          <Card.Text className="RecipeCard--content">
+            <FontAwesomeIcon icon={farClock} />
+            {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
+            <span> / </span>
+            <FontAwesomeIcon icon={faChartSimple} />
+            {getDifficultyLabel(recipe.difficulty)}
+          </Card.Text>
+        </Card.Body>
+      </Link>
     </Card>
   );
 }

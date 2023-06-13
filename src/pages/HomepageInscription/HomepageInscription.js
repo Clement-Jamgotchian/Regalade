@@ -75,6 +75,7 @@ function HomepageInscription() {
       password: password,
     })
       .then((res) => {
+        console.log(res);
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
         axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;

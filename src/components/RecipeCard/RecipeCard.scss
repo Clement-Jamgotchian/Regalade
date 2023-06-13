@@ -11,6 +11,12 @@
     overflow: hidden;
     text-align: left;
 
+    &--link {
+        color: #ffffff;
+        font-weight: normal;
+        text-decoration: none;
+    }
+
     &:hover {
         cursor: pointer;
     }
