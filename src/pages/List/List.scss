@@ -4,4 +4,18 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+
+    &--addButton {
+        width: 200px;
+        text-decoration: none;
+        align-self: end;
+    }
+    &--addButton a {
+        text-decoration: none;
+        color: #ffffff;
+        margin-left: 5px;
+    }
+    &--addButton svg {
+        color: #ffffff;
+    }
 }

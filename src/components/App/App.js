@@ -19,7 +19,7 @@ function App() {
 
   if (isLoggedIn) {
     return (
-      <Container fluid className="App">
+      <Container className="App">
         <Header />
         <Routes>
           <Route

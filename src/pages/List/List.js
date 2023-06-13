@@ -5,6 +5,10 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
+// FontAwesome import
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
 
@@ -44,16 +48,14 @@ function List() {
     getList();
   }, [recipeRemoved]);
 
-  if (list.length === 0) {
-    <Button>
-      <Link to="/recipes">Ajoutez votre première recette à votre liste de repas</Link>
-    </Button>;
-  }
-
   return (
     <div className="List">
       {list ? (
         <>
+          <Button className="List--addButton">
+            <FontAwesomeIcon icon={faPlus} />
+            <Link to="/">Ajouter</Link>
+          </Button>
           <Recipes recipes={list} setRecipes={setList} />
           <Pagination setRecipes={setList} pageCount={pageCount} />
         </>
