@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,8 +15,8 @@ import {
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
-import axios from 'axios';
-import { addRecipeToList } from '../../actions/list';
+import { useLocation } from 'react-router-dom';
+import { updateRecipesList } from '../../actions/list';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
 // Styles import
@@ -29,10 +30,11 @@ import { getStars, getTotalDuration, getDifficultyLabel } from '../../utils/form
 // faHeart : filled heart
 // farHeart : empty heart
 function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
+  const isInPageList = window.location.pathname === '/list';
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
 
-  if (isLoggedIn) {
+  if (isLoggedIn && !isInPageList) {
     return (
       <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
         <FontAwesomeIcon className={className} icon={icon} />
@@ -43,7 +45,11 @@ function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
 
 // If user is logged in, we show the cart icon
 function CartIcon({ isLoggedIn, addToList }) {
-  if (isLoggedIn) {
+  const location = useLocation();
+  const isInPageList = location.pathname === '/list';
+
+  if (isLoggedIn && !isInPageList) {
+    console.log(location);
     return (
       <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
         <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
@@ -52,11 +58,13 @@ function CartIcon({ isLoggedIn, addToList }) {
   }
 }
 
-// If recipe is in the list page, we show the delete icon instead of favorite icon
+// If recipe is in the list page, we show the delete icon instead of the favorite icon
 function DeleteIcon({ removeFromList }) {
-  if (window.location.pathname === '/list') {
+  const isInPageList = window.location.pathname === '/list';
+
+  if (isInPageList) {
     return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={removeFromList}>
+      <button className="RecipeCard--deleteButton" type="button" onClick={removeFromList}>
         <FontAwesomeIcon icon={faCircleXmark} />
       </button>
     );
@@ -70,22 +78,22 @@ function RecipeCard({ recipe }) {
 
   const addToList = async (id) => {
     await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        dispatch(updateRecipesList({ action: 'added' }));
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const removeFromList = async (id) => {
-    console.log(id);
-    // await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    await axios.delete(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+      .then(() => {
+        dispatch(updateRecipesList({ action: 'removed' }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const toggleFavorite = () => {
@@ -105,7 +113,6 @@ function RecipeCard({ recipe }) {
         toggleFavorite={toggleFavorite}
       />
       <DeleteIcon removeFromList={() => {
-        // dispatch(removeFromList(recipe));
         removeFromList(recipe.id);
       }}
       />
@@ -114,7 +121,6 @@ function RecipeCard({ recipe }) {
         <CartIcon
           isLoggedIn={isLoggedIn}
           addToList={() => {
-            dispatch(addRecipeToList(recipe));
             addToList(recipe.id);
           }}
         />

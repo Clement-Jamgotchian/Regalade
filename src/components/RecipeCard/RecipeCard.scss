@@ -37,7 +37,7 @@
         box-shadow: 0px 5px 5px #00000015;
     }
 
-    &--buttonFavoriteToggle {
+    & button {
         background: none;
         color: inherit;
         border: none;
@@ -47,18 +47,29 @@
         outline: inherit;
     }
 
+    
     &--favorite:hover, &--favorite__active:hover, &--cart:hover {
         transform: scale(1.4);
         transition: transform 1s ease;
     }
-
-    &--favorite {
+    
+    &--favorite, &--deleteButton {
         position: absolute;
         right: 1rem;
         top: 1rem;
-        color: #ffffff;
+        color: #ffffff !important;
         z-index: 2;
         transition: transform 1s ease;
+    }
+
+    &--deleteButton {
+        color: vars.$primaryButton !important;
+    } 
+    
+    &--deleteButton svg {
+        background-color: #ffffff;
+        border-radius: 25px;
+        padding: 1px;
     }
 
     &--favorite__active {

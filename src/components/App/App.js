@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import HomepageInscription from '../HomepageInscription/HomepageInscription';
-import Loader from '../Loader/Loader';
+// import Loader from '../Loader/Loader';
 import Faq from '../Faq/Faq';
 
 import Footer from '../Footer/Footer';
@@ -14,12 +14,12 @@ import RecipesList from '../../pages/List/List';
 import Header from '../Header/Header';
 
 function App() {
-  const isLoading = useSelector((state) => state.user.isLoading);
+  // const isLoading = useSelector((state) => state.user.isLoading);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   if (isLoggedIn) {
     return (
-      <Container className="App">
+      <Container fluid className="App">
         <Header />
         <Routes>
           <Route
@@ -36,7 +36,7 @@ function App() {
           />
           <Route path="/faq" element={<Faq />} />
         </Routes>
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
 
         {/* <Loader /> */}
         {/* <HomepageInscription /> */}
