@@ -37,11 +37,12 @@ function RecipeDetails() {
     <section className="recipeDetails">
       <section
         className="recipeDetails-header"
-        style={{ backgroundSize: '100% 100%', background: `url(${picture})` }}
       >
-        <h1 className="recipeDetails-header-title">{title}</h1>
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
-        <div className="recipeDetails-header-rating">{getStars(rating)}</div>
+        <div className="recipeDetails-header-container">
+          <h1 className="recipeDetails-header-title">{title}</h1>
+          <div className="recipeDetails-header-rating">{getStars(rating)}</div>
+        </div>
       </section>
       <section className="recipeDetails-preparation">
         <div className="recipeDetails-preparation-time">
@@ -49,7 +50,7 @@ function RecipeDetails() {
           <h3 className="recipeDetails-preparation-title">
             Préparation
             {' '}
-            <span className="recipeDetails-preparation-title">
+            <span className="recipeDetails-preparation-title-quantity">
               {cookingDuration}
               {' '}
               min
@@ -59,9 +60,9 @@ function RecipeDetails() {
         <div className="recipeDetails-preparation-cuisson">
           <img src={cuisson} alt="icone de cuisson" className="recipeDetails-preparation-image" />
           <h3 className="recipeDetails-preparation-title">
-            Préparation
+            Cuisson
             {' '}
-            <span className="recipeDetails-preparation-title">
+            <span className="recipeDetails-preparation-title-quantity">
               {setupDuration}
               {' '}
               min
@@ -75,13 +76,14 @@ function RecipeDetails() {
         <div className="recipeDetails-ingredients-ingredient">
           {containsIngredients.map((ingredient) => (
             <section key={ingredient.ingredient.id} className="recipeDetails-ingredients-ingredient-item">
-              <img src={vegetables} alt="icone de l'ingrédient" />
-              <p className="recipeDetails-ingredients-ingredient-item-name">{ingredient.ingredient.name}</p>
-              <p className="recipeDetails-ingredients-ingredient-item-name">
-                {ingredient.quantity}
-                {' '}
-                {ingredient.ingredient.unit}
-              </p>
+              <img className="recipeDetails-ingredients-ingredient-item-image" src={vegetables} alt="icone de l'ingrédient" />
+              <div className="recipeDetails-ingredients-ingredient-item-container">
+                <p className="recipeDetails-ingredients-ingredient-item-name">{ingredient.ingredient.name}</p>
+                <p className="recipeDetails-ingredients-ingredient-item-name-quantity">
+                  {ingredient.quantity}
+                  {ingredient.ingredient.unit}
+                </p>
+              </div>
             </section>
           ))}
 
