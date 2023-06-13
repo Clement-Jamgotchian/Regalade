@@ -4,19 +4,20 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    &--addButton a {
+    &--addButton a, &--generateCartButton a {
         text-decoration: none;
         color: #ffffff;
         margin-left: 5px;
     }
-    &--addButton svg {
+    &--addButton svg, &--generateCartButton svg {
         color: #ffffff;
     }
 
-    &--addButton {
-        width: 150px;
+    &--addButton, &--generateCartButton {
+        width: 250px;
         text-decoration: none;
         align-self: end;
+        margin: 7px;
     }
 
     &--removeAllButton {

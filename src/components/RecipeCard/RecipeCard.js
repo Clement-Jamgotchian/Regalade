@@ -15,7 +15,7 @@ import {
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { updateRecipesList } from '../../actions/list';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 
@@ -30,7 +30,8 @@ import { getStars, getTotalDuration, getDifficultyLabel } from '../../utils/form
 // faHeart : filled heart
 // farHeart : empty heart
 function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
-  const isInPageList = window.location.pathname === '/list';
+  const location = useLocation();
+  const isInPageList = location.pathname === '/profil/mes-repas';
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
 
@@ -46,12 +47,11 @@ function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
 // If user is logged in, we show the cart icon
 function CartIcon({ isLoggedIn, addToList }) {
   const location = useLocation();
-  const isInPageList = location.pathname === '/list';
+  const isInPageList = location.pathname === '/profil/mes-repas';
 
   if (isLoggedIn && !isInPageList) {
-    console.log(location);
     return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={(e) => { e.preventDefault(); addToList(); }}>
         <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
       </button>
     );
@@ -60,7 +60,8 @@ function CartIcon({ isLoggedIn, addToList }) {
 
 // If recipe is in the list page, we show the delete icon instead of the favorite icon
 function DeleteIcon({ removeFromList }) {
-  const isInPageList = window.location.pathname === '/list';
+  const location = useLocation();
+  const isInPageList = location.pathname === '/profil/mes-repas';
 
   if (isInPageList) {
     return (
@@ -116,26 +117,28 @@ function RecipeCard({ recipe }) {
         removeFromList(recipe.id);
       }}
       />
-      <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
-      <Card.Body className="RecipeCard--body">
-        <CartIcon
-          isLoggedIn={isLoggedIn}
-          addToList={() => {
-            addToList(recipe.id);
-          }}
-        />
-        <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
-        <Card.Text className="RecipeCard--rating">
-          {getStars(recipe.rating)}
-        </Card.Text>
-        <Card.Text className="RecipeCard--content">
-          <FontAwesomeIcon icon={farClock} />
-          {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
-          <span> / </span>
-          <FontAwesomeIcon icon={faChartSimple} />
-          {getDifficultyLabel(recipe.difficulty)}
-        </Card.Text>
-      </Card.Body>
+      <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
+        <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
+        <Card.Body className="RecipeCard--body">
+          <CartIcon
+            isLoggedIn={isLoggedIn}
+            addToList={() => {
+              addToList(recipe.id);
+            }}
+          />
+          <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
+          <Card.Text className="RecipeCard--rating">
+            {getStars(recipe.rating)}
+          </Card.Text>
+          <Card.Text className="RecipeCard--content">
+            <FontAwesomeIcon icon={farClock} />
+            {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
+            <span> / </span>
+            <FontAwesomeIcon icon={faChartSimple} />
+            {getDifficultyLabel(recipe.difficulty)}
+          </Card.Text>
+        </Card.Body>
+      </Link>
     </Card>
   );
 }

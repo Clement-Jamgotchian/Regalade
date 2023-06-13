@@ -12,6 +12,7 @@ import coeur from '../../assets/images/coeur.png';
 import list from '../../assets/images/liste.png';
 import { MyLayout } from '../MyLayout';
 import { setWidthValue } from '../../actions/profil';
+import List from '../../pages/List/List';
 
 const profilDataNav = [
   {
@@ -92,7 +93,7 @@ function Profil() {
       return <Recipes />;
     }
     if (activePage === '/profil/mes-repas') {
-      return <Recipes />;
+      return <List />;
     }
     if (activePage === '/profil/mes-courses') {
       return <Recipes />;

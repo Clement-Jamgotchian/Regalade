@@ -3,13 +3,15 @@ import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { MyLayout } from '../MyLayout';
 import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
-import Faq from '../Faq/Faq';
 import RecipeDetails from '../RecipeDetails/RecipeDetail';
-import HomepageInscription from '../HomepageInscription/HomepageInscription';
+import HomepageInscription from '../../pages/HomepageInscription/HomepageInscription';
 import Profil from '../Profil/Profil';
-import { MyLayout } from '../MyLayout';
+import Faq from '../../pages/Faq/Faq';
+import Homepage from '../../pages/Homepage/Homepage';
+import List from '../../pages/List/List';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -19,10 +21,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomepageInscription />} />
         <Route
-          path="/home"
+          path="/recettes"
           element={(
             <MyLayout>
-              <Recipes />
+              <Homepage />
             </MyLayout>
           )}
         />
@@ -52,7 +54,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <Loader />
+                <List />
               </MyLayout>
             ) : (
               <Profil />
@@ -83,7 +85,14 @@ function App() {
             )
           }
         />
-        <Route path="/recette/:id" element={<RecipeDetails />} />
+        <Route
+          path="/recette/:id"
+          element={(
+            <MyLayout>
+              <RecipeDetails />
+            </MyLayout>
+            )}
+        />
         <Route path="/faq" element={<Faq />} />
       </Routes>
     </Container>

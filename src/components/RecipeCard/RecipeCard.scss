@@ -9,6 +9,13 @@
     color: #ffffff;
     background: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0%,rgba(0, 0, 0, 0.5) 100%);
     overflow: hidden;
+    text-align: left;
+
+    &--link {
+        color: #ffffff;
+        font-weight: normal;
+        text-decoration: none;
+    }
 
     &:hover {
         cursor: pointer;
@@ -21,9 +28,9 @@
         transition: transform 1s ease;
     }
 
-    &:hover &--title {
-        color: vars.$primaryButton;
-    }
+    // &:hover &--title {
+    //     color: vars.$primaryButton;
+    // }
     
     &--title {
         margin-right: 45px;
@@ -142,7 +149,7 @@
             transition: none;
         }
         &--favorite {
-            color: vars.$primaryButton;
+            color: vars.$primaryButton !important;
         }
 
         &--img {
