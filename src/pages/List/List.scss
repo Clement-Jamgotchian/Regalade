@@ -4,12 +4,6 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-
-    &--addButton {
-        width: 200px;
-        text-decoration: none;
-        align-self: end;
-    }
     &--addButton a {
         text-decoration: none;
         color: #ffffff;
@@ -17,5 +11,17 @@
     }
     &--addButton svg {
         color: #ffffff;
+    }
+
+    &--addButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: end;
+    }
+
+    &--removeAllButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: start;
     }
 }

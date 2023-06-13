@@ -1,7 +1,7 @@
 // React components
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -52,10 +52,16 @@ function List() {
     <div className="List">
       {list ? (
         <>
-          <Button className="List--addButton">
-            <FontAwesomeIcon icon={faPlus} />
-            <Link to="/">Ajouter</Link>
-          </Button>
+          <Stack direction="horizontal" gap={3}>
+            {/* <Button variant="danger" className="List--removeAllButton border">
+              <FontAwesomeIcon icon={faTrashCan} />
+              <Link to="/">Vider ma liste</Link>
+            </Button> */}
+            <Button variant="success" className="List--addButton border ms-auto">
+              <FontAwesomeIcon icon={faPlus} />
+              <Link to="/">Ajouter</Link>
+            </Button>
+          </Stack>
           <Recipes recipes={list} setRecipes={setList} />
           <Pagination setRecipes={setList} pageCount={pageCount} />
         </>

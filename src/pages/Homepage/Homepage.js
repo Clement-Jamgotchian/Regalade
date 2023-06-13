@@ -17,7 +17,6 @@ function Homepage() {
   const getRecipes = async () => {
     axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes')
       .then((response) => {
-        console.log(response.data.recipes);
         setRecipes(response.data.recipes);
         setPageCount(response.data.totalPages);
       })
