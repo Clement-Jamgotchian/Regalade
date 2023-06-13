@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 import Nav from 'react-bootstrap/Nav';
 
@@ -9,10 +10,14 @@ function Footer() {
           <Nav.Link href="/home">Mentions légales</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-1">Confidentialités</Nav.Link>
+          <Nav.Link eventkey="link-1">Confidentialités</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-2">FAQ</Nav.Link>
+          <Nav eventkey="link-2">
+            <Link to="/FAQ" className="nav-link">
+              FAQ
+            </Link>
+          </Nav>
         </Nav.Item>
       </Nav>
       <p className="text-center mt-2">&copy; Régalade</p>

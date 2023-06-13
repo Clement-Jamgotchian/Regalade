@@ -1,6 +1,6 @@
 import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import { MyLayout } from '../MyLayout';
+import { MyLayout } from '../../components/MyLayout';
 import './Faq.scss';
 
 function Faq() {

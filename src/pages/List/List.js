@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartArrowDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
@@ -50,16 +50,16 @@ function List() {
 
   return (
     <div className="List">
-      {list ? (
+      {list.length > 0 ? (
         <>
           <Stack direction="horizontal" gap={3}>
-            {/* <Button variant="danger" className="List--removeAllButton border">
-              <FontAwesomeIcon icon={faTrashCan} />
-              <Link to="/">Vider ma liste</Link>
-            </Button> */}
+            <Button variant="primary" className="List--generateCartButton border">
+              <FontAwesomeIcon icon={faCartArrowDown} />
+              <Link to="/">Générer ma liste de courses</Link>
+            </Button>
             <Button variant="success" className="List--addButton border ms-auto">
               <FontAwesomeIcon icon={faPlus} />
-              <Link to="/">Ajouter</Link>
+              <Link to="/recettes">Ajouter une recette</Link>
             </Button>
           </Stack>
           <Recipes recipes={list} setRecipes={setList} />

@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Navbar } from 'react-bootstrap';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
@@ -15,7 +15,9 @@ function Header() {
   const [scrollbarOn, setscrollbarOn] = useState(false);
   const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
-  const nickname = useSelector((state) => state.user.nickname);
+  const nickname = useSelector((state) => state.user.nicknameUser);
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const movingUpSearchbar = () => {
@@ -68,6 +70,10 @@ function Header() {
 
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
+    const path = location.pathname;
+    if (path !== '/recettes') {
+      navigate('/recettes');
+    }
     const lowerCaseSearchValue = searchBarValue
       .toLocaleLowerCase()
       .replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
@@ -125,20 +131,17 @@ function Header() {
             Bienvenue
             {nickname}
           </p>
-          <Nav.Link>
-            <Link to="/profil">
+          <Nav>
+            <Link to="/profil" className="nav-link">
               <img
                 className="Header-utilsLink-logo"
                 src={logoUser}
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav.Link>
-          <Nav.Link>
+          </Nav>
+          <Nav>
             <Link to="/list" className="nav-link">
-          </Nav.Link>
-          <Nav.Link>
-            <Link to="/list">
               <img
                 style={{ marginLeft: '15px' }}
                 className="Header-utilsLink-logo"
@@ -146,7 +149,7 @@ function Header() {
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav.Link>
+          </Nav>
         </Nav>
         <Navbar.Collapse
           id="responsive-navbar-nav"
@@ -154,15 +157,15 @@ function Header() {
           // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
         >
           <Nav className="mr-auto ">
-            <Nav.Link>
-              <Link to="/">Recettes</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="/list">Liste de repas</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="/fridge">Mon frigo</Link>
-            </Nav.Link>
+            <Nav>
+              <Link to="/recettes" className="nav-link">Recettes</Link>
+            </Nav>
+            <Nav>
+              <Link to="/profil/mes-repas" className="nav-link">Ma liste de repas</Link>
+            </Nav>
+            <Nav>
+              <Link to="/fridge" className="nav-link">Mon frigo</Link>
+            </Nav>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -183,6 +186,7 @@ function Header() {
             className="Header-form-button-close"
             onClick={() => {
               setSearchBarValue('');
+              dispatch(setSearchValue(''));
               setClosingButton(!closingButton);
             }}
           />

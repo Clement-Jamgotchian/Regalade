@@ -9,7 +9,7 @@ import { changePageNumber, updateRecipesList } from '../../actions/list';
 function Pagination({ setRecipes, pageCount }) {
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
   const location = useLocation();
-  const isInPageList = location.pathname === '/list';
+  const isInPageList = location.pathname === '/profil/mes-repas';
   const dispatch = useDispatch();
 
   const handlePageClick = (e) => {
