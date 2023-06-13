@@ -30,7 +30,11 @@ function List() {
   const getList = async () => {
     await axios.get(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`)
       .then((response) => {
-        const recipes = response.data.recipesList.map((item) => item.recipe);
+        console.log(response.data.recipesList[0].portions);
+        const recipes = response.data.recipesList.map((item) => ({
+          ...item.recipe, portions: item.portions,
+        }));
+        console.log(recipes);
         setList(recipes);
         setPageCount(response.data.totalPages);
         dispatch(updateRecipesList({ action: 'init', length: recipes.length }));

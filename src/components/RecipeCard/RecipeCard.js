@@ -3,14 +3,16 @@
 // React components
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card } from 'react-bootstrap';
+import {
+  Button, Card, Form, InputGroup,
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCartPlus, faChartSimple, faHeart, faCircleXmark,
+  faCartPlus, faChartSimple, faHeart, faCircleXmark, faPerson,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
@@ -68,6 +70,30 @@ function DeleteIcon({ removeFromList }) {
       <button className="RecipeCard--deleteButton" type="button" onClick={removeFromList}>
         <FontAwesomeIcon icon={faCircleXmark} />
       </button>
+    );
+  }
+}
+
+function ChangePortionsInput({ portions }) {
+  const location = useLocation();
+  const isInPageList = location.pathname === '/profil/mes-repas';
+
+  if (isInPageList) {
+    return (
+      <InputGroup className="RecipeCard--portionsInput mb-3">
+        <Button variant="info" id="button-addon1">
+          -
+        </Button>
+        <Form.Control
+          aria-label="Example text with button addon"
+          aria-describedby="basic-addon1"
+          value={portions}
+        />
+        <FontAwesomeIcon icon={faPerson} />
+        <Button variant="info" id="button-addon1">
+          +
+        </Button>
+      </InputGroup>
     );
   }
 }
@@ -137,6 +163,7 @@ function RecipeCard({ recipe }) {
             <FontAwesomeIcon icon={faChartSimple} />
             {getDifficultyLabel(recipe.difficulty)}
           </Card.Text>
+          <ChangePortionsInput portions={recipe.portions} />
         </Card.Body>
       </Link>
     </Card>
@@ -158,6 +185,10 @@ DeleteIcon.propTypes = {
   removeFromList: PropTypes.func.isRequired,
 };
 
+ChangePortionsInput.propTypes = {
+  portions: PropTypes.number.isRequired,
+};
+
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -167,6 +198,7 @@ RecipeCard.propTypes = {
     cookingDuration: PropTypes.number.isRequired,
     setupDuration: PropTypes.number.isRequired,
     difficulty: PropTypes.number.isRequired,
+    portions: PropTypes.number.isRequired,
   }),
 };
 

@@ -44,7 +44,7 @@
         box-shadow: 0px 5px 5px #00000015;
     }
 
-    & button {
+    &--favorite, &--favorite__active, &--deleteButton, {
         background: none;
         color: inherit;
         border: none;
@@ -55,7 +55,7 @@
     }
 
     
-    &--favorite:hover, &--favorite__active:hover, &--cart:hover {
+    &--favorite:hover, &--favorite__active:hover, &--cart:hover, &--cart {
         transform: scale(1.4);
         transition: transform 1s ease;
     }
@@ -128,6 +128,22 @@
 
     &--content svg:last-child {
         margin-left: 5px;
+    }
+
+    &--portionsInput {
+        width: 50%;
+        min-width: 120px;
+        z-index: 10;
+        border: none;
+    }
+    &--portionsInput input {
+        border: none;
+        text-align: right;
+    }
+    &--portionsInput svg {
+        color: vars.$text;
+        background-color: vars.$backGround;
+        padding: 0.75rem 0.75rem 0.75rem 0;
     }
 
 }
