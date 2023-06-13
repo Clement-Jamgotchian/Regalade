@@ -1,0 +1,74 @@
+@use '../../styles/vars';
+
+.Profil {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+  &-card {
+    width: 170px;
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid vars.$primaryButton;
+    border-radius: 99px;
+    background-color: vars.$backGround;
+    margin: 10px;
+    text-decoration: none;
+    color: vars.$text;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-direction: column;
+    }
+
+    &-img {
+      width: 50px;
+      margin: 5px 0;
+    }
+  }
+  &-card:hover {
+    background-color: vars.$secondaryButton;
+  }
+}
+@media (min-width: 990px) {
+  .Profil {
+    margin: 0;
+    &-card {
+      width: 140px;
+      height: 140px;
+      margin: 10px !important;
+    }
+    &-content {
+      margin-top: -1px !important;
+      border: 1px solid vars.$primaryButton;
+      border-radius: 10px;
+      margin: auto;
+    }
+
+  }
+  .container-profil {
+    margin-bottom: 20px;
+  }
+  .activLink{
+    position: relative;
+    height: 180px;
+    margin-bottom: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom: 0;
+    border-bottom-right-radius: 0px;
+    align-items: flex-start;
+    padding-top: 10px;
+    z-index: 10;
+  }
+}
+@media (min-width: 784px) {
+  .Profil {
+    &-card {
+      margin: 10px 40px;
+    }
+  }
+}

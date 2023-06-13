@@ -13,6 +13,7 @@ function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [screenWidth, setScreenWidth] = useState(false);
   const [scrollbarOn, setscrollbarOn] = useState(false);
+  const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
   const nickname = useSelector((state) => state.user.nickname);
   const dispatch = useDispatch();
@@ -65,6 +66,23 @@ function Header() {
     handleScrollSearchbar();
   }, []);
 
+  const handleSubmitForm = (evt) => {
+    evt.preventDefault();
+    const lowerCaseSearchValue = searchBarValue
+      .toLocaleLowerCase()
+      .replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
+    if (lowerCaseSearchValue) {
+      dispatch(setSearchValue(lowerCaseSearchValue));
+    }
+    if (showTopBtn === true && screenWidth === true) {
+      const buttonToggle = document.querySelector('.Header-show-button');
+      const form = document.querySelector('.Header-form');
+      buttonToggle.classList.remove('none');
+      form.classList.add('none');
+    }
+    setscrollbarOn(!scrollbarOn);
+  };
+
   const toggleSearchBar = () => {
     setscrollbarOn((prevScrollbarOn) => !prevScrollbarOn);
     const buttonToggle = document.querySelector('.Header-show-button');
@@ -76,20 +94,12 @@ function Header() {
     }
   };
 
-  const handleSubmitForm = (evt) => {
-    evt.preventDefault();
-    const lowerCaseSearchValue = searchBarValue
-      .toLocaleLowerCase()
-      .replace(/([^a-zA-Z0-9 ]|[0-9])/g, '');
-    dispatch(setSearchValue(lowerCaseSearchValue));
-    if (showTopBtn === true && screenWidth === true) {
-      const buttonToggle = document.querySelector('.Header-show-button');
-      const form = document.querySelector('.Header-form');
-      buttonToggle.classList.remove('none');
-      form.classList.add('none');
+  const toggleCloseButton = () => {
+    if (searchBarValue) {
+      setClosingButton(true);
+    } else {
+      setClosingButton(false);
     }
-    setSearchBarValue('');
-    setscrollbarOn(!scrollbarOn);
   };
 
   window.addEventListener('scroll', handleScrollSearchbar);
@@ -115,17 +125,20 @@ function Header() {
             Bienvenue
             {nickname}
           </p>
-          <Nav>
-            <Link to="/profil" className="nav-link">
+          <Nav.Link>
+            <Link to="/profil">
               <img
                 className="Header-utilsLink-logo"
                 src={logoUser}
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav>
-          <Nav>
+          </Nav.Link>
+          <Nav.Link>
             <Link to="/list" className="nav-link">
+          </Nav.Link>
+          <Nav.Link>
+            <Link to="/list">
               <img
                 style={{ marginLeft: '15px' }}
                 className="Header-utilsLink-logo"
@@ -133,30 +146,47 @@ function Header() {
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav>
+          </Nav.Link>
         </Nav>
-        <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          className="Header-link"
+          // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
+        >
           <Nav className="mr-auto ">
-            <Nav>
-              <Link to="/" className="nav-link">Recettes</Link>
-            </Nav>
-            <Nav>
-              <Link to="/list" className="nav-link">Liste de repas</Link>
-            </Nav>
-            <Nav>
-              <Link to="/fridge" className="nav-link">Mon frigo</Link>
-            </Nav>
+            <Nav.Link>
+              <Link to="/">Recettes</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/list">Liste de repas</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/fridge">Mon frigo</Link>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
       <form className="Header-form" onSubmit={handleSubmitForm}>
+        {/* exemple : {(showTopBtn && screenWidth) && <button type="button">Coucou</button>} */}
         <input
           className="Header-form-input"
           value={searchBarValue}
           onChange={(evt) => {
             setSearchBarValue(evt.target.value);
+            toggleCloseButton();
           }}
         />
+        {closingButton && (
+          <button
+            type="button"
+            aria-label="clear search bar"
+            className="Header-form-button-close"
+            onClick={() => {
+              setSearchBarValue('');
+              setClosingButton(!closingButton);
+            }}
+          />
+        )}
         <button
           type="submit"
           aria-label="search bar"

@@ -3,54 +3,90 @@ import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import HomepageInscription from '../HomepageInscription/HomepageInscription';
-// import Loader from '../Loader/Loader';
+import Recipes from '../Recipes/Recipes';
+import Loader from '../Loader/Loader';
 import Faq from '../Faq/Faq';
-
-import Footer from '../Footer/Footer';
-import Menuphone from '../Menuphone/Menuphone';
-import Homepage from '../../pages/Homepage/Homepage';
-import RecipesList from '../../pages/List/List';
-import Header from '../Header/Header';
+import RecipeDetails from '../RecipeDetails/RecipeDetail';
+import HomepageInscription from '../HomepageInscription/HomepageInscription';
+import Profil from '../Profil/Profil';
+import { MyLayout } from '../MyLayout';
 
 function App() {
-  // const isLoading = useSelector((state) => state.user.isLoading);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  if (isLoggedIn) {
-    return (
-      <Container className="App">
-        <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Homepage />
-            }
-          />
-          <Route
-            path="/list"
-            element={
-              <RecipesList />
-            }
-          />
-          <Route path="/faq" element={<Faq />} />
-        </Routes>
-        {/* {isLoading && <Loader />} */}
-
-        {/* <Loader /> */}
-        {/* <HomepageInscription /> */}
-        <Menuphone />
-        <Footer />
-
-      </Container>
-    );
-  }
+  const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
 
   return (
-    <Routes>
-      <Route path="/" element={<HomepageInscription />} />
-    </Routes>
+    <Container className="App">
+      <Routes>
+        <Route path="/" element={<HomepageInscription />} />
+        <Route
+          path="/home"
+          element={(
+            <MyLayout>
+              <Recipes />
+            </MyLayout>
+          )}
+        />
+        <Route path="/profil" element={<Profil />} />
+        <Route
+          path="/profil/mes-recettes"
+          element={isWidthTrue ? <Recipes /> : <Profil />}
+        />
+        <Route
+          path="/profil/mes-favorites"
+          element={isWidthTrue ? <Recipes /> : <Profil />}
+        />
+        <Route
+          path="/profil/mes-ingredients"
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <Loader />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
+        />
+        <Route
+          path="/profil/mes-repas"
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <Loader />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
+        />
+        <Route
+          path="/profil/mes-courses"
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <Loader />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
+        />
+        <Route
+          path="/profil/mes-infos"
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <Loader />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
+        />
+        <Route path="/recette/:id" element={<RecipeDetails />} />
+        <Route path="/faq" element={<Faq />} />
+      </Routes>
+    </Container>
   );
 }
 
