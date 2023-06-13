@@ -1,20 +1,16 @@
 @use 'src/styles/vars';
 
-.col {
-    display: none;
-}
 .formSign {
 
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     margin: 0;
-    background-color: vars.$backGround;
 
     &-container {
         display: none;
         margin: auto;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
     }
     
     &-carousel {
@@ -177,6 +173,8 @@
         -webkit-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
         -moz-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.7) inset;
         transition: 0.4s;
+        text-decoration: none;
+        color: black;
     }
     &-submit:hover {
         text-align: end;
@@ -225,22 +223,14 @@
 }
 
 @media (min-width: 600px) {
-    .container {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-    }
-    
     .formSign {
         display: flex;
         flex-direction: column;
         margin: 0;
         padding: 0;
         background-size: cover;
-        height: 100vh;
-        width: 100vw;
-        background-color: vars.$backGround;
+        height: 100%;
+        width: 100%;
         text-align: center;
         font-family: vars.$font;
     
@@ -547,10 +537,4 @@
         }
     
     }
-}
-
-.container {
-    margin: 0px;
-    padding: 0px;
-    margin-right: 0;
 }

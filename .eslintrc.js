@@ -12,5 +12,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
     'linebreak-style': 'off',
+    'object-curly-newline': 'off',
   },
 };

@@ -1,8 +1,9 @@
 import './Header.scss';
 import { useLayoutEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Navbar } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
 import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
@@ -14,6 +15,7 @@ function Header() {
   const [scrollbarOn, setscrollbarOn] = useState(false);
   const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
+  const nickname = useSelector((state) => state.user.nickname);
   const dispatch = useDispatch();
 
   const movingUpSearchbar = () => {
@@ -105,39 +107,38 @@ function Header() {
 
   return (
     <div className="container-header">
-      <Navbar
-        collapseOnSelect
-        bg="info"
-        variant="light"
-        expand="lg"
-        className="Header"
-      >
+      <Navbar collapseOnSelect variant="light" expand="lg" className="Header">
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
         />
-        <Navbar.Brand href="#home" className="Header-logoMain">
+        <Navbar.Brand href="/home" className="Header-logoMain">
           <img
             src={logoMain}
             alt="logo du site qui est un panier de fruit et légumes"
           />
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
-          <p>Bienvenue Clem</p>
-          <Nav.Link href="#deets">
+          <p>
+            Bienvenue
+            {nickname}
+          </p>
+          <Nav.Link href="/profil">
             <img
               className="Header-utilsLink-logo"
               src={logoUser}
               alt="logo d'un utilisateur'"
             />
           </Nav.Link>
-          <Nav.Link href="#memes">
-            <img
-              style={{ marginLeft: '15px' }}
-              className="Header-utilsLink-logo"
-              src={logoCart}
-              alt="logo d'un utilisateur'"
-            />
+          <Nav.Link>
+            <Link to="/list">
+              <img
+                style={{ marginLeft: '15px' }}
+                className="Header-utilsLink-logo"
+                src={logoCart}
+                alt="logo d'un utilisateur'"
+              />
+            </Link>
           </Nav.Link>
         </Nav>
         <Navbar.Collapse
@@ -146,9 +147,9 @@ function Header() {
           // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
         >
           <Nav className="mr-auto ">
-            <Nav.Link href="#features">Recettes</Nav.Link>
-            <Nav.Link href="#pricing">Liste de repas</Nav.Link>
-            <Nav.Link href="#pricing">Mon frigo</Nav.Link>
+            <Nav.Link href="/home">Recettes</Nav.Link>
+            <Nav.Link href="/list">Liste de repas</Nav.Link>
+            <Nav.Link href="/fridge">Mon frigo</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

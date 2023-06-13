@@ -4,7 +4,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 150px;
   margin-bottom: 20px;
   &-card {
     width: 170px;
@@ -14,7 +13,7 @@
     align-items: center;
     border: 1px solid vars.$primaryButton;
     border-radius: 99px;
-    background-color: vars.$backGroundFull;
+    background-color: vars.$backGround;
     margin: 10px;
     text-decoration: none;
     color: vars.$text;
@@ -49,11 +48,12 @@
       border-radius: 10px;
       margin: auto;
     }
+
   }
   .container-profil {
-    margin-top: 200px;
+    margin-bottom: 20px;
   }
-  .activLink {
+  .activLink{
     position: relative;
     height: 180px;
     margin-bottom: 0px !important;

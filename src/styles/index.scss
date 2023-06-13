@@ -1,6 +1,7 @@
 @use '../styles/vars';
 
-$body-bg: vars.$backGroundFull;
+$body-font-family: vars.$font;
+$body-bg: vars.$backGround;
 
 $theme-colors: (
   'primary': vars.$primaryButton,
@@ -8,4 +9,26 @@ $theme-colors: (
   'info': vars.$backGround,
   );
 
-  @import '~bootstrap/scss/bootstrap';
+$pagination-color: vars.$primaryButton;
+$pagination-bg: vars.$backGround;
+$pagination-border-color: vars.$backGround;
+
+$pagination-active-bg: vars.$primaryButton;
+$pagination-active-border-color: vars.$primaryButton;
+
+$pagination-disabled-bg: vars.$backGround;
+$pagination-disabled-color: #acafb1;
+
+$pagination-focus-color: vars.$primaryButton;
+$pagination-focus-bg: rgba(vars.$primaryButton, .4); 
+$pagination-focus-box-shadow: rgba(vars.$primaryButton, .4); 
+
+$pagination-hover-color: #ffffff;
+$pagination-hover-bg: rgba(vars.$primaryButton, .4); 
+$pagination-hover-border-color: rgba(vars.$primaryButton, .4);
+
+html, body, #root {
+  height: 100%;
+}
+
+@import '~bootstrap/scss/bootstrap';

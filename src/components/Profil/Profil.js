@@ -1,6 +1,7 @@
 import './Profil.scss';
 import { useLayoutEffect, useState } from 'react';
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
 import toque from '../../assets/images/toque.png';
@@ -9,6 +10,8 @@ import utilisateur from '../../assets/images/utilisateur.png';
 import frigo from '../../assets/images/frigo.png';
 import coeur from '../../assets/images/coeur.png';
 import list from '../../assets/images/liste.png';
+import { MyLayout } from '../MyLayout';
+import { setWidthValue } from '../../actions/profil';
 
 const profilDataNav = [
   {
@@ -50,13 +53,11 @@ const profilDataNav = [
 ];
 
 function Profil() {
-  const [currentButtonId, setCurrentButtonId] = useState(null);
   const [screenWidth, setScreenWidth] = useState(false);
+  const [currentButtonId, setCurrentButtonId] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
-
-  const getCurrentId = (id) => {
-    setCurrentButtonId(id);
-  };
+  const [activePage, setActivePage] = useState('/profil/mes-recettes');
+  const dispatch = useDispatch();
 
   const handleWidthDimension = () => {
     if (window.innerWidth > 990) {
@@ -66,23 +67,51 @@ function Profil() {
     }
   };
 
-  const togglePages = () => {
+  const getCurrentId = (id) => {
+    setCurrentButtonId(id);
+  };
+
+  const togglePages = (link) => {
+    setActivePage(link);
     setIsOpen(!isOpen);
-    setScreenWidth(!screenWidth);
+    dispatch(setWidthValue(!screenWidth));
   };
 
   useLayoutEffect(() => {
     handleWidthDimension();
   }, []);
 
+  const renderContent = () => {
+    if (activePage === '/profil/mes-recettes') {
+      return <Loader />;
+    }
+    if (activePage === '/profil/mes-favorites') {
+      return <Loader />;
+    }
+    if (activePage === '/profil/mes-ingredients') {
+      return <Recipes />;
+    }
+    if (activePage === '/profil/mes-repas') {
+      return <Recipes />;
+    }
+    if (activePage === '/profil/mes-courses') {
+      return <Recipes />;
+    }
+    if (activePage === '/profil/mes-infos') {
+      return <Recipes />;
+    }
+
+    return null;
+  };
+
   window.addEventListener('resize', handleWidthDimension);
 
   return (
-    <div className="container-profil">
-      {isOpen && (
+    <MyLayout>
+      <div className="container-profil">
         <div className="Profil">
           {profilDataNav.map((profil) => (
-            <NavLink
+            <Link
               to={profil.link}
               key={profil.id}
               className={`Profil-card ${
@@ -90,7 +119,7 @@ function Profil() {
               }`}
               onClick={() => {
                 getCurrentId(profil.id);
-                togglePages();
+                togglePages(profil.link);
               }}
             >
               <h4 className="Profil-card-title">
@@ -102,29 +131,16 @@ function Profil() {
                 />
                 {profil.title}
               </h4>
-            </NavLink>
+            </Link>
           ))}
         </div>
-      )}
-
-      {screenWidth && (
-        <div className="Profil-content">
-          <button
-            type="button"
-            alt="Go to profil"
-            className="Profil-content-button"
-          />
-          <Routes>
-            <Route path="/profil/mes-recettes" element={<Recipes />} />
-            <Route path="/profil/mes-favorites" element={<Recipes />} />
-            <Route path="/profil/mes-ingredients" element={<Loader />} />
-            <Route path="/profil/mes-repas" element={<Loader />} />
-            <Route path="/profil/mes-courses" element={<Loader />} />
-            <Route path="/profil/mes-infos" element={<Loader />} />
-          </Routes>
-        </div>
-      )}
-    </div>
+        {screenWidth && (
+          <div className="Profil-content">
+            <div>{renderContent()}</div>
+          </div>
+        )}
+      </div>
+    </MyLayout>
   );
 }
 
