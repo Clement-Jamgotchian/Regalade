@@ -5,3 +5,10 @@ export const setWidthValue = (Value) => ({
     isTrue: Value,
   },
 });
+export const SET_CURRENT_BUTTON_ID = 'SET_CURRENT_BUTTON_ID';
+export const setCurrentButtonId = (id) => ({
+  type: SET_CURRENT_BUTTON_ID,
+  payload: {
+    currentButtonId: id,
+  },
+});
