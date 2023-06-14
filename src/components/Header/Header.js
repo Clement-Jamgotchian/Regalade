@@ -9,7 +9,7 @@ import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 import logoConnexion from '../../assets/images/connexion.png';
 import { setSearchValue } from '../../actions/header';
-import { setCurrentButtonId } from '../../actions/profil';
+import { setCurrentButtonId, setLink } from '../../actions/profil';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -139,6 +139,7 @@ function Header() {
               to={isInvited ? '/' : '/profil'}
               onClick={() => {
                 dispatch(setCurrentButtonId(1));
+                dispatch(setLink('recipes/my'));
               }}
               className="nav-link"
             >
@@ -172,11 +173,11 @@ function Header() {
               </Link>
             </Nav>
             <Nav>
-              {(isInvited === false) && (
+              {isInvited === false && (
                 <Link
                   to="/profil/mes-repas"
                   onClick={() => {
-                    dispatch(setCurrentButtonId(1));
+                    dispatch(setCurrentButtonId(4));
                   }}
                   className="nav-link"
                 >
@@ -185,7 +186,7 @@ function Header() {
               )}
             </Nav>
             <Nav>
-              {(isInvited === false) && (
+              {isInvited === false && (
                 <Link
                   to="/profil/mes-ingredients"
                   className="nav-link"

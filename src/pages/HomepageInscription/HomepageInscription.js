@@ -7,7 +7,10 @@ import axios from 'axios';
 // Dispatch
 import { useDispatch } from 'react-redux';
 import {
-  setConnectedUser, setInvitedUser, setNewNickname, setTokenUser,
+  setConnectedUser,
+  setInvitedUser,
+  setNewNickname,
+  setTokenUser,
 } from '../../actions/user';
 
 // assets
@@ -72,12 +75,15 @@ function HomepageInscription() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/login_check', {
-      email: email,
-      password: password,
-    })
+    axios
+      .post(
+        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/login_check',
+        {
+          email: email,
+          password: password,
+        },
+      )
       .then((res) => {
-
         console.log(res);
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
@@ -87,7 +93,6 @@ function HomepageInscription() {
 
         console.log("c'est ok");
         navigate('/recettes');
-
       })
       .catch((err) => {
         console.log(err);
@@ -99,11 +104,15 @@ function HomepageInscription() {
     event.preventDefault();
     if (password === confirmPassword) {
       console.log('bon mot de passe');
-      axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
-        email: email,
-        nickname: nickname,
-        password: password,
-      })
+      axios
+        .post(
+          'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user',
+          {
+            email: email,
+            nickname: nickname,
+            password: password,
+          },
+        )
         .then((res) => {
           console.log(res.data.nickname);
           dispatch(setTokenUser());
@@ -111,7 +120,6 @@ function HomepageInscription() {
           dispatch(setNewNickname(res.data.nickname));
 
           axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-
         })
         .catch(() => {
           alert('Oups !');
@@ -128,14 +136,26 @@ function HomepageInscription() {
 
   return (
     <div className="formSign">
-      <section className="formSign-container" style={{ display: `${displayCarousel}` }}>
+      <section
+        className="formSign-container"
+        style={{ display: `${displayCarousel}` }}
+      >
         <div className="formSign-carousel">
           <form
             className="formSign-carousel-up"
             onSubmit={handleSubmitCreate}
-            style={{ transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)` }}
+            style={{
+              transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)`,
+            }}
           >
-            <button type="submit" className="formSign-signupButton" style={{ display: `${displayUp}` }} onClick={rotate}>Se connecter</button>
+            <button
+              type="submit"
+              className="formSign-signupButton"
+              style={{ display: `${displayUp}` }}
+              onClick={rotate}
+            >
+              Se connecter
+            </button>
             <button
               type="button"
               className="formSign-cancelButton"
@@ -208,7 +228,11 @@ function HomepageInscription() {
             style={{ transform: `rotateY(${logoDeg}deg) translateX(-50%)` }}
           >
             <img src={tomate} alt="tomate" className="item tomate" />
-            <img src={trancheTomate} alt="trancheTomate" className="item trancheTomate" />
+            <img
+              src={trancheTomate}
+              alt="trancheTomate"
+              className="item trancheTomate"
+            />
             <img src={huile} alt="huile" className="item huile" />
             <img src={pain} alt="pain" className="item pain" />
             <img src={pomme} alt="pomme" className="item pomme" />
@@ -217,7 +241,9 @@ function HomepageInscription() {
           <form
             className="formSign-carousel-in"
             onSubmit={handleSubmit}
-            style={{ transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)` }}
+            style={{
+              transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`,
+            }}
           >
             <button
               type="submit"
@@ -235,7 +261,17 @@ function HomepageInscription() {
             >
               S&apos;inscrire
             </button>
-            <button type="button" className="formSign-cancelButton" onClick={displayTrigger}><img src={cancel} alt="bouton croix pour fermer" className="formSign-cancelButton-image" /></button>
+            <button
+              type="button"
+              className="formSign-cancelButton"
+              onClick={displayTrigger}
+            >
+              <img
+                src={cancel}
+                alt="bouton croix pour fermer"
+                className="formSign-cancelButton-image"
+              />
+            </button>
             <p className="formSign-carousel-title"> Se connecter</p>
             <input
               style={{ display: `${displayIn}` }}
@@ -270,17 +306,29 @@ function HomepageInscription() {
           </form>
         </div>
       </section>
-      <section className="formSign-details" style={{ display: `${displayDetails}` }}>
+      <section
+        className="formSign-details"
+        style={{ display: `${displayDetails}` }}
+      >
         <img src={logo} alt="logo régalade" className="formSign-logo" />
         <p className="formSign-description">
-          Explorez un monde de saveurs avec notre site de recettes.
-          Des plats délicieux, des astuces pratiques et une cuisine inspirante vous attendent.
-          Rejoignez-nous et découvrez le plaisir de cuisiner au quotidien !
+          Explorez un monde de saveurs avec notre site de recettes. Des plats
+          délicieux, des astuces pratiques et une cuisine inspirante vous
+          attendent. Rejoignez-nous et découvrez le plaisir de cuisiner au
+          quotidien !
         </p>
-        <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter / S&apos;inscrire</button>
+        <button
+          type="button"
+          className="formSign-buttonSign"
+          onClick={displayTrigger}
+        >
+          {' '}
+          Se connecter / S&apos;inscrire
+        </button>
 
-        <Link to="/recettes" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
-
+        <Link to="/recettes" className="formSign-button" onClick={inviteUser}>
+          Aller vers le site
+        </Link>
       </section>
     </div>
   );
