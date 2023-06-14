@@ -1,0 +1,36 @@
+@use 'src/styles/vars';
+
+.RecipeCard {
+    
+    &--cart {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    
+    &--cart:hover, &--cart {
+        transform: scale(1.4);
+        transition: transform 1s ease;
+    }
+    
+    &--cart {
+        position: absolute;
+        right: 1rem;
+        margin-top: 5px;
+        background: vars.$secondaryButton;
+        padding: 0.5rem 0.5rem 0.5rem 0.4rem;
+        border-radius: 50%;
+        color: #ffffff;
+        z-index: 2;
+        transition: 1s ease;
+    }
+
+    &--cart__added {
+        background: vars.$primaryButton;
+    }
+}
