@@ -3,42 +3,14 @@ import { useEffect, useState } from 'react';
 import './RecipeDetails.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 import { getStars } from '../../utils/formatRecipeData';
 
 import cuisine from '../../assets/cuisine.png';
 import cuisson from '../../assets/temps-de-cuisson.png';
 import vegetables from '../../assets/vegetables.png';
-import Header from '../Header/Header';
-import Menuphone from '../Menuphone/Menuphone';
-import Footer from '../Footer/Footer';
-import { addRecipeToList } from '../../actions/list';
-
-function FavoriteIcon(isLoggedIn, isFavorite, toggleFavorite) {
-  const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
-  const icon = isFavorite ? faHeart : farHeart;
-
-  if (isLoggedIn) {
-    return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
-        <FontAwesomeIcon className={className} icon={icon} />
-      </button>
-    );
-  }
-}
-
-function CartIcon(isLoggedIn, addToList) {
-  if (isLoggedIn) {
-    return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
-        <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
-      </button>
-    );
-  }
-}
+import CartIcon from '../RecipeCard/Icons/CartIcon/CartIcon';
+import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
 
 function RecipeDetails() {
   const [title, setTitle] = useState('');
@@ -65,6 +37,13 @@ function RecipeDetails() {
     }
   };
 
+  const addToList = async () => {
+    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   function handleClick() {
     navigate('/home');
   }
@@ -88,11 +67,8 @@ function RecipeDetails() {
   return (
 
     <section className="recipeDetails">
-      <Header className="recipeDetails-layout" style={{ display: 'none' }} />
-      <Menuphone className="recipeDetails-layout" />
       <section
         className="recipeDetails-header"
-
 
       >
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
@@ -102,7 +78,7 @@ function RecipeDetails() {
         <CartIcon
           className="recipeDetails-header-cart"
           isLoggedIn={isLoggedIn}
-          addToList={() => dispatch(addRecipeToList(recipe))}
+          addToList={() => addToList()}
         />
         <FavoriteIcon
           className="recipeDetails-header-favorite"
@@ -167,7 +143,6 @@ function RecipeDetails() {
           <div className="recipeDetails-recette-step">{step}</div>
         </section>
       </section>
-      <Footer className="recipeDetails-layout" />
     </section>
   );
 }
