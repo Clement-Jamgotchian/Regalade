@@ -1,6 +1,6 @@
 @use '../../styles/vars';
 
-.container-header{
+.container-header {
   position: sticky;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
 .Header {
   justify-content: center;
   color: vars.$text;
-  
+
   border-bottom: 1px solid vars.$accent;
 
   &-utilsLink {
@@ -49,7 +49,7 @@
       background-color: transparent;
       transition: 2s;
     }
-    &-input:focus{
+    &-input:focus {
       outline: none;
     }
     &-button {
@@ -62,7 +62,7 @@
       background-repeat: no-repeat;
       background-position: center;
       margin-right: 10px;
-      &-close{
+      &-close {
         width: 15px;
         border: none;
         padding: 2px;
@@ -82,13 +82,13 @@
     color: vars.$text;
     width: 35px;
   }
-  &-link{
-    a{
+  &-link {
+    a {
       font-family: 'Lato', sans-serif !important;
       color: vars.$text;
     }
   }
-  &-show-button{
+  &-show-button {
     width: 20px;
     height: 20px;
     border: 1px solid vars.$accent;
@@ -112,8 +112,7 @@
       justify-content: center;
       img {
         width: 180px;
-      margin-right: 90px;
-
+        margin-right: 90px;
       }
     }
     &-utilsLink {
@@ -132,6 +131,8 @@
       }
     }
     &-link {
+      min-width: 33%;
+      max-width: 33%;
       flex-grow: 1;
     }
   }
@@ -151,9 +152,9 @@
 @media (min-width: 575px) {
   .Header {
     justify-content: space-between;
-    &-logoMain{
-      img{
-      margin-left: 40px;
+    &-logoMain {
+      img {
+        margin-left: 40px;
       }
     }
     &-utilsLink {
@@ -166,16 +167,16 @@
   }
 }
 
-.none{
+.none {
   display: none;
 }
 
-.small-button{
+.small-button {
   margin: 0;
 }
-.Small{
+.Small {
   justify-content: space-between;
-  &-searchbar{
+  &-searchbar {
     margin-right: 10px;
     width: auto;
     max-width: 190px;

@@ -1,7 +1,7 @@
 import './Profil.scss';
 import { useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
 import toque from '../../assets/images/toque.png';
@@ -11,7 +11,7 @@ import frigo from '../../assets/images/frigo.png';
 import coeur from '../../assets/images/coeur.png';
 import list from '../../assets/images/liste.png';
 import { MyLayout } from '../MyLayout';
-import { setWidthValue } from '../../actions/profil';
+import { setWidthValue, setCurrentButtonId } from '../../actions/profil';
 import List from '../../pages/List/List';
 import Ingredient from '../Ingredient/Ingredient';
 
@@ -56,7 +56,7 @@ const profilDataNav = [
 
 function Profil() {
   const [screenWidth, setScreenWidth] = useState(false);
-  const [currentButtonId, setCurrentButtonId] = useState(null);
+  const currentButtonId = useSelector((state) => state.profil.profilButtonId);
   const [isOpen, setIsOpen] = useState(true);
   const [activePage, setActivePage] = useState('/profil/mes-recettes');
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ function Profil() {
   };
 
   const getCurrentId = (id) => {
-    setCurrentButtonId(id);
+    dispatch(setCurrentButtonId(id));
   };
 
   const togglePages = (link) => {
@@ -88,7 +88,7 @@ function Profil() {
       return <Loader />;
     }
     if (activePage === '/profil/mes-favorites') {
-      return <Loader />;
+      return <Recipes />;
     }
     if (activePage === '/profil/mes-ingredients') {
       return <Recipes />;

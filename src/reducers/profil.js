@@ -1,7 +1,8 @@
-import { SET_WIDTH_VALUE } from '../actions/profil';
+import { SET_WIDTH_VALUE, SET_CURRENT_BUTTON_ID } from '../actions/profil';
 
 const initialState = {
   isTrueWidth: null,
+  profilButtonId: null,
 };
 
 function reducer(state = initialState, action = {}) {
@@ -10,6 +11,11 @@ function reducer(state = initialState, action = {}) {
       return {
         ...state,
         isTrueWidth: action.payload.isTrue,
+      };
+    case SET_CURRENT_BUTTON_ID:
+      return {
+        ...state,
+        profilButtonId: action.payload.currentButtonId,
       };
     default:
       return state;
