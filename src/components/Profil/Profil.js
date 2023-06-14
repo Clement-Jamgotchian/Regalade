@@ -63,13 +63,12 @@ const profilDataNav = [
 function Profil() {
   const [activePage, setActivePage] = useState('/profil/mes-recettes');
   const [screenWidth, setScreenWidth] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+  const [recipes, setRecipes] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const currentButtonId = useSelector((state) => state.profil.profilButtonId);
   const linkAPI = useSelector((state) => state.profil.link);
   const dispatch = useDispatch();
-
-  const [recipes, setRecipes] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
   const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
@@ -79,7 +78,6 @@ function Profil() {
     axios
       .get(baseUrl + request)
       .then((response) => {
-        console.log(response.data);
         setRecipes(response.data.recipes);
         setPageCount(response.data.totalPages);
       })
