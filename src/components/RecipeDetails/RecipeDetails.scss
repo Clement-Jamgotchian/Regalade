@@ -46,12 +46,31 @@
         &-rating {
             color: vars.$primaryButton;
             text-shadow: 1px 1px 2px black;
-            margin-bottom: 2em;
+            
         }
         &-title {
+            
             color: vars.$primaryButton;
             text-shadow: 1px 1px 2px black;
             font-size: 2.5em;
+        }
+
+        &-cancelButton {
+            color: vars.$primaryButton;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+            position: absolute;
+            top: 0.5em;
+            left: .5em;
+            width: 30px;
+            height: 30px;
+            font-size: 2em;
+    
+            &-image {
+                width: 30px;
+                height: 30px;
+            }
+            
         }
 
         
@@ -205,6 +224,11 @@
             }
             &-title {
                 color: vars.$backGround;
+            }
+
+            &-cancelButton {
+                display: none;
+                
             }
     
             

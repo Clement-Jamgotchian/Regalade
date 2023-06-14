@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './RecipeDetails.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 import { getStars } from '../../utils/formatRecipeData';
 
 import cuisine from '../../assets/cuisine.png';
@@ -10,6 +15,30 @@ import vegetables from '../../assets/vegetables.png';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
+import { addRecipeToList } from '../../actions/list';
+
+function FavoriteIcon(isLoggedIn, isFavorite, toggleFavorite) {
+  const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
+  const icon = isFavorite ? faHeart : farHeart;
+
+  if (isLoggedIn) {
+    return (
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
+        <FontAwesomeIcon className={className} icon={icon} />
+      </button>
+    );
+  }
+}
+
+function CartIcon(isLoggedIn, addToList) {
+  if (isLoggedIn) {
+    return (
+      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={addToList}>
+        <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
+      </button>
+    );
+  }
+}
 
 function RecipeDetails() {
   const [title, setTitle] = useState('');
@@ -18,8 +47,27 @@ function RecipeDetails() {
   const [picture, setPicture] = useState('');
   const [setupDuration, setSetupDuration] = useState('');
   const [step, setStep] = useState('');
+  const [recipe, setRecipe] = useState([]);
   const [containsIngredients, setContainsIngrediants] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const [favorite, setFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setFavorite(!favorite);
+    if (favorite) {
+      dispatch(removeRecipeFromFavorites(recipe));
+    } else {
+      dispatch(addRecipeToFavorites(recipe));
+    }
+  };
+
+  function handleClick() {
+    navigate('/home');
+  }
 
   useEffect(() => {
     axios.get(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes/${id}`)
@@ -31,6 +79,7 @@ function RecipeDetails() {
         setPicture(response.data.picture);
         setStep(response.data.step);
         setRating(response.data.rating);
+        setRecipe(response.data);
       })
       .catch(() => {
         console.log('erreur dans recette detaillé');
@@ -45,6 +94,20 @@ function RecipeDetails() {
         className="recipeDetails-header"
       >
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
+        <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
+          <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
+        </button>
+        <CartIcon
+          className="recipeDetails-header-cart"
+          isLoggedIn={isLoggedIn}
+          addToList={() => dispatch(addRecipeToList(recipe))}
+        />
+        <FavoriteIcon
+          className="recipeDetails-header-favorite"
+          isLoggedIn={isLoggedIn}
+          isFavorite={favorite}
+          toggleFavorite={toggleFavorite}
+        />
         <div className="recipeDetails-header-container">
           <h1 className="recipeDetails-header-title">{title}</h1>
           <div className="recipeDetails-header-rating">{getStars(rating)}</div>
