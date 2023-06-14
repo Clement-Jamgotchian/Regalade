@@ -9,6 +9,13 @@
     color: #ffffff;
     background: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0%,rgba(0, 0, 0, 0.5) 100%);
     overflow: hidden;
+    text-align: left;
+
+    &--link {
+        color: #ffffff;
+        font-weight: normal;
+        text-decoration: none;
+    }
 
     &:hover {
         cursor: pointer;
@@ -21,9 +28,9 @@
         transition: transform 1s ease;
     }
 
-    &:hover &--title {
-        color: vars.$primaryButton;
-    }
+    // &:hover &--title {
+    //     color: vars.$primaryButton;
+    // }
     
     &--title {
         margin-right: 45px;
@@ -37,7 +44,7 @@
         box-shadow: 0px 5px 5px #00000015;
     }
 
-    &--buttonFavoriteToggle {
+    & button {
         background: none;
         color: inherit;
         border: none;
@@ -47,18 +54,29 @@
         outline: inherit;
     }
 
+    
     &--favorite:hover, &--favorite__active:hover, &--cart:hover {
         transform: scale(1.4);
         transition: transform 1s ease;
     }
-
-    &--favorite {
+    
+    &--favorite, &--deleteButton {
         position: absolute;
         right: 1rem;
         top: 1rem;
-        color: #ffffff;
+        color: #ffffff !important;
         z-index: 2;
         transition: transform 1s ease;
+    }
+
+    &--deleteButton {
+        color: vars.$primaryButton !important;
+    } 
+    
+    &--deleteButton svg {
+        background-color: #ffffff;
+        border-radius: 25px;
+        padding: 1px;
     }
 
     &--favorite__active {
@@ -131,7 +149,7 @@
             transition: none;
         }
         &--favorite {
-            color: vars.$primaryButton;
+            color: vars.$primaryButton !important;
         }
 
         &--img {
@@ -146,6 +164,10 @@
             height: 200px;
         }
 
+        &--body {
+            padding-top: 7rem;
+        }
+
         &--content {
             display: none;
         }
@@ -157,6 +179,10 @@
         &--img {
             width: 150px;
             height: 150px;
+        }
+        
+        &--body {
+            padding-top: 5rem;
         }
     }
 }

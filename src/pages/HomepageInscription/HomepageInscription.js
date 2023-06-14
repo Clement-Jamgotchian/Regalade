@@ -27,8 +27,10 @@ function HomepageInscription() {
   const [logoDeg, setLogoDeg] = useState(0);
   const [displayUp, setDisplayUp] = useState('none');
   const [displayIn, setDisplayIn] = useState('');
+
   const [displayCarousel, setDisplayCarousel] = useState('');
   const [displayDetails, setDisplayDetails] = useState('flex');
+
   const [error, setError] = useState('');
 
   // registration state
@@ -75,11 +77,16 @@ function HomepageInscription() {
       password: password,
     })
       .then((res) => {
+
+        console.log(res);
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
+        axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
         // localStorage.setItem('isLogged', setConnectedUser(true));
+
         console.log("c'est ok");
-        navigate('/home');
+        navigate('/recettes');
+
       })
       .catch((err) => {
         console.log(err);
@@ -101,6 +108,9 @@ function HomepageInscription() {
           dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
           dispatch(setNewNickname(res.data.nickname));
+
+          axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
+
         })
         .catch(() => {
           alert('Oups !');
@@ -267,7 +277,9 @@ function HomepageInscription() {
           Rejoignez-nous et découvrez le plaisir de cuisiner au quotidien !
         </p>
         <button type="button" className="formSign-buttonSign" onClick={displayTrigger}> Se connecter / S&apos;inscrire</button>
-        <Link to="/home" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
+
+        <Link to="/recettes" className="formSign-button" onClick={inviteUser}>Aller vers le site</Link>
+
       </section>
     </div>
   );

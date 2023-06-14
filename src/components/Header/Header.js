@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Navbar } from 'react-bootstrap';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
@@ -13,8 +13,11 @@ function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [screenWidth, setScreenWidth] = useState(false);
   const [scrollbarOn, setscrollbarOn] = useState(false);
+  const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
-  const nickname = useSelector((state) => state.user.nickname);
+  const nickname = useSelector((state) => state.user.nicknameUser);
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const movingUpSearchbar = () => {
@@ -65,6 +68,27 @@ function Header() {
     handleScrollSearchbar();
   }, []);
 
+  const handleSubmitForm = (evt) => {
+    evt.preventDefault();
+    const path = location.pathname;
+    if (path !== '/recettes') {
+      navigate('/recettes');
+    }
+    const lowerCaseSearchValue = searchBarValue
+      .toLocaleLowerCase()
+      .replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
+    if (lowerCaseSearchValue) {
+      dispatch(setSearchValue(lowerCaseSearchValue));
+    }
+    if (showTopBtn === true && screenWidth === true) {
+      const buttonToggle = document.querySelector('.Header-show-button');
+      const form = document.querySelector('.Header-form');
+      buttonToggle.classList.remove('none');
+      form.classList.add('none');
+    }
+    setscrollbarOn(!scrollbarOn);
+  };
+
   const toggleSearchBar = () => {
     setscrollbarOn((prevScrollbarOn) => !prevScrollbarOn);
     const buttonToggle = document.querySelector('.Header-show-button');
@@ -76,20 +100,12 @@ function Header() {
     }
   };
 
-  const handleSubmitForm = (evt) => {
-    evt.preventDefault();
-    const lowerCaseSearchValue = searchBarValue
-      .toLocaleLowerCase()
-      .replace(/([^a-zA-Z0-9 ]|[0-9])/g, '');
-    dispatch(setSearchValue(lowerCaseSearchValue));
-    if (showTopBtn === true && screenWidth === true) {
-      const buttonToggle = document.querySelector('.Header-show-button');
-      const form = document.querySelector('.Header-form');
-      buttonToggle.classList.remove('none');
-      form.classList.add('none');
+  const toggleCloseButton = () => {
+    if (searchBarValue) {
+      setClosingButton(true);
+    } else {
+      setClosingButton(false);
     }
-    setSearchBarValue('');
-    setscrollbarOn(!scrollbarOn);
   };
 
   window.addEventListener('scroll', handleScrollSearchbar);
@@ -102,26 +118,30 @@ function Header() {
           aria-controls="responsive-navbar-nav"
           className="Header-burger"
         />
-        <Navbar.Brand href="/home" className="Header-logoMain">
-          <img
-            src={logoMain}
-            alt="logo du site qui est un panier de fruit et légumes"
-          />
+        <Navbar.Brand className="Header-logoMain">
+          <Link to="/">
+            <img
+              src={logoMain}
+              alt="logo du site qui est un panier de fruit et légumes"
+            />
+          </Link>
         </Navbar.Brand>
         <Nav className="Header-utilsLink">
           <p>
             Bienvenue
             {nickname}
           </p>
-          <Nav.Link href="/profil">
-            <img
-              className="Header-utilsLink-logo"
-              src={logoUser}
-              alt="logo d'un utilisateur'"
-            />
-          </Nav.Link>
-          <Nav.Link>
-            <Link to="/list">
+          <Nav>
+            <Link to="/profil" className="nav-link">
+              <img
+                className="Header-utilsLink-logo"
+                src={logoUser}
+                alt="logo d'un utilisateur'"
+              />
+            </Link>
+          </Nav>
+          <Nav>
+            <Link to="/list" className="nav-link">
               <img
                 style={{ marginLeft: '15px' }}
                 className="Header-utilsLink-logo"
@@ -129,25 +149,48 @@ function Header() {
                 alt="logo d'un utilisateur'"
               />
             </Link>
-          </Nav.Link>
+          </Nav>
         </Nav>
-        <Navbar.Collapse id="responsive-navbar-nav  " className="Header-link">
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          className="Header-link"
+          // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
+        >
           <Nav className="mr-auto ">
-
-            <Nav.Link href="/home">Recettes</Nav.Link>
-            <Nav.Link href="/list">Liste de repas</Nav.Link>
-            <Nav.Link href="/fridge">Mon frigo</Nav.Link>
+            <Nav>
+              <Link to="/recettes" className="nav-link">Recettes</Link>
+            </Nav>
+            <Nav>
+              <Link to="/profil/mes-repas" className="nav-link">Ma liste de repas</Link>
+            </Nav>
+            <Nav>
+              <Link to="/fridge" className="nav-link">Mon frigo</Link>
+            </Nav>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
       <form className="Header-form" onSubmit={handleSubmitForm}>
+        {/* exemple : {(showTopBtn && screenWidth) && <button type="button">Coucou</button>} */}
         <input
           className="Header-form-input"
           value={searchBarValue}
           onChange={(evt) => {
             setSearchBarValue(evt.target.value);
+            toggleCloseButton();
           }}
         />
+        {closingButton && (
+          <button
+            type="button"
+            aria-label="clear search bar"
+            className="Header-form-button-close"
+            onClick={() => {
+              setSearchBarValue('');
+              dispatch(setSearchValue(''));
+              setClosingButton(!closingButton);
+            }}
+          />
+        )}
         <button
           type="submit"
           aria-label="search bar"

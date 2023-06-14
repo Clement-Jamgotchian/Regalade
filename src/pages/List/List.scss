@@ -1,0 +1,28 @@
+.List {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    &--addButton a, &--generateCartButton a {
+        text-decoration: none;
+        color: #ffffff;
+        margin-left: 5px;
+    }
+    &--addButton svg, &--generateCartButton svg {
+        color: #ffffff;
+    }
+
+    &--addButton, &--generateCartButton {
+        width: 250px;
+        text-decoration: none;
+        align-self: end;
+        margin: 7px;
+    }
+
+    &--removeAllButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: start;
+    }
+}

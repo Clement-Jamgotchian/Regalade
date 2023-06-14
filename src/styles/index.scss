@@ -7,6 +7,7 @@ $theme-colors: (
   'primary': vars.$primaryButton,
   'success': vars.$secondaryButton,
   'info': vars.$backGround,
+  'danger': #e90606,
   );
 
 $pagination-color: vars.$primaryButton;

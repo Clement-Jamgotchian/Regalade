@@ -92,6 +92,8 @@ function RecipeDetails() {
       <Menuphone className="recipeDetails-layout" />
       <section
         className="recipeDetails-header"
+
+
       >
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
         <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
