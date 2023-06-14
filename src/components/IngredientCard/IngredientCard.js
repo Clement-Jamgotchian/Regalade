@@ -14,6 +14,7 @@ import vegetables from '../../assets/vegetables.png';
 
 // Import styles
 import './IngredientCard.scss';
+import { changeIngredientQuantity } from '../../actions/cart';
 
 function IngredientCard({ ingredient, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
@@ -30,6 +31,7 @@ function IngredientCard({ ingredient, quantity }) {
                 e.preventDefault();
                 if (quantityValue > 0) {
                   setQuantityValue(quantityValue - 1);
+                  changeIngredientQuantity(ingredient.id, quantityValue);
                 }
               }}
             >
@@ -65,6 +67,7 @@ function IngredientCard({ ingredient, quantity }) {
 
 IngredientCard.propTypes = {
   ingredient: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     isCold: PropTypes.bool.isRequired,
     unit: PropTypes.string.isRequired,

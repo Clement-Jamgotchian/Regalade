@@ -9,7 +9,7 @@ const reducer = (state = initialState, action = {}) => {
     case ADD_INGREDIENTS_TO_CART:
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload.ingredients],
+        ingredients: action.payload.ingredients,
       };
 
     case REMOVE_INGREDIENT_FROM_CART:
@@ -21,16 +21,13 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_INGREDIENT_QUANTITY:
       return {
         ...state,
-        ingredients: state.ingredients.map((item) => ({
-            ...item, 
-          if (item.id === action.payload.ingredient.id) {
-            item.quantity: action.payload.quantity,
-          });
-        }),
+        // ingredients: state.ingredients
+        // .filter((el) => el.id === action.payload.ingredient.id)
+        // .map((item) => ({
+        //     ...item,
+        //     item.quantity: action.payload.quantity,
+        // })),
       };
-      const recipes = response.data.recipesList.map((item) => ({
-        ...item.recipe, portions: item.portions,
-      }));
 
     default:
       return state;

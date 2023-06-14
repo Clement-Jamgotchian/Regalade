@@ -8,12 +8,12 @@ import IngredientCard from '../IngredientCard/IngredientCard';
 // Import styles
 import './Department.scss';
 
-function Department({ department, cart }) {
+function Department({ department, ingredients }) {
   return (
     <div className="Department">
       <Row>
         <div className="Department--title">{department}</div>
-        {cart
+        {ingredients
           .filter((el) => el.ingredient.department.name === department)
           .map((item) => (
             <Col key={item.quantity} xs={12} md={4} lg={3}>
@@ -27,7 +27,7 @@ function Department({ department, cart }) {
 
 Department.propTypes = {
   department: PropTypes.string.isRequired,
-  cart: PropTypes.arrayOf(PropTypes.shape({
+  ingredients: PropTypes.arrayOf(PropTypes.shape({
     quantity: PropTypes.number.isRequired,
     ingredient: PropTypes.shape({
       name: PropTypes.string.isRequired,

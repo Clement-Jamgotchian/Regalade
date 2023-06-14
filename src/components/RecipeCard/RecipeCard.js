@@ -96,7 +96,7 @@ function RecipeCard({ recipe }) {
           </Card.Text>
           <ChangePortionsInput
             recipeId={recipe.id}
-            portions={recipe.portions}
+            portions={recipe.userPortions}
           />
         </Card.Body>
       </Link>
@@ -114,6 +114,7 @@ RecipeCard.propTypes = {
     setupDuration: PropTypes.number.isRequired,
     difficulty: PropTypes.number.isRequired,
     portions: PropTypes.number,
+    userPortions: PropTypes.number,
   }),
 };
 

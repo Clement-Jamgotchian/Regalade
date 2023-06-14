@@ -7,13 +7,13 @@ import Department from '../Department/Department';
 // Import styles
 import './Ingredients.scss';
 
-function Ingredients({ departments, cart }) {
+function Ingredients({ departments, ingredients }) {
   return (
     <div className="Ingredients">
-      {cart && (
+      {ingredients && (
         <>
           {Array.from(departments).map((department) => (
-            <Department department={department} cart={cart} />
+            <Department department={department} ingredients={ingredients} />
           ))}
         </>
       )}
@@ -27,7 +27,7 @@ Ingredients.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   })).isRequired,
-  cart: PropTypes.arrayOf(PropTypes.shape({
+  ingredients: PropTypes.arrayOf(PropTypes.shape({
     quantity: PropTypes.number.isRequired,
     ingredient: PropTypes.shape({
       name: PropTypes.string.isRequired,
