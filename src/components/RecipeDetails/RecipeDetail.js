@@ -121,7 +121,13 @@ function RecipeDetails() {
 
       <section className="recipeDetails-ingredients-container">
         <section className="recipeDetails-ingredients">
-          <h2 className="recipeDetails-ingredients-titles">Ingredients pour X personnes</h2>
+          <h2 className="recipeDetails-ingredients-titles">
+            Ingredients pour
+            {' '}
+            {recipe.portions}
+            {' '}
+            personnes
+          </h2>
           <div className="recipeDetails-ingredients-ingredient">
             {containsIngredients.map((ingredient) => (
               <section key={ingredient.ingredient.id} className="recipeDetails-ingredients-ingredient-item">

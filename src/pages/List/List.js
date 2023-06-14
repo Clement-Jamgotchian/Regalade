@@ -44,15 +44,6 @@ function List() {
       });
   };
 
-  const generateCart = async () => {
-    await axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
-      .then((response) => {
-        console.log(response);
-        navigate('/profil/mes-courses');
-      })
-      .catch((error) => console.log(error));
-  };
-
   // Get recipes on first load + when a recipe has been deleted
   // from the list to udpate the view
   useEffect(() => {
@@ -62,7 +53,7 @@ function List() {
   return (
     <div className="List">
       <Stack direction="horizontal" gap={3}>
-        <Button variant="primary" className="List--generateCartButton border" onClick={generateCart}>
+        <Button variant="primary" className="List--generateCartButton border" onClick={() => navigate('/profil/mes-courses')}>
           <FontAwesomeIcon icon={faCartArrowDown} />
           <Link to="/">Générer ma liste de courses</Link>
         </Button>

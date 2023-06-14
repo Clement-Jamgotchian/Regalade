@@ -41,8 +41,6 @@ function ChangePortionsInput({ recipeId, portions }) {
             <FontAwesomeIcon icon={faMinus} />
           </Button>
           <Form.Control
-            aria-label="Example text with button addon"
-            aria-describedby="basic-addon1"
             value={portionsInput}
             readOnly={portionsInput}
             onClick={(e) => {
