@@ -12,3 +12,10 @@ export const setCurrentButtonId = (id) => ({
     currentButtonId: id,
   },
 });
+export const SET_LINK = 'SET_LINK';
+export const setLink = (link) => ({
+  type: SET_LINK,
+  payload: {
+    currentLink: link,
+  },
+});

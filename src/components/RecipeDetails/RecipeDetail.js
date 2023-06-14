@@ -15,7 +15,7 @@ import vegetables from '../../assets/vegetables.png';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
-import { addRecipeToList } from '../../actions/list';
+// import { addRecipeToList } from '../../actions/list';
 
 function FavoriteIcon(isLoggedIn, isFavorite, toggleFavorite) {
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
@@ -92,8 +92,6 @@ function RecipeDetails() {
       <Menuphone className="recipeDetails-layout" />
       <section
         className="recipeDetails-header"
-
-
       >
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
         <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
@@ -102,7 +100,7 @@ function RecipeDetails() {
         <CartIcon
           className="recipeDetails-header-cart"
           isLoggedIn={isLoggedIn}
-          addToList={() => dispatch(addRecipeToList(recipe))}
+          // addToList={() => dispatch(addRecipeToList(recipe))}
         />
         <FavoriteIcon
           className="recipeDetails-header-favorite"
