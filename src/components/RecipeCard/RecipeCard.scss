@@ -89,6 +89,11 @@
             transition: none;
         }
 
+        &--title {
+            color: vars.$text;
+            height: auto;
+        }
+
         &--img {
             position: absolute;
             border-radius: 100%;

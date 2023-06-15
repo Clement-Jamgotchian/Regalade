@@ -1,6 +1,6 @@
 // React components
-import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'react-bootstrap';
 
 // Local components
 import RecipeCard from '../RecipeCard/RecipeCard';

@@ -23,6 +23,7 @@ function ChangePortionsInput({ recipeId, portions }) {
   const location = useLocation();
   const isInPageList = location.pathname === '/profil/mes-repas';
   const [portionsInput, setPortionsInput] = useState(portions);
+  let newValue = 0;
 
   if (isInPageList) {
     return (
@@ -33,16 +34,15 @@ function ChangePortionsInput({ recipeId, portions }) {
             onClick={(e) => {
               e.preventDefault();
               if (portionsInput > 0) {
-                setPortionsInput(portionsInput - 1);
+                newValue = portionsInput - 1;
+                setPortionsInput(newValue);
               }
-              handleChangePortionsSubmit(recipeId, portionsInput);
+              handleChangePortionsSubmit(recipeId, newValue);
             }}
           >
             <FontAwesomeIcon icon={faMinus} />
           </Button>
           <Form.Control
-            aria-label="Example text with button addon"
-            aria-describedby="basic-addon1"
             value={portionsInput}
             readOnly={portionsInput}
             onClick={(e) => {
@@ -57,8 +57,9 @@ function ChangePortionsInput({ recipeId, portions }) {
             variant="info"
             onClick={(e) => {
               e.preventDefault();
-              setPortionsInput(portionsInput + 1);
-              handleChangePortionsSubmit(recipeId, portionsInput);
+              newValue = portionsInput + 1;
+              setPortionsInput(newValue);
+              handleChangePortionsSubmit(recipeId, newValue);
             }}
           >
             <FontAwesomeIcon icon={faPlus} />
@@ -80,7 +81,7 @@ ChangePortionsInput.defaultProps = {
 
 handleChangePortionsSubmit.propTypes = {
   recipeId: PropTypes.number.isRequired,
-  portions: PropTypes.number,
+  portions: PropTypes.number.isRequired,
 };
 
 export default ChangePortionsInput;
