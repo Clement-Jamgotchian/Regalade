@@ -16,6 +16,8 @@ import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
 
+// import { addRecipeToList } from '../../actions/list';
+
 function FavoriteIcon(isLoggedIn, isFavorite, toggleFavorite) {
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
@@ -91,7 +93,6 @@ function RecipeDetails() {
       <Menuphone className="recipeDetails-layout" />
       <section
         className="recipeDetails-header"
-
       >
         <img src={picture} alt="la recette" className="recipeDetails-header-image" />
         <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
