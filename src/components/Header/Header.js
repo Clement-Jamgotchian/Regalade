@@ -164,21 +164,23 @@ function Header() {
             </Link>
           </Nav>
           <Nav>
-            <Link
-              to="/profil/mes-courses"
-              onClick={() => {
-                dispatch(setCurrentButtonId(5));
-                dispatch(setActivPage('/profil/mes-courses'));
-              }}
-              className="nav-link"
-            >
-              <img
-                style={{ marginLeft: '15px' }}
-                className="Header-utilsLink-logo"
-                src={logoCart}
-                alt="logo d'un utilisateur'"
-              />
-            </Link>
+            {isInvited === false && (
+              <Link
+                to="/profil"
+                className="nav-link"
+                onClick={() => {
+                  dispatch(setCurrentButtonId(5));
+                  dispatch(setActivPage('/profil/mes-courses'));
+                }}
+              >
+                <img
+                  style={{ marginLeft: '15px' }}
+                  className="Header-utilsLink-logo"
+                  src={logoCart}
+                  alt="logo d'un utilisateur'"
+                />
+              </Link>
+            )}
           </Nav>
         </Nav>
         <Navbar.Collapse
