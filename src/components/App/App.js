@@ -13,6 +13,7 @@ import Homepage from '../../pages/Homepage/Homepage';
 import List from '../../pages/List/List';
 import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
+import Cart from '../../pages/Cart/Cart';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -56,6 +57,18 @@ function App() {
             isWidthTrue ? (
               <MyLayout>
                 <List />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
+        />
+        <Route
+          path="/profil/mes-courses"
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <Cart />
               </MyLayout>
             ) : (
               <Profil />
