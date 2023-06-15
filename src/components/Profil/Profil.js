@@ -21,6 +21,7 @@ import {
 } from '../../actions/profil';
 import List from '../../pages/List/List';
 import Ingredient from '../Ingredient/Ingredient';
+import Fridge from '../../pages/Fridge/Fridge';
 
 const profilDataNav = [
   {
@@ -62,7 +63,6 @@ const profilDataNav = [
 ];
 
 function Profil() {
-  // const [activePage, setActivePage] = useState('/profil/mes-recettes');
   const activePage = useSelector((state) => state.profil.activProfilPage);
   const [screenWidth, setScreenWidth] = useState(false);
   const [pageCount, setPageCount] = useState(0);
@@ -133,7 +133,7 @@ function Profil() {
       return <Recipes recipes={recipes} />;
     }
     if (activePage === '/profil/mes-ingredients') {
-      return <Loader />;
+      return <Fridge />;
     }
     if (activePage === '/profil/mes-repas') {
       return <List />;
