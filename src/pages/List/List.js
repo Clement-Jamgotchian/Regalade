@@ -18,9 +18,7 @@ import { clearRecipeRemoved, updateRecipesList, showOrHideAlert, newAlertMessage
 
 // Styles import
 import './List.scss';
-import Pagination from '../../components/Pagination/Pagination';
-import { setActivPage, setCurrentButtonId } from '../../actions/profil';
-
+// import { setActivPage, setCurrentButtonId } from '../../actions/profil';
 
 function List() {
   const [list, setList] = useState([]);
