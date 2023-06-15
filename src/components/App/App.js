@@ -86,14 +86,19 @@ function App() {
           }
         />
         <Route
-          path="/recette/:id"
+          path="/recette/:idRecette"
           element={(
-            <MyLayout>
-              <RecipeDetails />
-            </MyLayout>
+            <RecipeDetails />
             )}
         />
-        <Route path="/faq" element={<Faq />} />
+        <Route
+          path="/FAQ"
+          element={(
+            <MyLayout>
+              <Faq />
+            </MyLayout>
+        )}
+        />
       </Routes>
     </Container>
   );
