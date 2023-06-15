@@ -9,68 +9,32 @@ import axios from 'axios';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCartPlus, faChartSimple, faHeart, faCircleXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import { faClock as farClock, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { updateRecipesList } from '../../actions/list';
-import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
+import {
+  addRecipeToFavorites,
+  removeRecipeFromFavorites,
+} from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
 
 // Import local utils
-import { getStars, getTotalDuration, getDifficultyLabel } from '../../utils/formatRecipeData';
+import {
+  getStars,
+  getTotalDuration,
+  getDifficultyLabel,
+} from '../../utils/formatRecipeData';
 
-// If user is logged in, we show the favorite icon,
-// active or not depends if added on favorite list or not
-// faHeart : filled heart
-// farHeart : empty heart
-function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
-  const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
-  const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
-  const icon = isFavorite ? faHeart : farHeart;
-
-  if (isLoggedIn && !isInPageList) {
-    return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
-        <FontAwesomeIcon className={className} icon={icon} />
-      </button>
-    );
-  }
-}
-
-// If user is logged in, we show the cart icon
-function CartIcon({ isLoggedIn, addToList }) {
-  const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
-
-  if (isLoggedIn && !isInPageList) {
-    return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={(e) => { e.preventDefault(); addToList(); }}>
-        <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
-      </button>
-    );
-  }
-}
-
-// If recipe is in the list page, we show the delete icon instead of the favorite icon
-function DeleteIcon({ removeFromList }) {
-  const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
-
-  if (isInPageList) {
-    return (
-      <button className="RecipeCard--deleteButton" type="button" onClick={removeFromList}>
-        <FontAwesomeIcon icon={faCircleXmark} />
-      </button>
-    );
-  }
-}
+// Import local components
+import ChangePortionsInput from './ChangePortionsInput/ChangePortionsInput';
+import FavoriteIcon from './Icons/FavoriteIcon/FavoriteIcon';
+import CartIcon from './Icons/CartIcon/CartIcon';
+import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
@@ -78,7 +42,10 @@ function RecipeCard({ recipe }) {
   const [favorite, setFavorite] = useState(false);
 
   const addToList = async (id) => {
-    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+    await axios
+      .post(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`,
+      )
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
       })
@@ -88,7 +55,10 @@ function RecipeCard({ recipe }) {
   };
 
   const removeFromList = async (id) => {
-    await axios.delete(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+    await axios
+      .delete(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`,
+      )
       .then(() => {
         dispatch(updateRecipesList({ action: 'removed' }));
       })
@@ -97,12 +67,34 @@ function RecipeCard({ recipe }) {
       });
   };
 
-  const toggleFavorite = () => {
+  const addToFavorite = async (id) => {
+    await axios
+      .post(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+      )
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const deleteToFavorite = async (id) => {
+    await axios
+      .delete(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+      )
+
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const toggleFavorite = (id) => {
     setFavorite(!favorite);
     if (favorite) {
       dispatch(removeRecipeFromFavorites(recipe));
+      deleteToFavorite(id);
     } else {
       dispatch(addRecipeToFavorites(recipe));
+      addToFavorite(id);
     }
   };
 
@@ -111,14 +103,21 @@ function RecipeCard({ recipe }) {
       <FavoriteIcon
         isLoggedIn={isLoggedIn}
         isFavorite={favorite}
-        toggleFavorite={toggleFavorite}
+        toggleFavorite={() => {
+          toggleFavorite(recipe.id);
+        }}
       />
-      <DeleteIcon removeFromList={() => {
-        removeFromList(recipe.id);
-      }}
+      <DeleteIcon
+        removeFromList={() => {
+          removeFromList(recipe.id);
+        }}
       />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
-        <Card.Img className="RecipeCard--img" variant="top" src={recipe.picture} />
+        <Card.Img
+          className="RecipeCard--img"
+          variant="top"
+          src={recipe.picture}
+        />
         <Card.Body className="RecipeCard--body">
           <CartIcon
             isLoggedIn={isLoggedIn}
@@ -137,26 +136,15 @@ function RecipeCard({ recipe }) {
             <FontAwesomeIcon icon={faChartSimple} />
             {getDifficultyLabel(recipe.difficulty)}
           </Card.Text>
+          <ChangePortionsInput
+            recipeId={recipe.id}
+            portions={recipe.portions}
+          />
         </Card.Body>
       </Link>
     </Card>
   );
 }
-
-FavoriteIcon.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  toggleFavorite: PropTypes.func.isRequired,
-};
-
-CartIcon.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  addToList: PropTypes.func.isRequired,
-};
-
-DeleteIcon.propTypes = {
-  removeFromList: PropTypes.func.isRequired,
-};
 
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
@@ -167,6 +155,7 @@ RecipeCard.propTypes = {
     cookingDuration: PropTypes.number.isRequired,
     setupDuration: PropTypes.number.isRequired,
     difficulty: PropTypes.number.isRequired,
+    portions: PropTypes.number,
   }),
 };
 

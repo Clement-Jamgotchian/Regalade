@@ -1,6 +1,6 @@
 // React components
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -18,6 +18,7 @@ import { clearRecipeRemoved, updateRecipesList } from '../../actions/list';
 // Styles import
 import './List.scss';
 import Pagination from '../../components/Pagination/Pagination';
+import { setActivPage, setCurrentButtonId } from '../../actions/profil';
 
 function List() {
   const [list, setList] = useState([]);
@@ -26,11 +27,18 @@ function List() {
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `?page=${pageNumber}` : '';
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getList = async () => {
-    await axios.get(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`)
+    await axios
+      .get(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`,
+      )
       .then((response) => {
-        const recipes = response.data.recipesList.map((item) => item.recipe);
+        const recipes = response.data.recipesList.map((item) => ({
+          ...item.recipe,
+          portions: item.portions,
+        }));
         setList(recipes);
         setPageCount(response.data.totalPages);
         dispatch(updateRecipesList({ action: 'init', length: recipes.length }));
@@ -39,6 +47,18 @@ function List() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const generateCart = async () => {
+    await axios
+      .post(
+        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart',
+      )
+      .then((response) => {
+        console.log(response);
+        navigate('/profil/mes-courses');
+      })
+      .catch((error) => console.log(error));
   };
 
   // Get recipes on first load + when a recipe has been deleted
@@ -50,9 +70,21 @@ function List() {
   return (
     <div className="List">
       <Stack direction="horizontal" gap={3}>
-        <Button variant="primary" className="List--generateCartButton border">
+        <Button
+          variant="primary"
+          className="List--generateCartButton border"
+          onClick={generateCart}
+        >
           <FontAwesomeIcon icon={faCartArrowDown} />
-          <Link to="/">Générer ma liste de courses</Link>
+          <Link
+            to="/"
+            onClick={() => {
+              dispatch(setCurrentButtonId(5));
+              dispatch(setActivPage('/profil/mes-courses'));
+            }}
+          >
+            Générer ma liste de courses
+          </Link>
         </Button>
         <Button variant="success" className="List--addButton border ms-auto">
           <FontAwesomeIcon icon={faPlus} />

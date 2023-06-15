@@ -7,7 +7,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
+import logoConnexion from '../../assets/images/connexion.png';
 import { setSearchValue } from '../../actions/header';
+import { setActivPage, setCurrentButtonId, setLink } from '../../actions/profil';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -16,6 +18,7 @@ function Header() {
   const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
   const nickname = useSelector((state) => state.user.nicknameUser);
+  const isInvited = useSelector((state) => state.user.isInvitedIn);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -132,10 +135,17 @@ function Header() {
             {nickname}
           </p>
           <Nav>
-            <Link to="/profil" className="nav-link">
+            <Link
+              to={isInvited ? '/' : '/profil'}
+              onClick={() => {
+                dispatch(setCurrentButtonId(1));
+                dispatch(setLink('recipes/my'));
+              }}
+              className="nav-link"
+            >
               <img
                 className="Header-utilsLink-logo"
-                src={logoUser}
+                src={isInvited ? logoConnexion : logoUser}
                 alt="logo d'un utilisateur'"
               />
             </Link>
@@ -158,13 +168,37 @@ function Header() {
         >
           <Nav className="mr-auto ">
             <Nav>
-              <Link to="/recettes" className="nav-link">Recettes</Link>
+              <Link to="/recettes" className="nav-link">
+                Recettes
+              </Link>
             </Nav>
             <Nav>
-              <Link to="/profil/mes-repas" className="nav-link">Ma liste de repas</Link>
+              {isInvited === false && (
+                <Link
+                  to="/profil/mes-repas"
+                  onClick={() => {
+                    dispatch(setCurrentButtonId(4));
+                    dispatch(setActivPage('/profil/mes-repas'));
+                  }}
+                  className="nav-link"
+                >
+                  Ma liste de repas
+                </Link>
+              )}
             </Nav>
             <Nav>
-              <Link to="/fridge" className="nav-link">Mon frigo</Link>
+              {isInvited === false && (
+                <Link
+                  to="/profil/mes-ingredients"
+                  className="nav-link"
+                  onClick={() => {
+                    dispatch(setCurrentButtonId(3));
+                    dispatch(setActivPage('/profil/mes-ingredients'));
+                  }}
+                >
+                  Mon frigo
+                </Link>
+              )}
             </Nav>
           </Nav>
         </Navbar.Collapse>

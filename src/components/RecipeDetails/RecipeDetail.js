@@ -16,7 +16,11 @@ import vegetables from '../../assets/vegetables.png';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
+
 import { updateRecipesList } from '../../actions/list';
+
+
+
 
 function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
   const location = useLocation();

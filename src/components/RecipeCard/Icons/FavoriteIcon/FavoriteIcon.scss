@@ -1,0 +1,44 @@
+@use 'src/styles/vars';
+
+.RecipeCard {
+    &--buttonFavoriteToggle, &--favorite__active {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    &--favorite:hover, &--favorite__active:hover {
+        transform: scale(1.4);
+        transition: transform 1s ease;
+    }
+
+    &--favorite {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: #ffffff !important;
+        z-index: 2;
+        transition: transform 1s ease;
+    }
+
+    &--favorite__active {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: vars.$primaryButton;
+        z-index: 2;
+        transition: transform 1s ease;
+    }
+}
+
+@media (max-width: vars.$layout-breakpoint-small) {
+    .RecipeCard {
+        &--favorite {
+            color: vars.$primaryButton !important;
+        }
+    }
+}
