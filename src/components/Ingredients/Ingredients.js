@@ -13,7 +13,7 @@ function Ingredients({ departments, ingredients }) {
       {ingredients && (
         <>
           {Array.from(departments).map((department) => (
-            <Department department={department} ingredients={ingredients} />
+            <Department key={department} department={department} ingredients={ingredients} />
           ))}
         </>
       )}
