@@ -31,7 +31,7 @@ function App() {
         <Route path="/profil" element={<Profil />} />
         <Route
           path="/profil/mes-recettes"
-          element={isWidthTrue ? <Recipes /> : <Profil />}
+          element={isWidthTrue ? <Homepage /> : <Profil />}
         />
         <Route
           path="/profil/mes-favorites"

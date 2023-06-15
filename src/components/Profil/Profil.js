@@ -17,6 +17,7 @@ import {
   setWidthValue,
   setCurrentButtonId,
   setLink,
+  setActivPage,
 } from '../../actions/profil';
 import List from '../../pages/List/List';
 import Ingredient from '../Ingredient/Ingredient';
@@ -61,7 +62,8 @@ const profilDataNav = [
 ];
 
 function Profil() {
-  const [activePage, setActivePage] = useState('/profil/mes-recettes');
+  // const [activePage, setActivePage] = useState('/profil/mes-recettes');
+  const activePage = useSelector((state) => state.profil.activProfilPage);
   const [screenWidth, setScreenWidth] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [recipes, setRecipes] = useState([]);
@@ -103,7 +105,7 @@ function Profil() {
   };
 
   const togglePages = (link) => {
-    setActivePage(link);
+    dispatch(setActivPage(link));
     setIsOpen(!isOpen);
     dispatch(setWidthValue(!screenWidth));
     if (link === '/profil/mes-recettes') {

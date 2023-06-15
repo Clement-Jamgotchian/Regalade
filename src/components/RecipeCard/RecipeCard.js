@@ -160,7 +160,7 @@ RecipeCard.propTypes = {
 };
 
 RecipeCard.defaultProps = {
-  recipe: {
+  recipe: ({
     id: -1,
     picture: 'https://picsum.photos/300/500',
     title: 'Titre par défaut',
@@ -168,7 +168,7 @@ RecipeCard.defaultProps = {
     cookingDuration: 15,
     setupDuration: 20,
     difficulty: 1,
-  },
+  }),
 };
 
 export default RecipeCard;

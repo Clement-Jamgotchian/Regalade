@@ -9,7 +9,7 @@ import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 import logoConnexion from '../../assets/images/connexion.png';
 import { setSearchValue } from '../../actions/header';
-import { setCurrentButtonId, setLink } from '../../actions/profil';
+import { setActivPage, setCurrentButtonId, setLink } from '../../actions/profil';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -178,6 +178,7 @@ function Header() {
                   to="/profil/mes-repas"
                   onClick={() => {
                     dispatch(setCurrentButtonId(4));
+                    dispatch(setActivPage('/profil/mes-repas'));
                   }}
                   className="nav-link"
                 >
@@ -192,6 +193,7 @@ function Header() {
                   className="nav-link"
                   onClick={() => {
                     dispatch(setCurrentButtonId(3));
+                    dispatch(setActivPage('/profil/mes-ingredients'));
                   }}
                 >
                   Mon frigo
