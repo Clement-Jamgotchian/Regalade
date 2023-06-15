@@ -19,3 +19,11 @@ export const setLink = (link) => ({
     currentLink: link,
   },
 });
+
+export const SET_ACTIV_PAGE_PROFIL = 'SET_ACTIV_PAGE_PROFIL';
+export const setActivPage = (page) => ({
+  type: SET_ACTIV_PAGE_PROFIL,
+  payload: {
+    currentActivPage: page,
+  },
+});

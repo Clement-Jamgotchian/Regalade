@@ -10,7 +10,7 @@ export function getTotalDuration(cookingDuration, setupDuration) {
   const totalDuration = cookingDuration + setupDuration;
   const hours = Math.floor(totalDuration / 60);
   // If minutes < 10, we add a 0 before
-  const minutes = (`0${totalDuration % 60}`).slice(-2);
+  const minutes = `0${totalDuration % 60}`.slice(-2);
   // If 0 hour, we show only minutes
   const totalDurationLabel = hours === 0 ? `${minutes}min` : `${hours}h${minutes}`;
   return totalDurationLabel;
@@ -33,7 +33,9 @@ export function getStars(starsRating) {
     if (i <= starsRating) {
       stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
       // If rating is decimal, we show a half-filled star
-      if (/^[0-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i) {
+      if (
+        /^[0-4]+.[1-9]+$/.test(starsRating) && Math.floor(starsRating) === i
+      ) {
         stars.push(<FontAwesomeIcon key="half" icon={faStarHalfStroke} />);
         i++;
         // We show other empty stars to have a total of 5 stars
