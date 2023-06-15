@@ -72,6 +72,7 @@ function List() {
       )
       .then((response) => {
         console.log(response);
+        dispatch(newAlertMessage('Votre liste de courses a bien été générées !'));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('success'));
         setTimeout(() => {

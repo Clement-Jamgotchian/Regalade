@@ -13,8 +13,9 @@ function Cart() {
   const getCart = async () => {
     await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
       .then((response) => {
-        console.log(response.data);
         setIngredients(response.data);
+        console.log(ingredients);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -31,7 +32,7 @@ function Cart() {
 
   return (
     <div className="Cart">
-      {ingredients ? (
+      {ingredients.length > 0 ? (
         <Ingredients departments={departments} ingredients={ingredients} />
       ) : (
         <Loader />
