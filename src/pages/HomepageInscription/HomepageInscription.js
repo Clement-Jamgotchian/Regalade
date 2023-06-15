@@ -77,7 +77,6 @@ function HomepageInscription() {
       password: password,
     })
       .then((res) => {
-
         console.log(res);
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
@@ -86,7 +85,6 @@ function HomepageInscription() {
 
         console.log("c'est ok");
         navigate('/recettes');
-
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +108,6 @@ function HomepageInscription() {
           dispatch(setNewNickname(res.data.nickname));
 
           axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-
         })
         .catch(() => {
           alert('Oups !');
