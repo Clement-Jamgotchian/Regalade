@@ -12,7 +12,6 @@ import Faq from '../../pages/Faq/Faq';
 import Homepage from '../../pages/Homepage/Homepage';
 import List from '../../pages/List/List';
 import MobilePages from '../../pages/MobilePages/MobilePages';
-import Ingredient from '../Ingredient/Ingredient';
 import Fridge from '../../pages/Fridge/Fridge';
 
 function App() {
@@ -57,18 +56,6 @@ function App() {
             isWidthTrue ? (
               <MyLayout>
                 <List />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-courses"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Ingredient />
               </MyLayout>
             ) : (
               <Profil />

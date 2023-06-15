@@ -20,10 +20,8 @@ import {
   setActivPage,
 } from '../../actions/profil';
 import List from '../../pages/List/List';
-import Ingredient from '../Ingredient/Ingredient';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
-
 
 const profilDataNav = [
   {
