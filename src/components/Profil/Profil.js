@@ -1,7 +1,9 @@
 import './Profil.scss';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Pagination } from 'react-bootstrap';
+import axios from 'axios';
 import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
 import toque from '../../assets/images/toque.png';
@@ -11,7 +13,12 @@ import frigo from '../../assets/images/frigo.png';
 import coeur from '../../assets/images/coeur.png';
 import list from '../../assets/images/liste.png';
 import { MyLayout } from '../MyLayout';
-import { setWidthValue } from '../../actions/profil';
+import {
+  setWidthValue,
+  setCurrentButtonId,
+  setLink,
+  setActivPage,
+} from '../../actions/profil';
 import List from '../../pages/List/List';
 import Cart from '../../pages/Cart/Cart';
 
@@ -55,11 +62,35 @@ const profilDataNav = [
 ];
 
 function Profil() {
+  // const [activePage, setActivePage] = useState('/profil/mes-recettes');
+  const activePage = useSelector((state) => state.profil.activProfilPage);
   const [screenWidth, setScreenWidth] = useState(false);
-  const [currentButtonId, setCurrentButtonId] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [recipes, setRecipes] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
-  const [activePage, setActivePage] = useState('/profil/mes-recettes');
+  const currentButtonId = useSelector((state) => state.profil.profilButtonId);
+  const linkAPI = useSelector((state) => state.profil.link);
   const dispatch = useDispatch();
+  const pageNumber = useSelector((state) => state.list.pageNumber);
+  const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
+  const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
+  const request = `?${pageRequest}`;
+
+  const getRecipes = async () => {
+    axios
+      .get(baseUrl + request)
+      .then((response) => {
+        setRecipes(response.data.recipes);
+        setPageCount(response.data.totalPages);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, [isOpen]);
 
   const handleWidthDimension = () => {
     if (window.innerWidth > 990) {
@@ -70,13 +101,19 @@ function Profil() {
   };
 
   const getCurrentId = (id) => {
-    setCurrentButtonId(id);
+    dispatch(setCurrentButtonId(id));
   };
 
   const togglePages = (link) => {
-    setActivePage(link);
+    dispatch(setActivPage(link));
     setIsOpen(!isOpen);
     dispatch(setWidthValue(!screenWidth));
+    if (link === '/profil/mes-recettes') {
+      dispatch(setLink('recipes/my'));
+    }
+    if (link === '/profil/mes-favorites') {
+      dispatch(setLink('favorite'));
+    }
   };
 
   useLayoutEffect(() => {
@@ -85,13 +122,18 @@ function Profil() {
 
   const renderContent = () => {
     if (activePage === '/profil/mes-recettes') {
-      return <Loader />;
+      return (
+        <>
+          <Recipes recipes={recipes} />
+          <Pagination setRecipes={setRecipes} pageCount={pageCount} />
+        </>
+      );
     }
     if (activePage === '/profil/mes-favorites') {
-      return <Loader />;
+      return <Recipes recipes={recipes} />;
     }
     if (activePage === '/profil/mes-ingredients') {
-      return <Recipes />;
+      return <Loader />;
     }
     if (activePage === '/profil/mes-repas') {
       return <List />;
@@ -100,7 +142,7 @@ function Profil() {
       return <Cart />;
     }
     if (activePage === '/profil/mes-infos') {
-      return <Recipes />;
+      return <Loader />;
     }
 
     return null;

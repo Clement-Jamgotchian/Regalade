@@ -18,6 +18,9 @@ import { clearRecipeRemoved, updateRecipesList, showOrHideAlert, newAlertMessage
 
 // Styles import
 import './List.scss';
+import Pagination from '../../components/Pagination/Pagination';
+import { setActivPage, setCurrentButtonId } from '../../actions/profil';
+
 
 function List() {
   const [list, setList] = useState([]);
@@ -31,7 +34,10 @@ function List() {
   const dispatch = useDispatch();
 
   const getList = async () => {
-    await axios.get(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`)
+    await axios
+      .get(
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`,
+      )
       .then((response) => {
         console.log(response.data);
         const recipes = response.data.recipesList.map((item) => ({
@@ -54,7 +60,10 @@ function List() {
   }, [recipeRemoved]);
 
   const generateCart = async () => {
-    await axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
+    await axios
+      .post(
+        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart',
+      )
       .then((response) => {
         console.log(response);
         dispatch(showOrHideAlert(true));
