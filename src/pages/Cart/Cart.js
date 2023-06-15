@@ -1,6 +1,5 @@
 // React components
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 // Local components
@@ -9,12 +8,13 @@ import Loader from '../../components/Loader/Loader';
 
 function Cart() {
   const [departments, setDepartments] = useState([]);
-  const ingredients = useSelector((store) => store.cart.ingredients);
+  const [ingredients, setIngredients] = useState([]);
 
   const getCart = async () => {
     await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
       .then((response) => {
         console.log(response.data);
+        setIngredients(response.data);
       })
       .catch((error) => {
         console.log(error);

@@ -164,7 +164,14 @@ function Header() {
             </Link>
           </Nav>
           <Nav>
-            <Link to="/list" className="nav-link">
+            <Link
+              to="/profil/mes-courses"
+              onClick={() => {
+                dispatch(setCurrentButtonId(5));
+                dispatch(setActivPage('/profil/mes-courses'));
+              }}
+              className="nav-link"
+            >
               <img
                 style={{ marginLeft: '15px' }}
                 className="Header-utilsLink-logo"

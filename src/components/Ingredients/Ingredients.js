@@ -30,6 +30,7 @@ Ingredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.shape({
     quantity: PropTypes.number.isRequired,
     ingredient: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       isCold: PropTypes.bool.isRequired,
       unit: PropTypes.string.isRequired,
