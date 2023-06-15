@@ -16,11 +16,6 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 import { Link } from 'react-router-dom';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
 import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
-import { updateRecipesList } from '../../actions/list';
-import {
-  addRecipeToFavorites,
-  removeRecipeFromFavorites,
-} from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';

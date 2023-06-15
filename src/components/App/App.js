@@ -12,8 +12,8 @@ import Faq from '../../pages/Faq/Faq';
 import Homepage from '../../pages/Homepage/Homepage';
 import List from '../../pages/List/List';
 import MobilePages from '../../pages/MobilePages/MobilePages';
-import Ingredient from '../Ingredient/Ingredient';
 import Fridge from '../../pages/Fridge/Fridge';
+import Cart from '../../pages/Cart/Cart';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -33,11 +33,27 @@ function App() {
         <Route path="/profil" element={<Profil />} />
         <Route
           path="/profil/mes-recettes"
-          element={isWidthTrue ? <MyLayout><MobilePages /></MyLayout> : <Profil />}
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <MobilePages />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
         />
         <Route
           path="/profil/mes-favorites"
-          element={isWidthTrue ? <MyLayout><MobilePages /></MyLayout> : <Profil />}
+          element={
+            isWidthTrue ? (
+              <MyLayout>
+                <MobilePages />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
         />
         <Route
           path="/profil/mes-ingredients"
@@ -68,7 +84,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <Ingredient />
+                <Cart />
               </MyLayout>
             ) : (
               <Profil />
@@ -87,19 +103,14 @@ function App() {
             )
           }
         />
-        <Route
-          path="/recette/:idRecette"
-          element={(
-            <RecipeDetails />
-            )}
-        />
+        <Route path="/recette/:idRecette" element={<RecipeDetails />} />
         <Route
           path="/FAQ"
           element={(
             <MyLayout>
               <Faq />
             </MyLayout>
-        )}
+          )}
         />
       </Routes>
     </Container>

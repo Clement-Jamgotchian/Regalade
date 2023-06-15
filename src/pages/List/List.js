@@ -14,10 +14,17 @@ import Recipes from '../../components/Recipes/Recipes';
 import Pagination from '../../components/Pagination/Pagination';
 
 // Import Redux actions
-import { clearRecipeRemoved, updateRecipesList, showOrHideAlert, newAlertMessage, changeAlertVariant } from '../../actions/list';
+import {
+  clearRecipeRemoved,
+  updateRecipesList,
+  showOrHideAlert,
+  newAlertMessage,
+  changeAlertVariant,
+} from '../../actions/list';
 
 // Styles import
 import './List.scss';
+
 // import { setActivPage, setCurrentButtonId } from '../../actions/profil';
 
 function List() {
@@ -39,7 +46,8 @@ function List() {
       .then((response) => {
         console.log(response.data);
         const recipes = response.data.recipesList.map((item) => ({
-          ...item.recipe, userPortions: item.portions,
+          ...item.recipe,
+          userPortions: item.portions,
         }));
         setList(recipes);
         setPageCount(response.data.totalPages);
@@ -83,7 +91,11 @@ function List() {
   return (
     <div className="List">
       {show && (
-        <Alert variant={alertVariant} onClose={() => dispatch(showOrHideAlert(false))} dismissible>
+        <Alert
+          variant={alertVariant}
+          onClose={() => dispatch(showOrHideAlert(false))}
+          dismissible
+        >
           {alertMessage}
         </Alert>
       )}
