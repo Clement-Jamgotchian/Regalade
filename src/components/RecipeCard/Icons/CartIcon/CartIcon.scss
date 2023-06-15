@@ -13,7 +13,7 @@
     }
 
     
-    &--cart:hover, &--cart {
+    &--cart:hover {
         transform: scale(1.4);
         transition: transform 1s ease;
     }
@@ -27,10 +27,10 @@
         border-radius: 50%;
         color: #ffffff;
         z-index: 2;
-        transition: 1s ease;
+        transition: 1s ease ;
     }
 
     &--cart__added {
-        background: vars.$primaryButton;
+        opacity: 0.5;
     }
 }

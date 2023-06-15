@@ -81,7 +81,8 @@ function HomepageInscription() {
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
         axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-        // localStorage.setItem('isLogged', setConnectedUser(true));
+        localStorage.setItem('isLogged', true);
+        localStorage.setItem('token', res.data.token);
 
         console.log("c'est ok");
         navigate('/recettes');

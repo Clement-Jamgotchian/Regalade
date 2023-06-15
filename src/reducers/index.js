@@ -4,7 +4,6 @@ import userReducer from './user';
 import listReducer from './list';
 import favoritesReducer from './favorites';
 import profilReducer from './profil';
-import cartReducer from './cart';
 
 const rootReducer = combineReducers({
   header: headerReducer,
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
   list: listReducer,
   favorites: favoritesReducer,
   profil: profilReducer,
-  cart: cartReducer,
 });
 
 export default rootReducer;

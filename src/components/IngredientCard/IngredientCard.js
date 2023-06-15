@@ -4,6 +4,7 @@ import {
   Button, Card, Form, InputGroup,
 } from 'react-bootstrap';
 import { useState } from 'react';
+import axios from 'axios';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,10 +15,23 @@ import vegetables from '../../assets/vegetables.png';
 
 // Import styles
 import './IngredientCard.scss';
-import { changeIngredientQuantity } from '../../actions/cart';
 
 function IngredientCard({ ingredient, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
+  let newValue = 0;
+
+  const updateIngredientQuantity = async (ingredientId, newQuantity) => {
+    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart/${ingredientId}`, {
+      quantity: newQuantity,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <Card className="IngredientCard mb-2">
       <Card.Img className="IngredientCard--image" variant="left" src={vegetables} />
@@ -30,8 +44,9 @@ function IngredientCard({ ingredient, quantity }) {
               onClick={(e) => {
                 e.preventDefault();
                 if (quantityValue > 0) {
-                  setQuantityValue(quantityValue - 1);
-                  changeIngredientQuantity(ingredient.id, quantityValue);
+                  newValue = quantityValue - 1;
+                  setQuantityValue(newValue);
+                  updateIngredientQuantity(ingredient.id, newValue);
                 }
               }}
             >
@@ -52,7 +67,9 @@ function IngredientCard({ ingredient, quantity }) {
               variant="success"
               onClick={(e) => {
                 e.preventDefault();
-                setQuantityValue(quantityValue + 1);
+                newValue = quantityValue + 1;
+                setQuantityValue(newValue);
+                updateIngredientQuantity(ingredient.id, newValue);
               }}
             >
               <FontAwesomeIcon icon={faPlus} size="xs" />

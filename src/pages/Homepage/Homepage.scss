@@ -4,4 +4,13 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 70px;
+
+    & .alert {
+        position: sticky;
+        z-index: 100;
+        top: 1rem;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
 }

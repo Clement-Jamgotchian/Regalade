@@ -1,7 +1,7 @@
 // React components
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Stack } from 'react-bootstrap';
+import { Alert, Button, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -14,8 +14,7 @@ import Recipes from '../../components/Recipes/Recipes';
 import Pagination from '../../components/Pagination/Pagination';
 
 // Import Redux actions
-import { clearRecipeRemoved, updateRecipesList } from '../../actions/list';
-import { addIngredientsToCart } from '../../actions/cart';
+import { clearRecipeRemoved, updateRecipesList, showOrHideAlert, newAlertMessage, changeAlertVariant } from '../../actions/list';
 
 // Styles import
 import './List.scss';
@@ -25,6 +24,9 @@ function List() {
   const [pageCount, setPageCount] = useState(0);
   const recipeRemoved = useSelector((state) => state.list.recipeRemoved);
   const pageNumber = useSelector((state) => state.list.pageNumber);
+  const alertMessage = useSelector((state) => state.list.alertMessage);
+  const alertVariant = useSelector((state) => state.list.alertVariant);
+  const show = useSelector((state) => state.list.showAlert);
   const pageRequest = pageNumber > 0 ? `?page=${pageNumber}` : '';
   const dispatch = useDispatch();
 
@@ -54,15 +56,30 @@ function List() {
   const generateCart = async () => {
     await axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
       .then((response) => {
-        dispatch(addIngredientsToCart(response.data));
+        console.log(response);
+        dispatch(showOrHideAlert(true));
+        dispatch(changeAlertVariant('success'));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       })
       .catch((error) => {
-        console.log(error);
+        dispatch(newAlertMessage(error));
+        dispatch(changeAlertVariant('danger'));
+        dispatch(showOrHideAlert(true));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       });
   };
 
   return (
     <div className="List">
+      {show && (
+        <Alert variant={alertVariant} onClose={() => dispatch(showOrHideAlert(false))} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
       <Stack direction="horizontal" gap={3}>
         <Button
           variant="primary"
