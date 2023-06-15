@@ -14,6 +14,8 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
 import { Link } from 'react-router-dom';
+import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
+import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 import { updateRecipesList } from '../../actions/list';
 import {
   addRecipeToFavorites,
@@ -48,9 +50,21 @@ function RecipeCard({ recipe }) {
       )
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
+        dispatch(newAlertMessage('La recette a bien été ajoutée à votre liste de repas.'));
+        dispatch(changeAlertVariant('success'));
+        dispatch(showOrHideAlert(true));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        console.log('error');
+        dispatch(changeAlertVariant('danger'));
+        dispatch(newAlertMessage('Cette recette est déjà dans votre liste de repas.'));
+        dispatch(showOrHideAlert(true));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       });
   };
 
@@ -138,7 +152,7 @@ function RecipeCard({ recipe }) {
           </Card.Text>
           <ChangePortionsInput
             recipeId={recipe.id}
-            portions={recipe.portions}
+            portions={recipe.userPortions}
           />
         </Card.Body>
       </Link>
@@ -156,6 +170,7 @@ RecipeCard.propTypes = {
     setupDuration: PropTypes.number.isRequired,
     difficulty: PropTypes.number.isRequired,
     portions: PropTypes.number,
+    userPortions: PropTypes.number,
   }),
 };
 

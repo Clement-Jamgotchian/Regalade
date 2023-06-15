@@ -20,7 +20,7 @@ import {
   setActivPage,
 } from '../../actions/profil';
 import List from '../../pages/List/List';
-import Ingredient from '../Ingredient/Ingredient';
+import Cart from '../../pages/Cart/Cart';
 
 const profilDataNav = [
   {
@@ -139,7 +139,7 @@ function Profil() {
       return <List />;
     }
     if (activePage === '/profil/mes-courses') {
-      return <Ingredient />;
+      return <Cart />;
     }
     if (activePage === '/profil/mes-infos') {
       return <Loader />;
