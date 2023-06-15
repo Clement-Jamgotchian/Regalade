@@ -16,7 +16,7 @@ function Department({ department, ingredients }) {
         {ingredients
           .filter((el) => el.ingredient.department.name === department)
           .map((item) => (
-            <Col key={item.quantity} xs={12} md={4} lg={3}>
+            <Col key={item.ingredient.id + item.quantity} xs={12} md={4} lg={3}>
               <IngredientCard ingredient={item.ingredient} quantity={item.quantity} />
             </Col>
           ))}
@@ -30,6 +30,7 @@ Department.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.shape({
     quantity: PropTypes.number.isRequired,
     ingredient: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       isCold: PropTypes.bool.isRequired,
       unit: PropTypes.string.isRequired,
