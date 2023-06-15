@@ -75,6 +75,7 @@ function Profil() {
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
   const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
   const request = `?${pageRequest}`;
+  console.log(linkAPI);
 
   const getRecipes = async () => {
     axios
