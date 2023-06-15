@@ -1,3 +1,13 @@
 .Ingredients {
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    
+    &--deleteButton {
+        align-items: end;
+    }
+
+}
+.modal-footer .btn-primary {
+    color: #ffffff;
 }

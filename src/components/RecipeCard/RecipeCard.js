@@ -50,7 +50,7 @@ function RecipeCard({ recipe }) {
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       })
       .catch(() => {
         console.log('error');
@@ -59,7 +59,7 @@ function RecipeCard({ recipe }) {
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       });
   };
 
