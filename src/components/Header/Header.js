@@ -9,7 +9,11 @@ import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 import logoConnexion from '../../assets/images/connexion.png';
 import { setSearchValue } from '../../actions/header';
-import { setActivPage, setCurrentButtonId, setLink } from '../../actions/profil';
+import {
+  setActivPage,
+  setCurrentButtonId,
+  setLink,
+} from '../../actions/profil';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -19,6 +23,8 @@ function Header() {
   const [searchBarValue, setSearchBarValue] = useState('');
   const nickname = useSelector((state) => state.user.nicknameUser);
   const isInvited = useSelector((state) => state.user.isInvitedIn);
+  const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
+  const pathProfil = isWidthTrue ? '/profil' : '/profil/mes-recettes';
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,6 +51,12 @@ function Header() {
       form.classList.remove('Small-searchbar');
       buttonSearch.classList.remove('small-button');
       containerHeader.append(form);
+    }
+  };
+
+  const handleNavProfil = () => {
+    if (isWidthTrue === false) {
+      dispatch(setActivPage('/profil/mes-recettes'));
     }
   };
 
@@ -136,10 +148,11 @@ function Header() {
           </p>
           <Nav>
             <Link
-              to={isInvited ? '/' : '/profil'}
+              to={isInvited ? '/' : pathProfil}
               onClick={() => {
                 dispatch(setCurrentButtonId(1));
                 dispatch(setLink('recipes/my'));
+                handleNavProfil();
               }}
               className="nav-link"
             >

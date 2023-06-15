@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { MyLayout } from '../MyLayout';
-import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
 import RecipeDetails from '../RecipeDetails/RecipeDetail';
 import HomepageInscription from '../../pages/HomepageInscription/HomepageInscription';
@@ -12,6 +11,9 @@ import Profil from '../Profil/Profil';
 import Faq from '../../pages/Faq/Faq';
 import Homepage from '../../pages/Homepage/Homepage';
 import List from '../../pages/List/List';
+import MobilePages from '../../pages/MobilePages/MobilePages';
+import Ingredient from '../Ingredient/Ingredient';
+import Fridge from '../../pages/Fridge/Fridge';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -31,18 +33,18 @@ function App() {
         <Route path="/profil" element={<Profil />} />
         <Route
           path="/profil/mes-recettes"
-          element={isWidthTrue ? <Homepage /> : <Profil />}
+          element={isWidthTrue ? <MyLayout><MobilePages /></MyLayout> : <Profil />}
         />
         <Route
           path="/profil/mes-favorites"
-          element={isWidthTrue ? <Recipes /> : <Profil />}
+          element={isWidthTrue ? <MyLayout><MobilePages /></MyLayout> : <Profil />}
         />
         <Route
           path="/profil/mes-ingredients"
           element={
             isWidthTrue ? (
               <MyLayout>
-                <Loader />
+                <Fridge />
               </MyLayout>
             ) : (
               <Profil />
@@ -66,7 +68,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <Loader />
+                <Ingredient />
               </MyLayout>
             ) : (
               <Profil />
