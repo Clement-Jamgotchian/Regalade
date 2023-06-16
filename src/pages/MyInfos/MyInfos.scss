@@ -1,6 +1,42 @@
 @use 'src/styles/vars';
 
+
 .MyInfos {
+  width: 100%;
+  
+  margin-bottom: 2em;
+  color: vars.$primaryButton;
+  --bs-border-color: #f2542d;
+  &-row {
+    width: 100%;
+    margin-bottom: 3em !important;
+    &-group {
+      width: 100%;
+
+      &-check {
+        width: 20em;
+      }
+
+      &-img {
+        width: 4em;
+        margin: auto;
+        border-radius: 50px;
+      }
+    }
+    
+  }
+}
+
+.form-check-input:checked {
+  background-color: vars.$primaryButton;
+  border-color: vars.$primaryButton;
+  --bs-border-color: vars.$primaryButton;
+
+}
+
+@media (min-width: 600px)
+{
+  .MyInfos {
   width: 40%;
   margin: auto;
   margin-bottom: 2em;
@@ -20,13 +56,6 @@
   }
 }
 
-.form-check-input:checked {
-  background-color: vars.$primaryButton;
-  border-color: vars.$primaryButton;
-  --bs-border-color: vars.$primaryButton;
 
-}
 
-.form-check-input {
-  
 }

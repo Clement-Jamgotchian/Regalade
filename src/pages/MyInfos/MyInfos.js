@@ -1,6 +1,7 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './MyInfos.scss';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNewNickname } from '../../actions/user';
 import utilisateur from '../../assets/images/utilisateur.png';
 import { newAlertMessage, showOrHideAlert } from '../../actions/list';
+import MyVerticallyCenteredModal from './Modal/Modal';
 
 function MyInfos() {
   const [profil, setProfil] = useState([]);
@@ -20,43 +22,34 @@ function MyInfos() {
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
+  const [modalShow, setModalShow] = React.useState(false);
+  const [submitOn, setSubmit] = useState(true);
 
   const [validated, setValidated] = useState(false);
 
-  console.log(email);
+  console.log(validated);
 
   const dispatch = useDispatch();
 
-  const getUser = () => {
-    axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user')
-      .then((response) => {
-        setProfil(response.data);
-        console.log(response.data);
-        dispatch(setNewNickname(response.data.nickname));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     if (form.checkValidity() === false && confirmPassword !== password) {
-      event.stopPropagation();
-    }
-    setValidated(true);
-    axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
-      email,
-      nickname,
-      password,
-    })
-      .then(() => {
-        dispatch(newAlertMessage('modifications bien ajoutées'));
+      e.stopPropagation();
+    } else {
+      setValidated(true);
+      await axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
+        email: email,
+        nickname: nickname,
+        password: password,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(() => {
+          dispatch(newAlertMessage('modifications bien ajoutées'));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const getPicture = (photo) => {
@@ -70,10 +63,31 @@ function MyInfos() {
     );
   };
 
+  const getProfil = async () => {
+    await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user')
+      .then((response) => {
+        setProfil(response.data);
+        setNickname(response.data.nickname);
+        setEmail(response.data.email);
+        console.log(response.data);
+        dispatch(setNewNickname(response.data.nickname));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   //   atob()
 
+  // const handlemodalShow = () => { setModalShow(false); };
+  // eslint-disable-next-line no-unused-expressions
+  const toggleSubmit = () => { submitOn ? setSubmit(false) : setSubmit(true); };
   useEffect(() => {
-    getUser();
+    handleSubmit();
+  }, [submitOn]);
+
+  useEffect(() => {
+    getProfil();
   }, []);
 
   return (
@@ -97,12 +111,11 @@ function MyInfos() {
             type="text"
             name="nickname"
             id="nickname"
+            defaultValue={profil.nickname}
             onChange={(event) => {
               setNickname(event.target.value);
-              console.log(event.target.value);
             }}
             placeholder="Pseudo"
-            defaultValue={profil.nickname}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -170,7 +183,7 @@ function MyInfos() {
             <img
               src={getPicture(profil.picture)}
               alt="profil de l'utilisateur"
-              className="MyInfos-img"
+              className="MyInfos-row-group-img"
             />
           </Form.Label>
           <Form.Control className="MyInfos-row-group-input" type="file" required />
@@ -182,10 +195,20 @@ function MyInfos() {
           required
           label="Confirmartion de modification"
           feedback="Vous devez cocher pour valider vos modifications"
+          // eslint-disable-next-line no-unused-expressions
+          onChange={() => { validated === true ? setValidated(false) : setValidated(true); }}
           feedbackType="invalid"
         />
       </Form.Group>
-      <Button type="submit">Submit form</Button>
+      <Button type="submit" onClick={toggleSubmit}>Modifier</Button>
+      <Button variant="primary" onClick={() => setModalShow(true)}>
+        Launch vertically centered modal
+      </Button>
+
+      <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </Form>
   );
 }
