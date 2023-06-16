@@ -53,7 +53,6 @@ function RecipeCard({ recipe }) {
         }, '4000');
       })
       .catch(() => {
-        console.log('error');
         dispatch(changeAlertVariant('danger'));
         dispatch(newAlertMessage('Cette recette est déjà dans votre liste de repas.'));
         dispatch(showOrHideAlert(true));
@@ -85,6 +84,7 @@ function RecipeCard({ recipe }) {
         console.log(error);
       });
   };
+
   const deleteToFavorite = async (id) => {
     await axios
       .delete(
