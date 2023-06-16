@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 // Import FontAwesome
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
@@ -12,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Local components
 import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import Department from '../Department/Department';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 // Import styles
 import './Ingredients.scss';
@@ -28,9 +28,9 @@ function Ingredients({ departments, ingredients }) {
   const handleShow = () => setShow(true);
 
   const generateCart = async () => {
-    await axios
+    await AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart',
+        '/cart',
       )
       .then((response) => {
         console.log(response);
@@ -53,7 +53,7 @@ function Ingredients({ departments, ingredients }) {
   };
 
   const deleteCart = async () => {
-    await axios.delete('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
+    await AxiosPrivate.delete('/cart')
       .then(() => {
         dispatch(setcartDeleted());
       })

@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from 'react-bootstrap';
-import axios from 'axios';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 import Recipes from '../Recipes/Recipes';
 import Loader from '../Loader/Loader';
 import toque from '../../assets/images/toque.png';
@@ -74,11 +74,11 @@ function Profil() {
   const dispatch = useDispatch();
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
+  const baseUrl = `/${linkAPI}`;
   const request = `?${pageRequest}`;
 
   const getRecipes = async () => {
-    axios
+    AxiosPrivate
       .get(baseUrl + request)
       .then((response) => {
         setRecipes(response.data.recipes);

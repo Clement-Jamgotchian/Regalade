@@ -1,5 +1,4 @@
 // React components
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
@@ -12,6 +11,7 @@ import './Homepage.scss';
 import Loader from '../../components/Loader/Loader';
 import Pagination from '../../components/Pagination/Pagination';
 import { showOrHideAlert } from '../../actions/list';
+import AxiosPublic from '../../utils/AxiosPublic';
 
 function Homepage() {
   const [recipes, setRecipes] = useState([]);
@@ -22,12 +22,12 @@ function Homepage() {
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = 'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes';
+  const baseUrl = '/recipes';
   const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&${pageRequest}` : `?${pageRequest}`;
   const dispatch = useDispatch();
 
   const getRecipes = async () => {
-    axios.get(baseUrl + request)
+    AxiosPublic.get(baseUrl + request)
       .then((response) => {
         setRecipes(response.data.recipes);
         setPageCount(response.data.totalPages);

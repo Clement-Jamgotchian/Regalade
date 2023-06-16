@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './RecipeDetails.scss';
 import PropTypes from 'prop-types';
@@ -17,10 +16,13 @@ import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
 import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
 import { updateRecipesList } from '../../actions/list';
+import AxiosPrivate from '../../utils/AxiosPrivate';
+import AxiosPublic from '../../utils/AxiosPublic';
 
 // If user is logged in, we show the cart icon
-function CartIcon({ isLoggedIn, addToList, isFavorite }) {
+function CartIcon({ addToList, isFavorite }) {
   const location = useLocation();
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const isInPageList = location.pathname === '/profil/mes-repas';
   const className = isFavorite ? 'recipeDetails-cart__active' : 'recipeDetails-cart';
 
@@ -40,7 +42,7 @@ function RecipeDetails() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const favoritesRecipes = useSelector((state) => state.favorites.recipes);
   // eslint-disable-next-line eqeqeq
   const isFavorite = favoritesRecipes.some((item) => item.id == idRecette);
@@ -48,7 +50,7 @@ function RecipeDetails() {
   const [cartOn, setCartOn] = useState(false);
 
   const addToList = async (id) => {
-    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`)
+    await AxiosPrivate.post(`/list/${id}`)
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
         setCartOn(true);
@@ -59,9 +61,9 @@ function RecipeDetails() {
   };
 
   const removeRecipe = async (id) => {
-    await axios
+    await AxiosPrivate
       .delete(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+        `/favorite/${id}`,
       )
       .then(() => {
         dispatch(removeRecipeFromFavorites(id));
@@ -72,9 +74,9 @@ function RecipeDetails() {
   };
 
   const addToFavorite = async (id) => {
-    await axios
+    await AxiosPrivate
       .post(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+        `/favorite/${id}`,
       )
       .then(() => {
         dispatch(addRecipeToFavorites(recipe));
@@ -98,7 +100,7 @@ function RecipeDetails() {
   }
 
   useEffect(() => {
-    axios.get(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes/${idRecette}`)
+    AxiosPublic.get(`/recipes/${idRecette}`)
       .then((response) => {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
@@ -129,7 +131,6 @@ function RecipeDetails() {
             isFavorite={cartOn}
           />
           <FavoriteIcon
-            isLoggedIn={isLoggedIn}
             recipeId={idRecette}
             toggleFavorite={() => {
               toggleFavorite(idRecette);
@@ -211,7 +212,6 @@ function RecipeDetails() {
 }
 
 CartIcon.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   addToList: PropTypes.func.isRequired,
   isFavorite: PropTypes.bool.isRequired,
 };

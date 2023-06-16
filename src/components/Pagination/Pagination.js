@@ -1,10 +1,10 @@
 // React components
-import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePageNumber, updateRecipesList } from '../../actions/list';
+import AxiosPublic from '../../utils/AxiosPublic';
 
 function Pagination({ setRecipes, pageCount }) {
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
@@ -14,11 +14,10 @@ function Pagination({ setRecipes, pageCount }) {
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected + 1;
-    const baseUrl = 'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api';
     const endpoint = isInPageList ? '/list' : '/recipes';
     const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&page=${selectedPage}` : `?page=${selectedPage}`;
 
-    axios.get(baseUrl + endpoint + request)
+    AxiosPublic.get(endpoint + request)
       .then((response) => {
         if (isInPageList) {
           const recipes = response.data.recipesList.map((item) => item.recipe);
