@@ -77,7 +77,7 @@ function Ingredients({ departments, ingredients }) {
             <FontAwesomeIcon icon={faTrashCan} />
         &nbsp;Vider ma liste de courses
           </Button>
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
               <Modal.Title>Êtes-vous sûr ?</Modal.Title>
             </Modal.Header>

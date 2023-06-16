@@ -1,7 +1,8 @@
-import { ADD_RECIPE_TO_FAVORITES, REMOVE_RECIPE_FROM_FAVORITES } from '../actions/favorites';
+import { ADD_RECIPE_TO_FAVORITES, CLEAR_RECIPE_REMOVED, FAVORITES_UPDATED, REMOVE_RECIPE_FROM_FAVORITES } from '../actions/favorites';
 
 export const initialState = {
   recipes: [],
+  recipeRemoved: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -15,7 +16,19 @@ const reducer = (state = initialState, action = {}) => {
     case REMOVE_RECIPE_FROM_FAVORITES:
       return {
         ...state,
-        recipes: state.recipes.filter((item) => item.id !== action.payload.recipe.id),
+        recipes: state.recipes.filter((item) => item.id !== action.payload.recipe),
+      };
+
+    case CLEAR_RECIPE_REMOVED:
+      return {
+        ...state,
+        recipeRemoved: false,
+      };
+
+    case FAVORITES_UPDATED:
+      return {
+        ...state,
+        recipeRemoved: true,
       };
 
     default:

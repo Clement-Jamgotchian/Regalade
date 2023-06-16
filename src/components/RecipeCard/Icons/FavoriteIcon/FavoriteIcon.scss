@@ -20,19 +20,27 @@
         position: absolute;
         right: 1rem;
         top: 1rem;
-        color: #ffffff !important;
+        color: vars.$primaryButton !important;
         z-index: 2;
         transition: transform 1s ease;
+        background: #ffffff !important;
+        padding: 0.5rem !important;
+        border-radius: 50%;
+
+        &__active {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: vars.$primaryButton !important;
+            z-index: 2;
+            transition: transform 1s ease;
+            background: #ffffff !important;
+            padding: 0.5rem !important;
+            border-radius: 50%;
+        }
     }
 
-    &--favorite__active {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        color: vars.$primaryButton;
-        z-index: 2;
-        transition: transform 1s ease;
-    }
+    
 }
 
 @media (max-width: vars.$layout-breakpoint-small) {
