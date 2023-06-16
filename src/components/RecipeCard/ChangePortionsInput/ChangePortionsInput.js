@@ -1,5 +1,4 @@
 // React components
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -11,9 +10,10 @@ import { faMinus, faPerson, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // Styles import
 import './ChangePortionsInput.scss';
+import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 function handleChangePortionsSubmit(recipeId, portionsInput) {
-  axios.put(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${recipeId}`, {
+  AxiosPrivate.put(`/list/${recipeId}`, {
     portions: portionsInput,
   })
     .catch((error) => console.log(error));

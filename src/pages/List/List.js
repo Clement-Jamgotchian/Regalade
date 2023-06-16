@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, Button, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +23,7 @@ import {
 // Styles import
 import './List.scss';
 import { clearCartDeleted } from '../../actions/cart';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 // import { setActivPage, setCurrentButtonId } from '../../actions/profil';
 
@@ -39,9 +39,9 @@ function List() {
   const dispatch = useDispatch();
 
   const getList = async () => {
-    await axios
+    await AxiosPrivate
       .get(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`,
+        `/list${pageRequest}`,
       )
       .then((response) => {
         const recipes = response.data.recipesList.map((item) => ({
@@ -64,9 +64,9 @@ function List() {
   }, [recipeRemoved]);
 
   const generateCart = async () => {
-    await axios
+    await AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart',
+        '/cart',
       )
       .then((response) => {
         console.log(response);

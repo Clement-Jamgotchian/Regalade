@@ -1,7 +1,6 @@
 // React components
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
@@ -12,6 +11,7 @@ import Pagination from '../../components/Pagination/Pagination';
 // Styles import
 import './Favorites.scss';
 import { clearRecipeRemoved } from '../../actions/favorites';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
@@ -22,9 +22,9 @@ function Favorites() {
   const dispatch = useDispatch();
 
   const getFavorites = async () => {
-    await axios
+    await AxiosPrivate
       .get(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite${pageRequest}`,
+        `/favorite${pageRequest}`,
       )
       .then((response) => {
         setFavorites(response.data.recipes);

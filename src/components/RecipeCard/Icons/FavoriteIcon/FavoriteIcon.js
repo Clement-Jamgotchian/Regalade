@@ -15,7 +15,8 @@ import { useSelector } from 'react-redux';
 // active or not depends if added on favorite list or not
 // faHeart : filled heart
 // farHeart : empty heart
-function FavoriteIcon({ isLoggedIn, recipeId, toggleFavorite }) {
+function FavoriteIcon({ recipeId, toggleFavorite }) {
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const favoritesRecipes = useSelector((store) => store.favorites.recipes);
   const isFavorite = favoritesRecipes.some((item) => item.id === recipeId);
   const location = useLocation();
@@ -23,6 +24,7 @@ function FavoriteIcon({ isLoggedIn, recipeId, toggleFavorite }) {
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
 
+  // eslint-disable-next-line eqeqeq
   if (isLoggedIn && !hideFavoriteIcon) {
     return (
       <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
@@ -33,7 +35,6 @@ function FavoriteIcon({ isLoggedIn, recipeId, toggleFavorite }) {
 }
 
 FavoriteIcon.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   recipeId: PropTypes.number.isRequired,
   toggleFavorite: PropTypes.func.isRequired,
 };

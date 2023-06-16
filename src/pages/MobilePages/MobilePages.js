@@ -1,9 +1,9 @@
 import './MobilePages.scss';
-import axios from 'axios';
 import { Pagination } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Recipes from '../../components/Recipes/Recipes';
+import AxiosPublic from '../../utils/AxiosPublic';
 
 function MobilePages() {
   const [pageCount, setPageCount] = useState(0);
@@ -11,11 +11,11 @@ function MobilePages() {
   const linkAPI = useSelector((state) => state.profil.link);
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
+  const baseUrl = `/${linkAPI}`;
   const request = `?${pageRequest}`;
 
   const getRecipes = async () => {
-    axios
+    AxiosPublic
       .get(baseUrl + request)
       .then((response) => {
         setRecipes(response.data.recipes);

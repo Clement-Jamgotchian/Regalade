@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,17 +31,17 @@ import ChangePortionsInput from './ChangePortionsInput/ChangePortionsInput';
 import FavoriteIcon from './Icons/FavoriteIcon/FavoriteIcon';
 import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [favorite, setFavorite] = useState(false);
   const linkAPI = useSelector((state) => state.profil.link);
 
   const addToList = async (id) => {
-    await axios
+    await AxiosPrivate
       .post(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`,
+        `/list/${id}`,
       )
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
@@ -64,9 +63,9 @@ function RecipeCard({ recipe }) {
   };
 
   const removeRecipe = async (id) => {
-    await axios
+    await AxiosPrivate
       .delete(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}/${id}`,
+        `/${linkAPI}/${id}`,
       )
       .then(() => {
         if (linkAPI === 'list') {
@@ -83,9 +82,9 @@ function RecipeCard({ recipe }) {
   };
 
   const addToFavorite = async (id) => {
-    await axios
+    await AxiosPrivate
       .post(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+        `/favorite/${id}`,
       )
       .then(() => {
         dispatch(addRecipeToFavorites(recipe));
@@ -107,7 +106,6 @@ function RecipeCard({ recipe }) {
   return (
     <Card className="RecipeCard">
       <FavoriteIcon
-        isLoggedIn={isLoggedIn}
         recipeId={recipe.id}
         toggleFavorite={() => {
           toggleFavorite(recipe.id);
@@ -126,7 +124,6 @@ function RecipeCard({ recipe }) {
         />
         <Card.Body className="RecipeCard--body">
           <CartIcon
-            isLoggedIn={isLoggedIn}
             addToList={() => {
               addToList(recipe.id);
             }}

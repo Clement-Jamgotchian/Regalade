@@ -5,7 +5,6 @@ import {
 } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,13 +19,16 @@ import './IngredientCard.scss';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
 import { updateCart } from '../../actions/cart';
 
+// Axios
+import AxiosPrivate from '../../utils/AxiosPrivate';
+
 function IngredientCard({ ingredient, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
   const dispatch = useDispatch();
   let newValue = 0;
 
   const updateIngredientQuantity = async (ingredientId, newQuantity) => {
-    await axios.put(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart/${ingredientId}`, {
+    await AxiosPrivate.put(`/cart/${ingredientId}`, {
       quantity: newQuantity,
     })
       .catch((error) => {
@@ -35,7 +37,7 @@ function IngredientCard({ ingredient, quantity }) {
   };
 
   const deleteIngredient = async (ingredientId) => {
-    await axios.delete(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart/${ingredientId}`)
+    await AxiosPrivate.delete(`/cart/${ingredientId}`)
       .then(() => {
         dispatch(updateCart());
         dispatch(newAlertMessage('L\'ingrédient a bien été supprimé de la liste de courses'));
