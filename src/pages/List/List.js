@@ -44,7 +44,6 @@ function List() {
         `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`,
       )
       .then((response) => {
-        console.log(response.data);
         const recipes = response.data.recipesList.map((item) => ({
           ...item.recipe,
           userPortions: item.portions,
@@ -101,6 +100,7 @@ function List() {
         </Alert>
       )}
       <Stack direction="horizontal" gap={3}>
+        {list.length > 0 && (
         <Button
           variant="primary"
           className="List--generateCartButton border"
@@ -112,6 +112,7 @@ function List() {
           <FontAwesomeIcon icon={faCartArrowDown} />
           <Link to="/profil/mes-repas">Générer ma liste de courses</Link>
         </Button>
+        )}
         <Button variant="success" className="List--addButton border ms-auto">
           <FontAwesomeIcon icon={faPlus} />
           <Link to="/recettes">Ajouter une recette</Link>

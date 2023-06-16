@@ -48,6 +48,9 @@
         color: vars.$primaryButton !important;
         z-index: 2;
         transition: transform .5s ease;
+        background: #ffffff;
+        padding: 0.5rem;
+        border-radius: 50%;
     }
 
 
@@ -68,6 +71,9 @@
         color: vars.$primaryButton;
         z-index: 2;
         transition: transform 1s ease;
+        background: #ffffff;
+        padding: 0.5rem;
+        border-radius: 50%;
     }
 
     &-cart {

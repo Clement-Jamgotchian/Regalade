@@ -22,6 +22,7 @@ import {
 import List from '../../pages/List/List';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
+import Favorites from '../../pages/Favorites/Favorites';
 
 const profilDataNav = [
   {
@@ -75,7 +76,6 @@ function Profil() {
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
   const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
   const request = `?${pageRequest}`;
-  console.log(linkAPI);
 
   const getRecipes = async () => {
     axios
@@ -115,6 +115,9 @@ function Profil() {
     if (link === '/profil/mes-favorites') {
       dispatch(setLink('favorite'));
     }
+    if (link === '/profil/mes-repas') {
+      dispatch(setLink('list'));
+    }
   };
 
   useLayoutEffect(() => {
@@ -131,7 +134,7 @@ function Profil() {
       );
     }
     if (activePage === '/profil/mes-favorites') {
-      return <Recipes recipes={recipes} />;
+      return <Favorites />;
     }
     if (activePage === '/profil/mes-ingredients') {
       return <Fridge />;

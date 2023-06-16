@@ -26,6 +26,8 @@ export function getDifficultyLabel(difficulty) {
 // faStar : filled star
 // faStarHalfStroke : half-filled star
 // farStart : empty star
+
+// TODO si non noté ajouter mention
 export function getStars(starsRating) {
   const stars = [];
   // For each integer, we show a full star

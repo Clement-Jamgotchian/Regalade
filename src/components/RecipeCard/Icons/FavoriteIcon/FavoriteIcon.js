@@ -9,18 +9,21 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 // Styles import
 import './FavoriteIcon.scss';
+import { useSelector } from 'react-redux';
 
 // If user is logged in, we show the favorite icon,
 // active or not depends if added on favorite list or not
 // faHeart : filled heart
 // farHeart : empty heart
-function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
+function FavoriteIcon({ isLoggedIn, recipeId, toggleFavorite }) {
+  const favoritesRecipes = useSelector((store) => store.favorites.recipes);
+  const isFavorite = favoritesRecipes.some((item) => item.id === recipeId);
   const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
+  const hideFavoriteIcon = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
   const icon = isFavorite ? faHeart : farHeart;
 
-  if (isLoggedIn && !isInPageList) {
+  if (isLoggedIn && !hideFavoriteIcon) {
     return (
       <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
         <FontAwesomeIcon className={className} icon={icon} />
@@ -31,7 +34,7 @@ function FavoriteIcon({ isLoggedIn, isFavorite, toggleFavorite }) {
 
 FavoriteIcon.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  recipeId: PropTypes.number.isRequired,
   toggleFavorite: PropTypes.func.isRequired,
 };
 
