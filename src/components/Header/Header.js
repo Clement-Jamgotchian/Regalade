@@ -91,7 +91,7 @@ function Header() {
     }
     const lowerCaseSearchValue = searchBarValue
       .toLocaleLowerCase()
-      .replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
+      .replace(/([-'`~!@#$§%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
     if (lowerCaseSearchValue) {
       dispatch(setSearchValue(lowerCaseSearchValue));
     }
