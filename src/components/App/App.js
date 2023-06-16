@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { MyLayout } from '../MyLayout';
-import Loader from '../Loader/Loader';
 import RecipeDetails from '../RecipeDetails/RecipeDetail';
 import HomepageInscription from '../../pages/HomepageInscription/HomepageInscription';
 import Profil from '../Profil/Profil';
@@ -14,6 +13,7 @@ import List from '../../pages/List/List';
 import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
+import MyInfos from '../../pages/MyInfos/MyInfos';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -96,7 +96,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <Loader />
+                <MyInfos />
               </MyLayout>
             ) : (
               <Profil />

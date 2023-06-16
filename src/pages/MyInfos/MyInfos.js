@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './MyInfos.scss';
 import { useEffect, useState } from 'react';
-import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 import { Alert, Col } from 'react-bootstrap';
@@ -14,9 +15,15 @@ function MyInfos() {
   const [profil, setProfil] = useState([]);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
+
+  const [validated, setValidated] = useState(false);
+
+  console.log(email);
 
   const dispatch = useDispatch();
 
@@ -32,24 +39,17 @@ function MyInfos() {
       });
   };
 
-  const changeEmail = (value) => {
-    if (value === '') {
-      return profil.email;
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    if (form.checkValidity() === false && confirmPassword !== password) {
+      event.stopPropagation();
     }
-    return value;
-  };
-
-  const changeNickname = (value) => {
-    if (value === '') {
-      return profil.value;
-    }
-    return value;
-  };
-
-  const handleSubmit = () => {
+    setValidated(true);
     axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
-      email: changeEmail(email),
-      nickname: changeNickname(nickname),
+      email,
+      nickname,
+      password,
     })
       .then(() => {
         dispatch(newAlertMessage('modifications bien ajoutées'));
@@ -75,8 +75,10 @@ function MyInfos() {
   useEffect(() => {
     getUser();
   }, []);
+
   return (
-    <Container className="MyInfos">
+    <Form className="MyInfos" noValidate validated={validated} onSubmit={handleSubmit}>
+      <h1>Modification de mon profil</h1>
       {showAlert && (
         <Alert
           variant={alertVariant}
@@ -86,64 +88,105 @@ function MyInfos() {
           {alertMessage}
         </Alert>
       )}
-      <Row className="MyInfos-container">
-        <h3 className="MyInfos-Title">
-          Hey,
-          {' '}
-          {profil.nickname}
-        </h3>
+      <Row className="mb-3 MyInfos-row">
+        <Form.Group className="MyInfos-row-group" as={Col} md="4">
+          <Form.Label className="MyInfos-row-group-label">Mon pseudo</Form.Label>
+          <Form.Control
+            required
+            className="MyInfos-row-group-input"
+            type="text"
+            name="nickname"
+            id="nickname"
+            onChange={(event) => {
+              setNickname(event.target.value);
+              console.log(event.target.value);
+            }}
+            placeholder="Pseudo"
+            defaultValue={profil.nickname}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
       </Row>
-      <form className="My-infos-form" onSubmit={handleSubmit}>
-        <Col>Mon pseudo</Col>
-        <Col>
-          <Row className="MyInfos-input-container">
-            <input
-              className="MyInfos-input"
-              type="text"
-              name="nickname"
-              id="nickname"
-              value={nickname}
-              placeholder=" "
-              onChange={(event) => {
-                setNickname(event.target.value);
-                console.log(event.target.value);
-              }}
-              required
-            />
-            <label className="MyInfos-placeholder" htmlFor="nickname">{profil.nickname}</label>
-          </Row>
-        </Col>
-        <Row className="MyInfos-input-container">
-          <p>Mon E-mail</p>
-          <input
-            className="MyInfos-input"
+      <Row className="mb-3 MyInfos-row">
+        <Form.Group className="MyInfos-row-group" as={Col} md="4">
+          <Form.Label className="MyInfos-row-group-label">E-mail</Form.Label>
+          <Form.Control
+            required
             type="email"
+            className="MyInfos-row-group-input"
             name="email"
             id="email"
-            placeholder=" "
-            value={email}
+            placeholder="E-mail"
+            defaultValue={profil.email}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">N&apos;oublie pas ton e-mail</Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3 MyInfos-row">
+        <Form.Group className="MyInfos-row-group" as={Col} md="4">
+          <Form.Label className="MyInfos-row-group-label">Mot de passe</Form.Label>
+          <Form.Control
+            className="MyInfos-row-group-input"
+            type="password"
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            placeholder="mot de passe"
+            aria-describedby="inputGroupPrepend"
             required
           />
-          <label className="MyInfos-placeholder" htmlFor="email">{profil.email}</label>
-        </Row>
-        <Row className="MyInfos-input-container">
-          <label className="MyInfos-file" htmlFor="picture">
+          <Form.Control.Feedback type="invalid">
+            N&apos;oublie pas de mettre ton mot de passe pour confirmer, tu peux aussi le changer.
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3 MyInfos-row">
+        <Form.Group className="MyInfos-row-group" as={Col} md="4">
+          <Form.Label className="MyInfos-row-group-label">confirmation de mot de passe</Form.Label>
+          <Form.Control
+            className="MyInfos-row-group-input"
+            type="password"
+            onChange={(event) => {
+              setConfirmPassword(event.target.value);
+            }}
+            placeholder="confirmation de mot de passe"
+            aria-describedby="inputGroupPrepend"
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            N&apos;oublie pas de confirmer ton mot de passe/nouveau mot de passe
+            pour pouvoir valider tes informations.
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3 MyInfos-row">
+        <Form.Group className="MyInfos-row-group" as={Col} md="6">
+          <Form.Label className="MyInfos-row-group-label">
+            Mon image de profil
             <img
               src={getPicture(profil.picture)}
               alt="profil de l'utilisateur"
               className="MyInfos-img"
             />
-          </label>
-          <input type="file" name="picture" id="picture" value={profil.picture} required />
-        </Row>
-        <button type="submit" className="formSign-button">
-          Modifier
-        </button>
-      </form>
-    </Container>
+          </Form.Label>
+          <Form.Control className="MyInfos-row-group-input" type="file" required />
+        </Form.Group>
+      </Row>
+      <Form.Group className="mb-3">
+        <Form.Check
+          className="MyInfos-row-group-check"
+          required
+          label="Confirmartion de modification"
+          feedback="Vous devez cocher pour valider vos modifications"
+          feedbackType="invalid"
+        />
+      </Form.Group>
+      <Button type="submit">Submit form</Button>
+    </Form>
   );
 }
 
