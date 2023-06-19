@@ -10,6 +10,7 @@ import { getDifficultyLabel, getStars } from '../../utils/formatRecipeData';
 
 import cuisine from '../../assets/cuisine.png';
 import cuisson from '../../assets/temps-de-cuisson.png';
+import defaultPicture from '../../assets/pictureDefault.jpg';
 import vegetables from '../../assets/vegetables.png';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
@@ -100,6 +101,13 @@ function RecipeDetails() {
     navigate('/recettes');
   }
 
+  const getPicture = (value) => {
+    if (value.picture === null) {
+      return defaultPicture;
+    }
+    return `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${value.picture}`;
+  };
+
   useEffect(() => {
     AxiosPublic.get(`/recipes/${idRecette}`)
       .then((response) => {
@@ -121,7 +129,7 @@ function RecipeDetails() {
         className="recipeDetails-header"
       >
         <div className="recipeDetails-header-imgAndButton">
-          <img src={recipe.picture} alt="la recette" className="recipeDetails-header-image" />
+          <img src={getPicture(recipe)} alt="la recette" className="recipeDetails-header-image" />
           <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
             <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
           </button>
