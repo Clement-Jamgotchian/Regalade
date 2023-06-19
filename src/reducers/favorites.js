@@ -1,4 +1,4 @@
-import { ADD_RECIPE_TO_FAVORITES, CLEAR_RECIPE_REMOVED, FAVORITES_UPDATED, REMOVE_RECIPE_FROM_FAVORITES } from '../actions/favorites';
+import { ADD_RECIPE_TO_FAVORITES, CLEAR_RECIPES, CLEAR_RECIPE_REMOVED, FAVORITES_UPDATED, REMOVE_RECIPE_FROM_FAVORITES } from '../actions/favorites';
 
 export const initialState = {
   recipes: [],
@@ -11,6 +11,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         recipes: [...state.recipes, action.payload.recipe],
+      };
+    case CLEAR_RECIPES:
+      return {
+        ...state,
+        recipes: [],
       };
 
     case REMOVE_RECIPE_FROM_FAVORITES:
