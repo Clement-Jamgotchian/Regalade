@@ -1,49 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import './FridgeDetails.scss';
 import fleche from '../../assets/images/fleche.png';
 import ModalFridge from './ModalFridge/ModalFridge';
 
-const test = [
-  {
-    id: 1,
-    title: 'Carotte',
-    unit: 'cl',
-    quantity: 50,
-  },
-  {
-    id: 2,
-    unit: 'cl',
-    quantity: 10,
-    title: 'Pain',
-  },
-  {
-    id: 3,
-    unit: 'cl',
-    quantity: 50,
-    title: 'Fromage',
-  },
-  {
-    id: 4,
-    unit: 'kg',
-    quantity: 30,
-    title: 'Choux',
-  },
-  {
-    id: 5,
-    unit: 'kg',
-    quantity: 20,
-    title: 'Noix',
-  },
-  {
-    id: 6,
-    unit: 'cl',
-    quantity: 50,
-    title: 'test',
-  },
-];
-function FridgeDetails() {
+function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
   const [show, setShow] = useState(false);
   const [isSeeMore, setIsSeeMore] = useState(false);
   const [quantityValue, setQuantityValue] = useState(null);
@@ -51,8 +14,8 @@ function FridgeDetails() {
   const [indexId, setIndexId] = useState(null);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const sliceTest = isSeeMore ? test : test.slice(0, 3);
-  // const current
+  const sliceTest = isSeeMore ? fridgeData : fridgeData.slice(0, 3);
+
   console.log(quantityValue);
 
   const changeValue = (newValue) => {
@@ -73,7 +36,7 @@ function FridgeDetails() {
             <th>Supprimer</th>
           </tr>
         </thead>
-        {sliceTest.map(({ title, id, unit, quantity }, i) => (
+        {sliceTest.map(({ ingredient, id, quantity }, i) => (
           <tbody key={id}>
             <tr>
               <td>
@@ -83,7 +46,7 @@ function FridgeDetails() {
                   alt="Flèche vers la droite"
                 />
               </td>
-              <td>{title}</td>
+              <td>{ingredient.name}</td>
               <td>
                 <from>
                   <input
@@ -99,12 +62,15 @@ function FridgeDetails() {
                   />
                 </from>
               </td>
-              <td>{unit}</td>
+              <td>{ingredient.unit}</td>
               <td>
                 <button
                   type="button"
                   className="FridgeDetails-button"
                   aria-label="croix de fermeture"
+                  onClick={() => {
+                    handleDeleteIngredient(ingredient.id);
+                  }}
                 />
               </td>
             </tr>
@@ -129,5 +95,22 @@ function FridgeDetails() {
     </div>
   );
 }
+
+FridgeDetails.propTypes = {
+  fridgeData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    ingredient: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      isCold: PropTypes.bool.isRequired,
+      name: PropTypes.string.isRequired,
+      unit: PropTypes.string.isRequired,
+      department: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+  })).isRequired,
+  handleDeleteIngredient: PropTypes.func.isRequired,
+};
 
 export default FridgeDetails;

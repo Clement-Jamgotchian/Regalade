@@ -37,6 +37,7 @@
   .Fridge {
     &-container {
       flex-direction: row;
+      align-items: flex-start;
     }
     &-closet {
       width: 50%;

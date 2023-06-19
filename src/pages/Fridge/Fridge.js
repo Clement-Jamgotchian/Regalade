@@ -11,6 +11,9 @@ import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
 
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
+  const closet = fridgeData.filter((noCold) => noCold.ingredient.isCold === false);
+  const fridge = fridgeData.filter((cold) => cold.ingredient.isCold === true);
+
   const getFridge = () => {
     axios
       .get(
@@ -20,6 +23,13 @@ function Fridge() {
         setFridgeData(response.data);
         console.log(response.data);
       })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleDeleteIngredient = (id) => {
+    axios.delete(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge/${id}`)
+      .then(() => {})
       .catch((error) => {
         console.log(error);
       });
@@ -41,7 +51,7 @@ function Fridge() {
               className="Fridge-img"
             />
           </h3>
-          <FridgeDetails fridgeData={fridgeData} />
+          <FridgeDetails fridgeData={fridge} handleDeleteIngredient={handleDeleteIngredient} />
         </Col>
         <Col className="Fridge-closet">
           <h3 className="Fridge-Title">
@@ -52,7 +62,7 @@ function Fridge() {
               className="Fridge-img"
             />
           </h3>
-          <FridgeDetails />
+          <FridgeDetails fridgeData={closet} handleDeleteIngredient={handleDeleteIngredient} />
         </Col>
       </Row>
       <Button className="Fridge-button" variant="primary" size="lg">

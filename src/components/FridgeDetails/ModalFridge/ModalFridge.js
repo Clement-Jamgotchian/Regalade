@@ -9,17 +9,28 @@ import axios from 'axios';
 
 function ModalFridge({ show, handleClose }) {
   const [isOpenList, setIsOpenList] = useState(false);
+  const [isFullModal, setIsFullModal] = useState(false);
+  const [isFridge, setIsFridge] = useState(false);
+  const [newUnit, setNewUnit] = useState('');
   const [searchIngredient, setSearchIngredient] = useState('');
+  const [ingredientById, setIngredientById] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [ingredient, setIngredient] = useState('');
   const smallIngredients = ingredient.slice(0, 5);
+  console.log(smallIngredients);
+  const numberValue = Number(inputValue);
   const baseUrl = 'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/ingredients';
   const request = searchIngredient !== undefined && searchIngredient !== '' ? `?search=${searchIngredient}` : '';
+  console.log(isFridge);
+  console.log(newUnit);
 
   const getRecipes = async () => {
     axios
       .get(baseUrl + request)
       .then((response) => {
+        if (!response || response.length === 0) {
+          setIngredient('');
+        }
         setIngredient(response.data);
       })
       .catch((error) => {
@@ -31,13 +42,14 @@ function ModalFridge({ show, handleClose }) {
     getRecipes();
   }, [searchIngredient]);
 
+  // Add a new ingrédient
   const handleAddIngredient = () => {
     axios
       .post(
         'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge',
         {
-          ingredient: searchIngredient,
-          quantity: inputValue,
+          ingredient: ingredientById,
+          quantity: numberValue,
         },
       )
       .then((response) => {
@@ -47,16 +59,35 @@ function ModalFridge({ show, handleClose }) {
         console.log(error);
       });
   };
-
+  // Remove all spécial characters and numbers from the input
   const filterInputText = (evt) => {
     const filteredValue = evt.replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
     setSearchIngredient(filteredValue);
   };
-
+  // Remove everithing except numbers
   const filterInputNumber = (evt) => {
     const filteredValue = evt.replace(/[^0-9]+/g, '');
     setInputValue(filteredValue);
-    console.log(evt);
+  };
+
+  const handleCreateIngredient = (evt) => {
+    evt.preventDefault();
+    setIsFullModal(!isFullModal);
+  };
+
+  const handleStorage = (evt) => {
+    if (evt.target.value === '1') {
+      setIsFridge(!isFridge);
+    }
+    if (evt.target.value === '2') {
+      setIsFridge(false);
+    }
+  };
+
+  const handleUnit = (evt) => {
+    if (evt.target.value !== 'Choisi l\'unité') {
+      setNewUnit(evt.target.value);
+    }
   };
 
   return (
@@ -69,49 +100,99 @@ function ModalFridge({ show, handleClose }) {
         <Form.Control
           type="text"
           value={searchIngredient}
-          onClick={() => {
-            setIsOpenList(!isOpenList);
-          }}
           onChange={(evt) => {
             setIsOpenList(true);
             filterInputText(evt.target.value);
           }}
         />
-        <Form.Control type="number" value={inputValue} onChange={(evt) => { filterInputNumber(evt.target.value); }} />
+        <Form.Control
+          type="number"
+          value={inputValue}
+          onChange={(evt) => {
+            filterInputNumber(evt.target.value);
+          }}
+        />
+        {isFullModal && (
+        <div className="Modal-select">
+          <Form.Select aria-label="Select closet/fridge" isRequired onClick={(evt) => { handleStorage(evt); }}>
+            <option>Ou se range t-il ?</option>
+            <option value="1">Dans le frigo</option>
+            <option value="2">Dans les placards</option>
+          </Form.Select>
+          <Form.Select aria-label="Select unit" isRequired onClick={(evt) => { handleUnit(evt); }}>
+            <option>Choisi l&apos;unité</option>
+            <option value="cl">cl</option>
+            <option value="pce">pce</option>
+            <option value="gr">gr</option>
+          </Form.Select>
+          <Form.Select aria-label="Select unit" isRequired onClick={(evt) => { handleUnit(evt); }}>
+            <option>Quel rayon ?</option>
+            <option value="cl">cl</option>
+            <option value="pce">pce</option>
+            <option value="gr">gr</option>
+          </Form.Select>
+        </div>
+        )}
         {isOpenList && (
           <ListGroup
             className="Modal-list"
-            onClick={(evt) => {
+            onClick={() => {
               setIsOpenList(false);
-              setSearchIngredient(evt.target.textContent);
             }}
           >
-            {smallIngredients
-              .filter((ingredients) => ingredients.name.includes(searchIngredient))
-              .map((filtered) => (
-                <ListGroup.Item action key={filtered.id}>
-                  {filtered.name}
-                </ListGroup.Item>
-              ))}
-            <ListGroup.Item action>
-              L&apos;ingrédient n&apos;éxiste pas ?
-            </ListGroup.Item>
+            {smallIngredients.length > 0 ? (
+              smallIngredients
+                .filter((ingredients) => ingredients.name.includes(searchIngredient))
+                .map((filtered) => (
+                  <ListGroup.Item
+                    key={filtered.id}
+                    id={filtered.id}
+                    onClick={(evt) => {
+                      setSearchIngredient(evt.target.textContent);
+                      setIngredientById(evt.target.id);
+                    }}
+                  >
+                    {`${filtered.name} [${filtered.unit}]`}
+                  </ListGroup.Item>
+                ))
+            ) : (
+              <ListGroup.Item
+                action
+                onClick={(evt) => {
+                  handleCreateIngredient(evt);
+                }}
+              >
+                L&apos;ingrédient n&apos;éxiste pas ?
+              </ListGroup.Item>
+            )}
           </ListGroup>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            handleClose();
-            setSearchIngredient('');
-          }}
-        >
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleAddIngredient}>
-          Ajouter
-        </Button>
+        {isFullModal ? (
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleAddIngredient();
+              handleClose();
+              setSearchIngredient('');
+              setIsFullModal(false);
+            }}
+          >
+            Ajouter quand même
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleAddIngredient();
+              handleClose();
+              setSearchIngredient('');
+            }}
+          >
+            Ajouter
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );
