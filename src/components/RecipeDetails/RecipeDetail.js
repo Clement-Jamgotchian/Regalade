@@ -10,6 +10,7 @@ import { getDifficultyLabel, getStars } from '../../utils/formatRecipeData';
 
 import cuisine from '../../assets/cuisine.png';
 import cuisson from '../../assets/temps-de-cuisson.png';
+import defaultPicture from '../../assets/pictureDefault.jpg';
 import vegetables from '../../assets/vegetables.png';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
@@ -17,6 +18,7 @@ import Footer from '../Footer/Footer';
 import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
 import { updateRecipesList } from '../../actions/list';
 import AxiosPrivate from '../../utils/AxiosPrivate';
+// eslint-disable-next-line import/no-named-as-default
 import AxiosPublic from '../../utils/AxiosPublic';
 
 // If user is logged in, we show the cart icon
@@ -99,12 +101,20 @@ function RecipeDetails() {
     navigate('/recettes');
   }
 
+  const getPicture = (value) => {
+    if (value.picture === null) {
+      return defaultPicture;
+    }
+    return `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${value.picture}`;
+  };
+
   useEffect(() => {
     AxiosPublic.get(`/recipes/${idRecette}`)
       .then((response) => {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
         setFavorite(isFavorite);
+        console.log(response.data);
       })
       .catch(() => {
         console.log('erreur dans recette detaillé');

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from 'react-bootstrap';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import Recipes from '../Recipes/Recipes';
-import Loader from '../Loader/Loader';
 import toque from '../../assets/images/toque.png';
 import caddie from '../../assets/images/caddie.png';
 import utilisateur from '../../assets/images/utilisateur.png';
@@ -22,6 +21,7 @@ import {
 import List from '../../pages/List/List';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
+import MyInfos from '../../pages/MyInfos/MyInfos';
 import Favorites from '../../pages/Favorites/Favorites';
 
 const profilDataNav = [
@@ -146,7 +146,7 @@ function Profil() {
       return <Cart />;
     }
     if (activePage === '/profil/mes-infos') {
-      return <Loader />;
+      return <MyInfos />;
     }
 
     return null;

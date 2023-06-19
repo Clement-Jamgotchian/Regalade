@@ -13,6 +13,7 @@ import {
 } from '../../actions/user';
 
 // Axios
+// eslint-disable-next-line import/no-named-as-default
 import AxiosPublic from '../../utils/AxiosPublic';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 
@@ -76,8 +77,7 @@ function HomepageInscription() {
     }
   };
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit() {
     AxiosPrivate
       .post(
         '/login_check',
@@ -102,8 +102,7 @@ function HomepageInscription() {
       });
   }
 
-  const handleSubmitCreate = (event) => {
-    event.preventDefault();
+  const handleSubmitCreate = () => {
     if (password === confirmPassword) {
       AxiosPublic
         .post('/user', {
@@ -116,6 +115,7 @@ function HomepageInscription() {
           dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
           dispatch(setNewNickname(res.data.nickname));
+          handleSubmit();
         })
         .catch(() => {
           alert('Oups !');
@@ -143,13 +143,13 @@ function HomepageInscription() {
         <div className="formSign-carousel">
           <form
             className="formSign-carousel-up"
-            onSubmit={handleSubmitCreate}
+            onSubmit={(e) => { e.preventDefault(); handleSubmitCreate(); }}
             style={{
               transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)`,
             }}
           >
             <button
-              type="submit"
+              type="button"
               className="formSign-signupButton"
               style={{ display: `${displayUp}` }}
               onClick={rotate}
@@ -240,21 +240,13 @@ function HomepageInscription() {
           </div>
           <form
             className="formSign-carousel-in"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
             style={{
               transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`,
             }}
           >
             <button
-              type="submit"
-              className="formSign-signinButton"
-              style={{ display: `${displayIn}`, transition: '1s' }}
-              onClick={rotate}
-            >
-              S&apos;inscrire
-            </button>
-            <button
-              type="submit"
+              type="button"
               className="formSign-signinButton"
               style={{ display: `${displayIn}`, transition: '1s' }}
               onClick={rotate}
