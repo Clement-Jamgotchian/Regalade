@@ -130,7 +130,7 @@ function RecipeDetails() {
       >
         <div className="recipeDetails-header-imgAndButton">
           <img
-            src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+            src={getPicture(recipe)}
             alt="la recette"
             className="recipeDetails-header-image"
           />
