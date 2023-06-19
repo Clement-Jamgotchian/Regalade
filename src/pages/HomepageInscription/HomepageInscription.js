@@ -150,7 +150,7 @@ function HomepageInscription() {
             }}
           >
             <button
-              type="submit"
+              type="button"
               className="formSign-signupButton"
               style={{ display: `${displayUp}` }}
               onClick={rotate}
@@ -247,15 +247,7 @@ function HomepageInscription() {
             }}
           >
             <button
-              type="submit"
-              className="formSign-signinButton"
-              style={{ display: `${displayIn}`, transition: '1s' }}
-              onClick={rotate}
-            >
-              S&apos;inscrire
-            </button>
-            <button
-              type="submit"
+              type="button"
               className="formSign-signinButton"
               style={{ display: `${displayIn}`, transition: '1s' }}
               onClick={rotate}

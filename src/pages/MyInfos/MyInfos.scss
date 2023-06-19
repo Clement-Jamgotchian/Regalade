@@ -1,11 +1,15 @@
 @use 'src/styles/vars';
 
+.MyInfos-container {
+  width: 100%;
+  margin: auto;
+  color: vars.$primaryButton;
 
+}
 .MyInfos {
   width: 100%;
-  
   margin-bottom: 2em;
-  color: vars.$primaryButton;
+  margin: auto;
   --bs-border-color: #f2542d;
   &-row {
     width: 100%;
@@ -15,6 +19,13 @@
 
       &-check {
         width: 20em;
+      }
+      &-button {
+        margin-bottom: 2em;
+        &-delete {
+          background-color: #f22d2d;
+          margin-left: 1em;
+        }
       }
 
       &-img {
@@ -51,8 +62,22 @@
       &-check {
         width: 20em;
       }
+
+      
     }
     
+  }
+}
+
+.MyInfos-formMember {
+  margin-top: 1em;
+  width: 20em;
+
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 1em;
   }
 }
 

@@ -1,14 +1,18 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import axios from 'axios';
 import { useState } from 'react';
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { newAlertMessage } from '../../../actions/list';
+import { Alert, Button, Col, Form, Modal, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../../actions/list';
 
 function MyVerticallyCenteredModal(props) {
   const [nickname, setNickname] = useState('');
-  const [isAdult, setIsAdult] = useState(true);
+  const [isAdult, setIsAdult] = useState(false);
+  const showAlert = useSelector((state) => state.list.showAlert);
+  const alertMessage = useSelector((state) => state.list.alertMessage);
+  const alertVariant = useSelector((state) => state.list.alertVariant);
 
   const dispatch = useDispatch();
   const handleCreateMember = async (event) => {
@@ -18,10 +22,26 @@ function MyVerticallyCenteredModal(props) {
       isAdult,
     })
       .then(() => {
-        dispatch(newAlertMessage('modifications bien ajoutées'));
+        dispatch(newAlertMessage('Un membres a bien été ajoutées'));
+        dispatch(showOrHideAlert(true));
+        dispatch(changeAlertVariant('success'));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
+        if (props.clickedAdd === true) {
+          props.setClickedAdd(false);
+        } else {
+          props.setClickedAdd(true);
+        }
       })
       .catch((err) => {
         console.log(err);
+        dispatch(newAlertMessage("Le membre n'a pas pu être ajoutées"));
+        dispatch(showOrHideAlert(true));
+        dispatch(changeAlertVariant('danger'));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       });
   };
   return (
@@ -39,6 +59,15 @@ function MyVerticallyCenteredModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {showAlert && (
+          <Alert
+            variant={alertVariant}
+            onClose={() => dispatch(showOrHideAlert(false))}
+            dismissible
+          >
+            {alertMessage}
+          </Alert>
+          )}
           <Row className="mb-3 MyInfos-row">
             <Form.Group className="MyInfos-row-group" as={Col} md="4">
               <Form.Label className="MyInfos-row-group-label">Mon pseudo</Form.Label>
@@ -57,15 +86,28 @@ function MyVerticallyCenteredModal(props) {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Select aria-label="Default select example">
+            <Form.Select
+              onChange={(event) => {
+                if (event.target.value === 'Enfant') {
+                  setIsAdult(false);
+                } else {
+                  setIsAdult(true);
+                }
+              }}
+              aria-label="Default select example"
+            >
               <option>Adulte ou enfant</option>
-              <option value={() => { setIsAdult(false); }}>Enfant</option>
-              <option value={() => { setIsAdult(true); }}>Adulte</option>
+              <option>Enfant</option>
+              <option>Adulte</option>
             </Form.Select>
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit">Ajouter</Button>
+          <Button
+            type="submit"
+          >
+            Ajouter
+          </Button>
           <Button type="button" onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Form>
