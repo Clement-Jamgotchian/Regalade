@@ -32,9 +32,6 @@ function MyInfos() {
   const [clickedAdd, setClickedAdd] = useState(true);
 
   const [validated, setValidated] = useState(false);
-
-  console.log(clickedAdd);
-
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -67,8 +64,16 @@ function MyInfos() {
     }
   };
 
-  const handleSubmitMember = async () => {
-    await axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/members', {
+  const changeClickedAdd = () => {
+    if (clickedAdd === true) {
+      setClickedAdd(false);
+    } else {
+      setClickedAdd(true);
+    }
+  };
+
+  const handleSubmitMember = async (id) => {
+    await axios.put(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/members/${id}`, {
       nickname: nicknameMember,
       isAdult: isAdult,
     })
@@ -79,6 +84,7 @@ function MyInfos() {
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
         }, '5000');
+        changeClickedAdd();
       })
       .catch((err) => {
         console.log(err);
@@ -119,7 +125,6 @@ function MyInfos() {
         setProfil(response.data);
         setNickname(response.data.nickname);
         setEmail(response.data.email);
-        console.log(response.data);
         dispatch(setNewNickname(response.data.nickname));
       })
       .catch((err) => {
@@ -149,14 +154,9 @@ function MyInfos() {
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
         }, '5000');
-        if (clickedAdd === true) {
-          setClickedAdd(false);
-        } else {
-          setClickedAdd(true);
-        }
+        changeClickedAdd();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch(newAlertMessage("Le membre n'a pas pu être supprimé"));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('danger'));
@@ -297,7 +297,10 @@ function MyInfos() {
           <Form
             key={member.id}
             className="MyInfos-formMember"
-            onSubmit={handleSubmitMember}
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmitMember(member.id);
+            }}
           >
             <Form.Group className="MyInfos-row-group" as={Col} md="4">
               <Form.Label className="MyInfos-row-group-label">
@@ -320,18 +323,21 @@ function MyInfos() {
                 }}
               />
             </Form.Group>
-            <Form.Select aria-label="Default select example">
+            <Form.Select
+              onChange={(event) => {
+                if (event.target.value === 'Enfant') {
+                  setIsAdult(false);
+                } else {
+                  setIsAdult(true);
+                }
+              }}
+              aria-label="Default select example"
+            >
               <option>{member.isAdult ? 'Adulte' : 'Enfant'}</option>
-              <option
-                value={() => { false; }}
-                onChange={() => { setIsAdult(false); }}
-              >
+              <option>
                 Enfant
               </option>
-              <option
-                value={() => { true; }}
-                onChange={() => { setIsAdult(true); }}
-              >
+              <option>
                 Adulte
               </option>
             </Form.Select>
@@ -363,8 +369,8 @@ function MyInfos() {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        setClickedAdd={setClickedAdd}
-        clickedAdd={clickedAdd}
+        setclickedadd={setClickedAdd}
+        clickedadd={clickedAdd}
       />
     </section>
   );

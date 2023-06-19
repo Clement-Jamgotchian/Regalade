@@ -28,10 +28,10 @@ function MyVerticallyCenteredModal(props) {
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
         }, '5000');
-        if (props.clickedAdd === true) {
-          props.setClickedAdd(false);
+        if (props.clickedadd === true) {
+          props.setclickedadd(false);
         } else {
-          props.setClickedAdd(true);
+          props.setclickedadd(true);
         }
       })
       .catch((err) => {
