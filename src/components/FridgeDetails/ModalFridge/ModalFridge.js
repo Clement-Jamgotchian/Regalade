@@ -4,25 +4,32 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function ModalFridge({ show, handleClose }) {
   const [isOpenList, setIsOpenList] = useState(false);
   const [isFullModal, setIsFullModal] = useState(false);
   const [isFridge, setIsFridge] = useState(false);
+
   const [newUnit, setNewUnit] = useState('');
   const [searchIngredient, setSearchIngredient] = useState('');
   const [ingredientById, setIngredientById] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [ingredient, setIngredient] = useState('');
+
   const smallIngredients = ingredient.slice(0, 5);
-  console.log(smallIngredients);
+  const currentFridge = useSelector((state) => state.fridge.fridge);
+
+  const numberIngreId = Number(ingredientById);
   const numberValue = Number(inputValue);
+
   const baseUrl = 'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/ingredients';
-  const request = searchIngredient !== undefined && searchIngredient !== '' ? `?search=${searchIngredient}` : '';
-  console.log(isFridge);
-  console.log(newUnit);
+  const request = searchIngredient !== undefined && searchIngredient !== ''
+    ? `?search=${searchIngredient}`
+    : '';
 
   const getRecipes = async () => {
     axios
@@ -59,6 +66,27 @@ function ModalFridge({ show, handleClose }) {
         console.log(error);
       });
   };
+
+  // create a new ingrédient
+  const handleNewIngredient = () => {
+    axios
+      .post(
+        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/ingredients',
+        {
+          name: searchIngredient,
+          isCold: isFridge,
+          unit: newUnit,
+          department: 85,
+        },
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   // Remove all spécial characters and numbers from the input
   const filterInputText = (evt) => {
     const filteredValue = evt.replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
@@ -85,9 +113,23 @@ function ModalFridge({ show, handleClose }) {
   };
 
   const handleUnit = (evt) => {
-    if (evt.target.value !== 'Choisi l\'unité') {
+    if (evt.target.value !== "Choisi l'unité") {
       setNewUnit(evt.target.value);
     }
+  };
+
+  const renderFridge = () => {
+    const findInDrige = currentFridge.find((fridge) => fridge.ingredient.id === numberIngreId);
+
+    if (findInDrige) {
+      return (
+        <Alert variant="alert">
+          Ingrédient déjà dans le frigo !
+        </Alert>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -97,6 +139,7 @@ function ModalFridge({ show, handleClose }) {
         <Modal.Title>Quantité</Modal.Title>
       </Modal.Header>
       <Modal.Body className="Modal-body">
+        <div>{renderFridge()}</div>
         <Form.Control
           type="text"
           value={searchIngredient}
@@ -113,25 +156,43 @@ function ModalFridge({ show, handleClose }) {
           }}
         />
         {isFullModal && (
-        <div className="Modal-select">
-          <Form.Select aria-label="Select closet/fridge" isRequired onClick={(evt) => { handleStorage(evt); }}>
-            <option>Ou se range t-il ?</option>
-            <option value="1">Dans le frigo</option>
-            <option value="2">Dans les placards</option>
-          </Form.Select>
-          <Form.Select aria-label="Select unit" isRequired onClick={(evt) => { handleUnit(evt); }}>
-            <option>Choisi l&apos;unité</option>
-            <option value="cl">cl</option>
-            <option value="pce">pce</option>
-            <option value="gr">gr</option>
-          </Form.Select>
-          <Form.Select aria-label="Select unit" isRequired onClick={(evt) => { handleUnit(evt); }}>
-            <option>Quel rayon ?</option>
-            <option value="cl">cl</option>
-            <option value="pce">pce</option>
-            <option value="gr">gr</option>
-          </Form.Select>
-        </div>
+          <div className="Modal-select">
+            <Form.Select
+              aria-label="Select closet/fridge"
+              isRequired
+              onClick={(evt) => {
+                handleStorage(evt);
+              }}
+            >
+              <option>Ou se range t-il ?</option>
+              <option value="1">Dans le frigo</option>
+              <option value="2">Dans les placards</option>
+            </Form.Select>
+            <Form.Select
+              aria-label="Select unit"
+              isRequired
+              onClick={(evt) => {
+                handleUnit(evt);
+              }}
+            >
+              <option>Choisi l&apos;unité</option>
+              <option value="cl">cl</option>
+              <option value="pce">pce</option>
+              <option value="gr">gr</option>
+            </Form.Select>
+            <Form.Select
+              aria-label="Select unit"
+              isRequired
+              onClick={(evt) => {
+                handleUnit(evt);
+              }}
+            >
+              <option>Quel rayon ?</option>
+              <option value="cl">cl</option>
+              <option value="pce">pce</option>
+              <option value="gr">gr</option>
+            </Form.Select>
+          </div>
         )}
         {isOpenList && (
           <ListGroup
@@ -173,7 +234,7 @@ function ModalFridge({ show, handleClose }) {
           <Button
             variant="primary"
             onClick={() => {
-              handleAddIngredient();
+              handleNewIngredient();
               handleClose();
               setSearchIngredient('');
               setIsFullModal(false);

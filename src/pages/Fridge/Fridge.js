@@ -1,5 +1,6 @@
 import './Fridge.scss';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
@@ -8,9 +9,11 @@ import Button from 'react-bootstrap/Button';
 import fridgeLogo from '../../assets/images/frigo.png';
 import closetLogo from '../../assets/images/placard.png';
 import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
+import { setFridgeValue } from '../../actions/fridge';
 
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
+  const dispatch = useDispatch();
   const closet = fridgeData.filter((noCold) => noCold.ingredient.isCold === false);
   const fridge = fridgeData.filter((cold) => cold.ingredient.isCold === true);
 
@@ -20,6 +23,7 @@ function Fridge() {
         'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge',
       )
       .then((response) => {
+        dispatch(setFridgeValue(response.data));
         setFridgeData(response.data);
         console.log(response.data);
       })
