@@ -37,8 +37,6 @@ function MyInfos() {
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(postImage.picture);
-
   const handleSubmit = async (e) => {
     if (confirmPassword !== password) {
       e.stopPropagation();
@@ -103,9 +101,9 @@ function MyInfos() {
   };
 
   const getPicture = (photo) => {
-    if (photo !== null) {
+    if (photo.picture !== null) {
       return (
-        photo
+        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${photo.picture}`
       );
     }
     return (
@@ -305,7 +303,7 @@ function MyInfos() {
             <Form.Label className="MyInfos-row-group-label">
               Mon image de profil
               <img
-                src={getPicture(profil.picture)}
+                src={getPicture(profil)}
                 alt="profil de l'utilisateur"
                 className="MyInfos-row-group-img"
               />

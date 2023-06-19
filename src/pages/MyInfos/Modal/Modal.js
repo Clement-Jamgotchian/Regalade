@@ -7,7 +7,7 @@ import { Alert, Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../../actions/list';
 
-function MyVerticallyCenteredModal({ onHide, setclickedadd, clickedadd }) {
+function MyVerticallyCenteredModal(props) {
   const [nickname, setNickname] = useState('');
   const [isAdult, setIsAdult] = useState(false);
   const showAlert = useSelector((state) => state.list.showAlert);
@@ -28,10 +28,10 @@ function MyVerticallyCenteredModal({ onHide, setclickedadd, clickedadd }) {
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
         }, '5000');
-        if (clickedadd === true) {
-          setclickedadd(false);
+        if (props.clickedadd === true) {
+          props.setclickedadd(false);
         } else {
-          setclickedadd(true);
+          props.setclickedadd(true);
         }
       })
       .catch((err) => {
@@ -46,6 +46,8 @@ function MyVerticallyCenteredModal({ onHide, setclickedadd, clickedadd }) {
   };
   return (
     <Modal
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -106,7 +108,7 @@ function MyVerticallyCenteredModal({ onHide, setclickedadd, clickedadd }) {
           >
             Ajouter
           </Button>
-          <Button type="button" onClick={onHide}>Close</Button>
+          <Button type="button" onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Form>
     </Modal>
