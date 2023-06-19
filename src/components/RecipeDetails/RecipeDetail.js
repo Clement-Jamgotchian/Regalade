@@ -17,6 +17,7 @@ import Footer from '../Footer/Footer';
 import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
 import { updateRecipesList } from '../../actions/list';
 import AxiosPrivate from '../../utils/AxiosPrivate';
+// eslint-disable-next-line import/no-named-as-default
 import AxiosPublic from '../../utils/AxiosPublic';
 
 // If user is logged in, we show the cart icon
@@ -105,6 +106,7 @@ function RecipeDetails() {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
         setFavorite(isFavorite);
+        console.log(response.data);
       })
       .catch(() => {
         console.log('erreur dans recette detaillé');
