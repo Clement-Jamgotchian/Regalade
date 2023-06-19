@@ -30,9 +30,14 @@ function MyInfos() {
   const [isAdult, setIsAdult] = useState(true);
   const [nicknameMember, setNicknameMember] = useState('');
   const [clickedAdd, setClickedAdd] = useState(true);
+  const [postImage, setPostImage] = useState({
+    picture: '',
+  });
 
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
+
+  console.log(postImage.picture);
 
   const handleSubmit = async (e) => {
     if (confirmPassword !== password) {
@@ -42,7 +47,7 @@ function MyInfos() {
       await axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
         email: email,
         nickname: nickname,
-        password: password,
+        picture: postImage.picture,
       })
         .then(() => {
           dispatch(newAlertMessage('modifications bien ajoutées'));
@@ -126,6 +131,7 @@ function MyInfos() {
         setNickname(response.data.nickname);
         setEmail(response.data.email);
         dispatch(setNewNickname(response.data.nickname));
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -166,6 +172,23 @@ function MyInfos() {
       });
   };
 
+  const convertToBase64 = (file) => new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    setPostImage({ picture: base64 });
+  };
+
   //   atob()
 
   // const handlemodalShow = () => { setModalShow(false); };
@@ -177,7 +200,9 @@ function MyInfos() {
   }, []);
 
   useEffect(() => {
+    getProfil();
     getMembers();
+    console.log(profil);
   }, [clickedAdd]);
 
   return (
@@ -285,7 +310,15 @@ function MyInfos() {
                 className="MyInfos-row-group-img"
               />
             </Form.Label>
-            <Form.Control className="MyInfos-row-group-input" type="file" required />
+            <Form.Control
+              className="MyInfos-row-group-input"
+              type="file"
+              label="Image"
+              name="myFile"
+              accept=".jpeg, .png, .jpg"
+              onChange={(e) => handleFileUpload(e)}
+              required
+            />
           </Form.Group>
         </Row>
         <Button type="submit">Modifier</Button>
