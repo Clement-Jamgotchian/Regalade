@@ -24,7 +24,6 @@ import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
 import Favorites from '../../pages/Favorites/Favorites';
 
-
 const profilDataNav = [
   {
     id: 1,
