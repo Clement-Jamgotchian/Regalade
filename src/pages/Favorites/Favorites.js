@@ -10,12 +10,13 @@ import Pagination from '../../components/Pagination/Pagination';
 
 // Styles import
 import './Favorites.scss';
-import { clearRecipeRemoved } from '../../actions/favorites';
+import { addRecipeToFavorites, clearRecipeRemoved, clearRecipes } from '../../actions/favorites';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function Favorites() {
-  const [favorites, setFavorites] = useState([]);
+  // const [favorites, setFavorites] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const favorites = useSelector((state) => state.favorites.recipes);
   const recipeRemoved = useSelector((state) => state.favorites.recipeRemoved);
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `?page=${pageNumber}` : '';
@@ -27,7 +28,8 @@ function Favorites() {
         `/favorite${pageRequest}`,
       )
       .then((response) => {
-        setFavorites(response.data.recipes);
+        dispatch(clearRecipes());
+        response.data.recipes.map((recipe) => dispatch(addRecipeToFavorites(recipe)));
         setPageCount(response.data.totalPages);
         dispatch(clearRecipeRemoved());
       })
@@ -44,8 +46,8 @@ function Favorites() {
 
   return (
     <div className="Favorites">
-      <Recipes recipes={favorites} setRecipes={setFavorites} />
-      <Pagination setRecipes={setFavorites} pageCount={pageCount} />
+      <Recipes recipes={favorites} />
+      <Pagination setRecipes={() => dispatch(addRecipeToFavorites)} pageCount={pageCount} />
     </div>
   );
 }

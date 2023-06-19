@@ -31,10 +31,10 @@ axios.interceptors.response.use(
 
       const result = await memoizedRefreshToken();
 
-      if (result?.accessToken) {
+      if (result?.token) {
         config.headers = {
           ...config.headers,
-          authorization: `Bearer ${result?.accessToken}`,
+          authorization: `Bearer ${result?.token}`,
         };
       }
 

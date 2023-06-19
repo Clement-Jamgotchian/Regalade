@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 
 // React components
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -37,6 +37,7 @@ function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
   const [favorite, setFavorite] = useState(false);
   const linkAPI = useSelector((state) => state.profil.link);
+  const favoritesList = useSelector((store) => store.favorites.recipes);
 
   const addToList = async (id) => {
     await AxiosPrivate
@@ -70,8 +71,7 @@ function RecipeCard({ recipe }) {
       .then(() => {
         if (linkAPI === 'list') {
           dispatch(updateRecipesList({ action: 'removed' }));
-        }
-        if (linkAPI === 'favorite') {
+        } else {
           dispatch(removeRecipeFromFavorites(id));
           dispatch(updateFavorites());
         }
@@ -103,6 +103,10 @@ function RecipeCard({ recipe }) {
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favoritesList));
+  }, [favoritesList]);
+
   return (
     <Card className="RecipeCard">
       <FavoriteIcon
@@ -120,7 +124,7 @@ function RecipeCard({ recipe }) {
         <Card.Img
           className="RecipeCard--img"
           variant="top"
-          src={recipe.picture}
+          src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
         />
         <Card.Body className="RecipeCard--body">
           <CartIcon
