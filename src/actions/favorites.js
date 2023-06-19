@@ -2,6 +2,7 @@ export const ADD_RECIPE_TO_FAVORITES = 'ADD_RECIPE_TO_FAVORITES';
 export const REMOVE_RECIPE_FROM_FAVORITES = 'REMOVE_RECIPE_FROM_FAVORITES';
 export const CLEAR_RECIPE_REMOVED = 'CLEAR_RECIPE_REMOVED';
 export const FAVORITES_UPDATED = 'FAVORITES_UPDATED';
+export const CLEAR_RECIPES = 'CLEAR_RECIPES';
 
 export const addRecipeToFavorites = (data) => ({
   type: ADD_RECIPE_TO_FAVORITES,
@@ -23,4 +24,8 @@ export const clearRecipeRemoved = () => ({
 
 export const updateFavorites = () => ({
   type: FAVORITES_UPDATED,
+});
+
+export const clearRecipes = () => ({
+  type: CLEAR_RECIPES,
 });

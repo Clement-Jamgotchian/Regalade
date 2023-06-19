@@ -46,7 +46,7 @@ function RecipeDetails() {
   const favoritesRecipes = useSelector((state) => state.favorites.recipes);
   // eslint-disable-next-line eqeqeq
   const isFavorite = favoritesRecipes.some((item) => item.id == idRecette);
-  const [favorite, setFavorite] = useState();
+  const [favorite, setFavorite] = useState(isFavorite);
   const [cartOn, setCartOn] = useState(false);
 
   const addToList = async (id) => {
@@ -87,12 +87,12 @@ function RecipeDetails() {
   };
 
   const toggleFavorite = (id) => {
+    setFavorite(!favorite);
     if (favorite) {
       removeRecipe(id);
     } else {
       addToFavorite(id);
     }
-    setFavorite(!favorite);
   };
 
   function handleClick() {
@@ -119,7 +119,11 @@ function RecipeDetails() {
         className="recipeDetails-header"
       >
         <div className="recipeDetails-header-imgAndButton">
-          <img src={recipe.picture} alt="la recette" className="recipeDetails-header-image" />
+          <img
+            src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+            alt="la recette"
+            className="recipeDetails-header-image"
+          />
           <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
             <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
           </button>

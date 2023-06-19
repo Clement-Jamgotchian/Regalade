@@ -10,6 +10,7 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 // Styles import
 import './FavoriteIcon.scss';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 // If user is logged in, we show the favorite icon,
 // active or not depends if added on favorite list or not
@@ -18,7 +19,9 @@ import { useSelector } from 'react-redux';
 function FavoriteIcon({ recipeId, toggleFavorite }) {
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const favoritesRecipes = useSelector((store) => store.favorites.recipes);
-  const isFavorite = favoritesRecipes.some((item) => item.id === recipeId);
+  // eslint-disable-next-line eqeqeq
+  const favoriteInit = favoritesRecipes.some((item) => item.id == recipeId);
+  const [isFavorite, setIsFavorite] = useState(favoriteInit);
   const location = useLocation();
   const hideFavoriteIcon = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
   const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
@@ -27,7 +30,14 @@ function FavoriteIcon({ recipeId, toggleFavorite }) {
   // eslint-disable-next-line eqeqeq
   if (isLoggedIn && !hideFavoriteIcon) {
     return (
-      <button className="RecipeCard--buttonFavoriteToggle" type="button" onClick={toggleFavorite}>
+      <button
+        className="RecipeCard--buttonFavoriteToggle"
+        type="button"
+        onClick={() => {
+          setIsFavorite(!isFavorite);
+          toggleFavorite();
+        }}
+      >
         <FontAwesomeIcon className={className} icon={icon} />
       </button>
     );
