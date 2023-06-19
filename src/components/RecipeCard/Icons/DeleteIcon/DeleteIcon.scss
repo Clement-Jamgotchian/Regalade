@@ -18,15 +18,17 @@
         color: #ffffff !important;
         z-index: 2;
         transition: transform 1s ease;
+
+        &:hover {
+            transform: scale(1.4);
+            transition: transform 1s ease;
+        }
+
+        & svg {
+            background-color: vars.$primaryButton;
+            border-radius: 25px;
+            padding: 0.5rem 0.6rem;
+        }
     }
 
-    &--deleteButton {
-        color: vars.$primaryButton !important;
-    } 
-    
-    &--deleteButton svg {
-        background-color: #ffffff;
-        border-radius: 25px;
-        padding: 1px;
-    }
 }

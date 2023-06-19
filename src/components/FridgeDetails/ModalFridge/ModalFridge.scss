@@ -1,0 +1,22 @@
+.Modal{
+    &-header{
+        display: flex;
+        justify-content: space-around;
+        padding:5px 30px;
+        button{
+            position: absolute;
+            right: 20px;
+            top: 13px;
+        }
+        div{
+            font-size: 1.2rem;
+        }
+    }
+    &-body{
+        display: flex;
+        justify-content: space-around;
+        input{
+            width: 40%;
+        }
+    }
+}

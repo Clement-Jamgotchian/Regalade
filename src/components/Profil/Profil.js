@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from 'react-bootstrap';
-import axios from 'axios';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 import Recipes from '../Recipes/Recipes';
 import toque from '../../assets/images/toque.png';
 import caddie from '../../assets/images/caddie.png';
@@ -22,6 +22,8 @@ import List from '../../pages/List/List';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
+import Favorites from '../../pages/Favorites/Favorites';
+
 
 const profilDataNav = [
   {
@@ -73,11 +75,11 @@ function Profil() {
   const dispatch = useDispatch();
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/${linkAPI}`;
+  const baseUrl = `/${linkAPI}`;
   const request = `?${pageRequest}`;
 
   const getRecipes = async () => {
-    axios
+    AxiosPrivate
       .get(baseUrl + request)
       .then((response) => {
         setRecipes(response.data.recipes);
@@ -114,6 +116,9 @@ function Profil() {
     if (link === '/profil/mes-favorites') {
       dispatch(setLink('favorite'));
     }
+    if (link === '/profil/mes-repas') {
+      dispatch(setLink('list'));
+    }
   };
 
   useLayoutEffect(() => {
@@ -130,7 +135,7 @@ function Profil() {
       );
     }
     if (activePage === '/profil/mes-favorites') {
-      return <Recipes recipes={recipes} />;
+      return <Favorites />;
     }
     if (activePage === '/profil/mes-ingredients') {
       return <Fridge />;

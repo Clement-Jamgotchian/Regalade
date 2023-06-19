@@ -134,7 +134,7 @@ function Header() {
           className="Header-burger"
         />
         <Navbar.Brand className="Header-logoMain">
-          <Link to="/">
+          <Link to="/recettes">
             <img
               src={logoMain}
               alt="logo du site qui est un panier de fruit et légumes"

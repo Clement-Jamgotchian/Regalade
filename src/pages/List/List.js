@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, Button, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +15,6 @@ import Pagination from '../../components/Pagination/Pagination';
 // Import Redux actions
 import {
   clearRecipeRemoved,
-  updateRecipesList,
   showOrHideAlert,
   newAlertMessage,
   changeAlertVariant,
@@ -24,6 +22,8 @@ import {
 
 // Styles import
 import './List.scss';
+import { clearCartDeleted } from '../../actions/cart';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 // import { setActivPage, setCurrentButtonId } from '../../actions/profil';
 
@@ -39,19 +39,17 @@ function List() {
   const dispatch = useDispatch();
 
   const getList = async () => {
-    await axios
+    await AxiosPrivate
       .get(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list${pageRequest}`,
+        `/list${pageRequest}`,
       )
       .then((response) => {
-        console.log(response.data);
         const recipes = response.data.recipesList.map((item) => ({
           ...item.recipe,
           userPortions: item.portions,
         }));
         setList(recipes);
         setPageCount(response.data.totalPages);
-        dispatch(updateRecipesList({ action: 'init', length: recipes.length }));
         dispatch(clearRecipeRemoved());
       })
       .catch((error) => {
@@ -66,18 +64,19 @@ function List() {
   }, [recipeRemoved]);
 
   const generateCart = async () => {
-    await axios
+    await AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart',
+        '/cart',
       )
       .then((response) => {
         console.log(response);
-        dispatch(newAlertMessage('Votre liste de courses a bien été générées !'));
+        dispatch(clearCartDeleted());
+        dispatch(newAlertMessage('Votre liste de courses a bien été générée !'));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('success'));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       })
       .catch((error) => {
         dispatch(newAlertMessage(error));
@@ -85,7 +84,7 @@ function List() {
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       });
   };
 
@@ -101,6 +100,7 @@ function List() {
         </Alert>
       )}
       <Stack direction="horizontal" gap={3}>
+        {list.length > 0 && (
         <Button
           variant="primary"
           className="List--generateCartButton border"
@@ -110,8 +110,9 @@ function List() {
           }}
         >
           <FontAwesomeIcon icon={faCartArrowDown} />
-          <Link to="/profil/mes-courses">Générer ma liste de courses</Link>
+          <Link to="/profil/mes-repas">Générer ma liste de courses</Link>
         </Button>
+        )}
         <Button variant="success" className="List--addButton border ms-auto">
           <FontAwesomeIcon icon={faPlus} />
           <Link to="/recettes">Ajouter une recette</Link>
