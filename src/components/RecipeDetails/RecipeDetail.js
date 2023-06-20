@@ -18,6 +18,8 @@ import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
 import { updateRecipesList } from '../../actions/list';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import AxiosPublic from '../../utils/AxiosPublic';
+import Rating from './Rating/Rating';
+import CommentsCarousel from './CommentsCarousel/CommentsCarousel';
 
 // If user is logged in, we show the cart icon
 function CartIcon({ addToList, isFavorite }) {
@@ -48,6 +50,8 @@ function RecipeDetails() {
   const isFavorite = favoritesRecipes.some((item) => item.id == idRecette);
   const [favorite, setFavorite] = useState(isFavorite);
   const [cartOn, setCartOn] = useState(false);
+  const regex = /ÉTAPE/g;
+  const steps = recipe.step?.replace(regex, '<br/><br/> ÉTAPE');
 
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
@@ -207,9 +211,22 @@ function RecipeDetails() {
         </section>
         <section className="recipeDetails-recette">
           <h2 className="recipeDetails-recette-titles">Recette</h2>
-          <div className="recipeDetails-recette-step">{recipe.step}</div>
+          <div
+            className="recipeDetails-recette-step"
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: steps,
+            }}
+          />
         </section>
       </section>
+      {isLoggedIn && (
+        <section className="recipeDetails-comments">
+          {recipe.comments
+          && <CommentsCarousel comments={recipe.comments} />}
+          <Rating recipe={idRecette} />
+        </section>
+      )}
       <Footer className="recipeDetails-layout" />
     </section>
   );

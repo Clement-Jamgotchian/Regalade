@@ -1,0 +1,35 @@
+@use 'src/styles/vars';
+
+.CommentsCarousel {
+
+    & .carousel-indicators [data-bs-target] {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: vars.$primaryButton;
+    }
+
+    &--card {
+        border-color: transparent;
+        box-shadow: 2px 2px 5px 0px lightgray;
+        padding: 0.75rem;
+        margin-bottom: 80px;
+        border-radius: 2px;
+        width: 33%;
+        background-color: #ffffff;
+    }
+
+    &--card .card-title span {
+        font-size: .8rem;
+        padding-left: 0.4rem;
+        font-weight: 400;
+    }
+    &--card .card-body {
+        min-height: 100px;
+        padding: 0.5rem 0;
+    }
+
+    &--card svg {
+        color: vars.$primaryButton;
+    }
+}
