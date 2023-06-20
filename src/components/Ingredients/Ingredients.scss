@@ -1,3 +1,29 @@
 .Ingredients {
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    
+    &--deleteButton {
+        align-items: end;
+    }
+
+    &--generateCartButton {
+        color: #ffffff;
+        width: 250px;
+        text-decoration: none;
+        align-self: end;
+        margin: 7px;
+    }
+
+    &--generateCartButton:hover {
+        color: #ffffff;
+    }
+
+    &--generateCartButton svg {
+        margin-right: 5px;
+    }
+
+}
+.modal-footer .btn-primary {
+    color: #ffffff;
 }

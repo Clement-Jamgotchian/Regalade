@@ -4,28 +4,48 @@ import {
   Button, Card, Form, InputGroup,
 } from 'react-bootstrap';
 import { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 // FontAwesome import
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 // Assets
 import vegetables from '../../assets/vegetables.png';
 
 // Import styles
 import './IngredientCard.scss';
+import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
+import { updateCart } from '../../actions/cart';
+
+// Axios
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function IngredientCard({ ingredient, quantity }) {
   const [quantityValue, setQuantityValue] = useState(quantity);
+  const dispatch = useDispatch();
   let newValue = 0;
 
   const updateIngredientQuantity = async (ingredientId, newQuantity) => {
-    await axios.post(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart/${ingredientId}`, {
+    await AxiosPrivate.put(`/cart/${ingredientId}`, {
       quantity: newQuantity,
     })
-      .then((response) => {
-        console.log(response);
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteIngredient = async (ingredientId) => {
+    await AxiosPrivate.delete(`/cart/${ingredientId}`)
+      .then(() => {
+        dispatch(updateCart());
+        dispatch(newAlertMessage('L\'ingrédient a bien été supprimé de la liste de courses'));
+        dispatch(showOrHideAlert(true));
+        dispatch(changeAlertVariant('success'));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '5000');
       })
       .catch((error) => {
         console.log(error);
@@ -75,6 +95,17 @@ function IngredientCard({ ingredient, quantity }) {
               <FontAwesomeIcon icon={faPlus} size="xs" />
             </Button>
           </InputGroup>
+          <Button
+            variant="info"
+            onClick={(e) => {
+              e.preventDefault();
+              newValue = 0;
+              setQuantityValue(0);
+              deleteIngredient(ingredient.id);
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </Button>
         </Form>
       </Card.Body>
 

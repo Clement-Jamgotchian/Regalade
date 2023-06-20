@@ -1,11 +1,10 @@
 /* eslint-disable no-plusplus */
 
 // React components
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +14,7 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 // Import Redux actions
 import { Link } from 'react-router-dom';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
-import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
+import { addRecipeToFavorites, removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
@@ -32,16 +31,18 @@ import ChangePortionsInput from './ChangePortionsInput/ChangePortionsInput';
 import FavoriteIcon from './Icons/FavoriteIcon/FavoriteIcon';
 import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [favorite, setFavorite] = useState(false);
+  const linkAPI = useSelector((state) => state.profil.link);
+  const favoritesList = useSelector((store) => store.favorites.recipes);
 
   const addToList = async (id) => {
-    await axios
+    await AxiosPrivate
       .post(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`,
+        `/list/${id}`,
       )
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
@@ -50,26 +51,30 @@ function RecipeCard({ recipe }) {
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       })
       .catch(() => {
-        console.log('error');
         dispatch(changeAlertVariant('danger'));
         dispatch(newAlertMessage('Cette recette est déjà dans votre liste de repas.'));
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
-        }, '5000');
+        }, '4000');
       });
   };
 
-  const removeFromList = async (id) => {
-    await axios
+  const removeRecipe = async (id) => {
+    await AxiosPrivate
       .delete(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/list/${id}`,
+        `/${linkAPI}/${id}`,
       )
       .then(() => {
-        dispatch(updateRecipesList({ action: 'removed' }));
+        if (linkAPI === 'list') {
+          dispatch(updateRecipesList({ action: 'removed' }));
+        } else {
+          dispatch(removeRecipeFromFavorites(id));
+          dispatch(updateFavorites());
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -77,20 +82,13 @@ function RecipeCard({ recipe }) {
   };
 
   const addToFavorite = async (id) => {
-    await axios
+    await AxiosPrivate
       .post(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
+        `/favorite/${id}`,
       )
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const deleteToFavorite = async (id) => {
-    await axios
-      .delete(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/favorite/${id}`,
-      )
-
+      .then(() => {
+        dispatch(addRecipeToFavorites(recipe));
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -99,37 +97,37 @@ function RecipeCard({ recipe }) {
   const toggleFavorite = (id) => {
     setFavorite(!favorite);
     if (favorite) {
-      dispatch(removeRecipeFromFavorites(recipe));
-      deleteToFavorite(id);
+      removeRecipe(id);
     } else {
-      dispatch(addRecipeToFavorites(recipe));
       addToFavorite(id);
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favoritesList));
+  }, [favoritesList]);
+
   return (
     <Card className="RecipeCard">
       <FavoriteIcon
-        isLoggedIn={isLoggedIn}
-        isFavorite={favorite}
+        recipeId={recipe.id}
         toggleFavorite={() => {
           toggleFavorite(recipe.id);
         }}
       />
       <DeleteIcon
-        removeFromList={() => {
-          removeFromList(recipe.id);
+        removeRecipe={() => {
+          removeRecipe(recipe.id);
         }}
       />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
         <Card.Img
           className="RecipeCard--img"
           variant="top"
-          src={recipe.picture}
+          src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
         />
         <Card.Body className="RecipeCard--body">
           <CartIcon
-            isLoggedIn={isLoggedIn}
             addToList={() => {
               addToList(recipe.id);
             }}

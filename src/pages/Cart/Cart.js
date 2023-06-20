@@ -1,41 +1,46 @@
 // React components
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Local components
 import Ingredients from '../../components/Ingredients/Ingredients';
-import Loader from '../../components/Loader/Loader';
+import { clearIngredientRemoved } from '../../actions/cart';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function Cart() {
   const [departments, setDepartments] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const ingredientRemoved = useSelector((state) => state.cart.ingredientRemoved);
+  const cartDeleted = useSelector((store) => store.cart.cartDeleted);
+  const dispatch = useDispatch();
 
   const getCart = async () => {
-    await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/cart')
-      .then((response) => {
-        console.log(response.data);
-        setIngredients(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!cartDeleted) {
+      await AxiosPrivate.get('/cart')
+        .then((response) => {
+          setIngredients(response.data);
+          const departmentsSet = new Set(
+            response.data.map((item) => item.ingredient.department.name),
+          );
+          setDepartments(departmentsSet);
+          dispatch(clearIngredientRemoved());
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setIngredients([]);
+      setDepartments([]);
+    }
   };
 
   useEffect(() => {
     getCart();
-    const departmentsSet = new Set(
-      ingredients.map((item) => item.ingredient.department.name),
-    );
-    setDepartments(departmentsSet);
-  }, [ingredients]);
+  }, [ingredientRemoved, cartDeleted]);
 
   return (
     <div className="Cart">
-      {ingredients ? (
-        <Ingredients departments={departments} ingredients={ingredients} />
-      ) : (
-        <Loader />
-      )}
+      <Ingredients departments={departments} ingredients={ingredients} />
     </div>
   );
 }

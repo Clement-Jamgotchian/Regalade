@@ -5,6 +5,7 @@ import listReducer from './list';
 import favoritesReducer from './favorites';
 import profilReducer from './profil';
 import fridgeReducer from './fridge';
+import cartReducer from './cart';
 
 const rootReducer = combineReducers({
   header: headerReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   favorites: favoritesReducer,
   profil: profilReducer,
   fridge: fridgeReducer,
+  cart: cartReducer,
 });
 
 export default rootReducer;

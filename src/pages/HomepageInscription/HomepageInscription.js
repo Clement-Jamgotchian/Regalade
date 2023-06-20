@@ -2,7 +2,6 @@
 import './HomepageInscription.scss';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 // Dispatch
 import { useDispatch } from 'react-redux';
@@ -12,6 +11,11 @@ import {
   setNewNickname,
   setTokenUser,
 } from '../../actions/user';
+
+// Axios
+// eslint-disable-next-line import/no-named-as-default
+import AxiosPublic from '../../utils/AxiosPublic';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 // assets
 import tomate from '../../assets/tomate.png';
@@ -73,26 +77,23 @@ function HomepageInscription() {
     }
   };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    axios
+  function handleSubmit() {
+    AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/login_check',
+        '/login_check',
         {
           email: email,
           password: password,
         },
       )
       .then((res) => {
-        console.log(res);
         dispatch(setTokenUser(res.data.token));
         dispatch(setConnectedUser(true));
         dispatch(setInvitedUser(false));
-        axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-        localStorage.setItem('isLogged', true);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem('token', res.data.token);
-
-        console.log("c'est ok");
+        localStorage.setItem('refreshToken', res.data.refresh_token);
+        localStorage.setItem('invitedUser', JSON.stringify(false));
         navigate('/recettes');
       })
       .catch((err) => {
@@ -101,26 +102,20 @@ function HomepageInscription() {
       });
   }
 
-  const handleSubmitCreate = (event) => {
-    event.preventDefault();
+  const handleSubmitCreate = () => {
     if (password === confirmPassword) {
-      console.log('bon mot de passe');
-      axios
-        .post(
-          'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user',
-          {
-            email: email,
-            nickname: nickname,
-            password: password,
-          },
-        )
+      AxiosPublic
+        .post('/user', {
+          email: email,
+          nickname: nickname,
+          password: password,
+        })
         .then((res) => {
           console.log(res.data.nickname);
           dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
           dispatch(setNewNickname(res.data.nickname));
-
-          axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
+          handleSubmit();
         })
         .catch(() => {
           alert('Oups !');
@@ -133,6 +128,10 @@ function HomepageInscription() {
 
   const inviteUser = () => {
     dispatch(setInvitedUser(true));
+    localStorage.setItem('isLoggedIn', JSON.stringify(false));
+    localStorage.setItem('invitedUser', JSON.stringify(true));
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
   };
 
   return (
@@ -144,13 +143,13 @@ function HomepageInscription() {
         <div className="formSign-carousel">
           <form
             className="formSign-carousel-up"
-            onSubmit={handleSubmitCreate}
+            onSubmit={(e) => { e.preventDefault(); handleSubmitCreate(); }}
             style={{
               transform: `rotateY(${currDegUp}deg) translateZ(150px) translateY(200px)`,
             }}
           >
             <button
-              type="submit"
+              type="button"
               className="formSign-signupButton"
               style={{ display: `${displayUp}` }}
               onClick={rotate}
@@ -241,21 +240,13 @@ function HomepageInscription() {
           </div>
           <form
             className="formSign-carousel-in"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
             style={{
               transform: `rotateY(${currDegIn}deg) translateZ(150px) translateY(200px)`,
             }}
           >
             <button
-              type="submit"
-              className="formSign-signinButton"
-              style={{ display: `${displayIn}`, transition: '1s' }}
-              onClick={rotate}
-            >
-              S&apos;inscrire
-            </button>
-            <button
-              type="submit"
+              type="button"
               className="formSign-signinButton"
               style={{ display: `${displayIn}`, transition: '1s' }}
               onClick={rotate}

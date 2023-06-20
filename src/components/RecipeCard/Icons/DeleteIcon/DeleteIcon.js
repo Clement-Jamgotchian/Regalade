@@ -6,27 +6,27 @@ import { useLocation } from 'react-router-dom';
 
 // FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 // Styles import
 import './DeleteIcon.scss';
 
-// If recipe is in the list page, we show the delete icon instead of the favorite icon
-function DeleteIcon({ removeFromList }) {
+// If recipe is in the list or favorite page, we show the delete icon instead of the favorite icon
+function DeleteIcon({ removeRecipe }) {
   const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
+  const hideDeleteButton = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
 
-  if (isInPageList) {
+  if (hideDeleteButton) {
     return (
-      <button className="RecipeCard--deleteButton" type="button" onClick={removeFromList}>
-        <FontAwesomeIcon icon={faCircleXmark} />
+      <button className="RecipeCard--deleteButton" type="button" onClick={removeRecipe}>
+        <FontAwesomeIcon icon={faXmark} />
       </button>
     );
   }
 }
 
 DeleteIcon.propTypes = {
-  removeFromList: PropTypes.func.isRequired,
+  removeRecipe: PropTypes.func.isRequired,
 };
 
 export default DeleteIcon;

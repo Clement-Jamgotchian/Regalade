@@ -48,6 +48,9 @@
         color: vars.$primaryButton !important;
         z-index: 2;
         transition: transform .5s ease;
+        background: #ffffff;
+        padding: 0.5rem;
+        border-radius: 50%;
     }
 
 
@@ -68,6 +71,9 @@
         color: vars.$primaryButton;
         z-index: 2;
         transition: transform 1s ease;
+        background: #ffffff;
+        padding: 0.5rem;
+        border-radius: 50%;
     }
 
     &-cart {
@@ -343,10 +349,15 @@
                 width: 100%;
                 height: 30vh;
                 border-radius: 10px 0px 0px 0px;
+                object-fit: cover;
             }
             &-rating {
                 color: vars.$backGround;
                 margin-bottom: 1em;
+
+                & span {
+                    display: block;
+                }
 
             }
             &-title {
@@ -482,6 +493,8 @@
                 font-size: 1.1em;
                 margin: 1em 1em;
             }
+
         }
+
     }
 }

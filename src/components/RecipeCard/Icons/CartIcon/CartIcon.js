@@ -10,7 +10,8 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import './CartIcon.scss';
 
 // If user is logged in, we show the cart icon
-function CartIcon({ isLoggedIn, addToList }) {
+function CartIcon({ addToList }) {
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const location = useLocation();
   const isInPageList = location.pathname === '/profil/mes-repas';
 
@@ -24,7 +25,6 @@ function CartIcon({ isLoggedIn, addToList }) {
 }
 
 CartIcon.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   addToList: PropTypes.func.isRequired,
 };
 
