@@ -46,5 +46,15 @@ export function getStars(starsRating) {
       stars.push(<FontAwesomeIcon key={i} icon={farStar} />);
     }
   }
+  if (starsRating === null) {
+    stars.push(<span>Pas encore notée</span>);
+  } else {
+    stars.push(
+      <span>
+        {starsRating}
+        /5
+      </span>,
+    );
+  }
   return stars;
 }
