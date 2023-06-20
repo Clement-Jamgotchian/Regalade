@@ -6,23 +6,13 @@ import './FridgeDetails.scss';
 import fleche from '../../assets/images/fleche.png';
 import ModalFridge from './ModalFridge/ModalFridge';
 
-function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
+function FridgeDetails({ fridgeData, handleDeleteIngredient, getFridge, updateQuantity }) {
   const [show, setShow] = useState(false);
   const [isSeeMore, setIsSeeMore] = useState(false);
-  const [quantityValue, setQuantityValue] = useState(null);
-  const [inputId, setInputId] = useState(null);
-  const [indexId, setIndexId] = useState(null);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const sliceTest = isSeeMore ? fridgeData : fridgeData.slice(0, 3);
-
-  console.log(quantityValue);
-
-  const changeValue = (newValue) => {
-    if (indexId + 1 === inputId) {
-      setQuantityValue(newValue);
-    }
-  };
 
   return (
     <div className="FridgeDetails">
@@ -36,7 +26,7 @@ function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
             <th>Supprimer</th>
           </tr>
         </thead>
-        {sliceTest.map(({ ingredient, id, quantity }, i) => (
+        {sliceTest.map(({ ingredient, id, quantity }) => (
           <tbody key={id}>
             <tr>
               <td>
@@ -54,9 +44,7 @@ function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
                     id={id}
                     value={quantity}
                     onChange={(event) => {
-                      setInputId(event.currentTarget.id);
-                      setIndexId(i);
-                      changeValue(event.currentTarget.value);
+                      updateQuantity(event.currentTarget.value, ingredient.id);
                     }}
                     type="number"
                   />
@@ -70,6 +58,7 @@ function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
                   aria-label="croix de fermeture"
                   onClick={() => {
                     handleDeleteIngredient(ingredient.id);
+                    getFridge();
                   }}
                 />
               </td>
@@ -91,7 +80,7 @@ function FridgeDetails({ fridgeData, handleDeleteIngredient }) {
           {isSeeMore ? 'Réduire' : 'Voir plus'}
         </Button>
       </div>
-      <ModalFridge handleClose={handleClose} show={show} />
+      <ModalFridge handleClose={handleClose} show={show} getFridge={getFridge} />
     </div>
   );
 }
@@ -111,6 +100,9 @@ FridgeDetails.propTypes = {
     }).isRequired,
   })).isRequired,
   handleDeleteIngredient: PropTypes.func.isRequired,
+  getFridge: PropTypes.func.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+
 };
 
 export default FridgeDetails;

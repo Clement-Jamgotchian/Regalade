@@ -25,7 +25,6 @@ function Fridge() {
       .then((response) => {
         dispatch(setFridgeValue(response.data));
         setFridgeData(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -37,6 +36,35 @@ function Fridge() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const updateFridgeData = (updatedData, id) => {
+    const currentQuantity = updatedData.find((quantity) => quantity.ingredient.id === id).quantity;
+    const number = Number(currentQuantity);
+    axios.put(
+      `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge/${id}`,
+      {
+        quantity: number,
+      },
+    )
+      .then((res) => { console.log(res); })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const updateQuantity = (newQuantity, ingredientId) => {
+    const updatedData = fridgeData.map((item) => {
+      if (item.ingredient.id === ingredientId) {
+        return {
+          ...item,
+          quantity: newQuantity,
+        };
+      }
+      return item;
+    });
+    setFridgeData(updatedData);
+    updateFridgeData(updatedData, ingredientId);
   };
 
   useEffect(() => {
@@ -55,7 +83,12 @@ function Fridge() {
               className="Fridge-img"
             />
           </h3>
-          <FridgeDetails fridgeData={fridge} handleDeleteIngredient={handleDeleteIngredient} />
+          <FridgeDetails
+            fridgeData={fridge}
+            handleDeleteIngredient={handleDeleteIngredient}
+            getFridge={getFridge}
+            updateQuantity={updateQuantity}
+          />
         </Col>
         <Col className="Fridge-closet">
           <h3 className="Fridge-Title">
@@ -66,7 +99,12 @@ function Fridge() {
               className="Fridge-img"
             />
           </h3>
-          <FridgeDetails fridgeData={closet} handleDeleteIngredient={handleDeleteIngredient} />
+          <FridgeDetails
+            fridgeData={closet}
+            handleDeleteIngredient={handleDeleteIngredient}
+            getFridge={getFridge}
+            updateQuantity={updateQuantity}
+          />
         </Col>
       </Row>
       <Button className="Fridge-button" variant="primary" size="lg">

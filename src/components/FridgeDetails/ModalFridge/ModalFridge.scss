@@ -27,12 +27,20 @@
     }
     &-select{
         width: 100%;
-        margin-top: 1rem;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
         
         select{
+            margin-top: 1rem;
             width: 40%;
         }
+    }
+    &-alert{
+        position: absolute;
+        width: 60%;
+        top: 77px;
+        right: 15px;
+        text-align: center;
     }
 }
