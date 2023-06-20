@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Button, FloatingLabel, Form, Row } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
 import './CreateRecipe.scss';
 import StepOne from './Step/stepOne';
+import StepThree from './Step/stepThree';
 import StepTwo from './Step/stepTwo';
 
 function CreateRecipe() {
@@ -14,10 +15,10 @@ function CreateRecipe() {
   const [title, setTitle] = useState('');
   const [descritption, setDescritption] = useState('');
   const [step, setStep] = useState('');
-  const [setupDuration, setSetupDuration] = useState('');
-  const [cookingDuration, setCookingDuration] = useState('');
-  const [difficulty, setDifficulty] = useState('');
-  const [category, setCategory] = useState('');
+  const [setupDuration, setSetupDuration] = useState(0);
+  const [cookingDuration, setCookingDuration] = useState(0);
+  const [difficulty, setDifficulty] = useState(1);
+  const [category, setCategory] = useState(1);
   const [containsIngredients, setContainsIngredients] = useState([]);
 
   const dispatch = useDispatch();
@@ -77,16 +78,10 @@ function CreateRecipe() {
           containsIngredients={containsIngredients}
           setContainsIngredients={setContainsIngredients}
         />
-        <Row className="mb-3 CreateRecipe-form-row-1">
-          <FloatingLabel controlId="floatingSelect" label="Works with selects" className="CreateRecipe-form-row-1-group">
-            <Form.Select aria-label="Floating label select example">
-              <option>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </Form.Select>
-          </FloatingLabel>
-        </Row>
+        <StepThree
+          step={step}
+          setStep={setStep}
+        />
         <Button className="CreateRecipe-form-button" type="submit">Créer</Button>
       </Form>
     </section>

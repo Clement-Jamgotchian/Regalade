@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
-function StepOne({ setPostImage }) {
+function StepOne({ setPostImage, title, setTitle, setCategory }) {
   const convertToBase64 = (file) => new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -30,6 +30,8 @@ function StepOne({ setPostImage }) {
             name="title"
             id="title"
             placeholder="Titre de la recette"
+            value={title}
+            onChange={(e) => { setTitle(e.target.value); console.log(title); }}
           />
         </Form.Group>
       </Row>
@@ -48,7 +50,13 @@ function StepOne({ setPostImage }) {
           />
         </Form.Group>
       </Row>
-      <div key="inline-radio" className="mb-3">
+      <div
+        key="inline-radio-one"
+        className="mb-3"
+        onChange={(event) => {
+          setCategory(event.target.value);
+        }}
+      >
         <Form.Label className="CreateRecipe-form-row-1-group-label">
           Type de plat
         </Form.Label>
