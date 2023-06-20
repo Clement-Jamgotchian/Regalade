@@ -1,69 +1,77 @@
 @use '../../styles/vars';
 
-.FridgeDetails{
+.FridgeDetails {
+  width: 100%;
+  margin-top: 20px;
+  &-titles {
+    th{
+      font-size: 0.9rem;
+        font-weight: 500;
+    }
+  }
+  &-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    margin-top: 20px;
+    p {
+      margin: 0 30px;
+    }
+  }
+  &-img {
+    width: 15px;
+    height: 15px;
+    // margin-right: -20px;
+  }
+  &-ingredient {
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  &-button {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/images/cross.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 18px;
+    padding-right: 30px;
+    margin-right: 35px;
+  }
+  &-button:hover {
+    transform: scale(1.2);
+  }
+  &-input {
+    width: 60px;
+    border-radius: 5px;
+    border: 1px solid;
+  }
+  &-add {
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+    margin: 20px auto;
+    button:last-child {
+      font-family: vars.$font;
+      color: #fff;
+    }
+    button:hover {
+      transform: scale(1.1);
+      color: #fff;
+    }
+  }
+}
+@media (min-width: 990px) {
+  .FridgeDetails {
     &-titles{
-        display: flex;
-        justify-content: center;
-        p{
-            margin-left: 15px;
-            font-weight: 600;
-        }
-
+      font-size: 1rem;
     }
-    &-form{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        p{
-            margin: 0 30px;
-        }
+    &-table {
+      width: 60%;
+      margin: auto;
     }
-    &-img{
-        width: 15px;
-        height: 15px;
-        margin-right: -20px;
-    }
-    &-ingredient{
-        font-size: 1.2em;
-        font-weight: 600;
-    }
-    &-button    {
-        display: flex;
-        width: 25px;
-        height: 25px;
-        border: none;
-        background-color: transparent;
-        background-image: url(../../assets/images/cross.png);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        margin-left: 18px;
-        padding-right: 30px ;
-        margin-right: 35px;
-    }
-    &-button:hover{
-        transform: scale(1.2);
-    }
-    &-input{
-        width: 60px;
-        border-radius: 5px;
-        border: 1px solid ;
-    }
-    &-add{
-        display: flex;
-        width: 70%;
-        justify-content: space-between;
-        margin: 20px auto;
-        button:last-child{
-            font-family: vars.$font;
-            color: #fff;
-        }
-        button:hover{
-            transform: scale(1.1);
-            color: #fff;
-          }
-    }
+  }
 }
