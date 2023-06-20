@@ -14,11 +14,10 @@ function CommentsCarousel({ comments }) {
   };
 
   // Helper function to group every 3 recipe to a new array
-  const reduceRecipes = (acc, cur, idx) => {
+  const reduceComments = (acc, cur, idx) => {
     const groupIndex = Math.floor(idx / 3);
     if (!acc[groupIndex]) acc[groupIndex] = [];
     acc[groupIndex].push(cur);
-    console.log(acc);
     return acc;
   };
 
@@ -29,8 +28,8 @@ function CommentsCarousel({ comments }) {
         {' '}
         Commentaires
       </h3>
-      <Carousel activeIndex={index} onSelect={handleSelect} touch className="CommentsCarousel">
-        {comments.reduce(reduceRecipes, []).map((comment, idx) => (
+      <Carousel activeIndex={index} onSelect={handleSelect} touch className="CommentsCarousel desktop">
+        {comments.reduce(reduceComments, []).map((comment, idx) => (
           <Carousel.Item key={idx}>
             <Stack
               direction="horizontal"
@@ -38,7 +37,7 @@ function CommentsCarousel({ comments }) {
               gap={3}
             >
               {comment.map((el) => (
-                <Card className="CommentsCarousel--card" key={el.user.nickname + el.rating}>
+                <Card className="CommentsCarousel--card" key={el.user.nickname + el.rating} sm={12} md={6} lg={4}>
                   <Card.Title>
                     {el.user.nickname}
                   </Card.Title>
@@ -50,6 +49,30 @@ function CommentsCarousel({ comments }) {
                   </Card.Body>
                 </Card>
               ))}
+            </Stack>
+          </Carousel.Item>
+        ))}
+      </Carousel>
+
+      <Carousel activeIndex={index} onSelect={handleSelect} touch className="CommentsCarousel mobile">
+        {comments.map((comment, idx) => (
+          <Carousel.Item key={idx}>
+            <Stack
+              direction="horizontal"
+              className="h-100 justify-content-start align-items-start"
+              gap={3}
+            >
+              <Card className="CommentsCarousel--card" sm={12} md={6} lg={4}>
+                <Card.Title>
+                  {comment.user.nickname}
+                </Card.Title>
+                <Card.Title>
+                  {getStars(comment.rating)}
+                </Card.Title>
+                <Card.Body>
+                  <p>{comment.content}</p>
+                </Card.Body>
+              </Card>
             </Stack>
           </Carousel.Item>
         ))}

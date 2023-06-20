@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert, Button, Card, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
-import './Rating.scss';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
+import './Rating.scss';
+import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../../actions/list';
 
 function Rating({ recipe }) {
   const [clicked1, setClicked1] = useState(false);
@@ -22,6 +24,10 @@ function Rating({ recipe }) {
   const [hover5, setHover5] = useState(false);
   const [rating, setRating] = useState();
   const [content, setContent] = useState('');
+  const showAlert = useSelector((state) => state.list.showAlert);
+  const alertMessage = useSelector((state) => state.list.alertMessage);
+  const alertVariant = useSelector((state) => state.list.alertVariant);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,8 +38,28 @@ function Rating({ recipe }) {
     };
     await AxiosPrivate
       .post('/comments', data)
-      .catch((error) => {
-        console.log(error);
+      .then(() => {
+        setContent('');
+        setRating(0);
+        setClicked1(false);
+        setClicked2(false);
+        setClicked3(false);
+        setClicked4(false);
+        setClicked5(false);
+        dispatch(newAlertMessage('Merci ! Votre commentaire a bien été envoyé et sera publié après validation.'));
+        dispatch(changeAlertVariant('success'));
+        dispatch(showOrHideAlert(true));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '4000');
+      })
+      .catch(() => {
+        dispatch(changeAlertVariant('danger'));
+        dispatch(newAlertMessage('Un problème est survenu, veuillez réessayer ultérieurement.'));
+        dispatch(showOrHideAlert(true));
+        setTimeout(() => {
+          dispatch(showOrHideAlert(false));
+        }, '4000');
       });
   };
 
@@ -146,10 +172,19 @@ function Rating({ recipe }) {
         />
         <Form onSubmit={handleSubmit}>
           <Form.Control as="textarea" aria-label="comment" value={content} onChange={(e) => setContent(e.target.value)} />
-          <Button className="Rating--submitButton" id="submit-comment" variant="success" type="submit">
+          <Button className="Rating--submitButton mb-3" id="submit-comment" variant="success" type="submit">
             Envoyer
           </Button>
         </Form>
+        {showAlert && (
+        <Alert
+          variant={alertVariant}
+          onClose={() => dispatch(showOrHideAlert(false))}
+          dismissible
+        >
+          {alertMessage}
+        </Alert>
+        )}
       </Card.Body>
     </Card>
   );

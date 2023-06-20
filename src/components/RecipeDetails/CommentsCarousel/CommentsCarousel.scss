@@ -1,6 +1,13 @@
 @use 'src/styles/vars';
 
 .CommentsCarousel {
+    &.desktop {
+        display: block;
+    }
+    
+    &.mobile {
+        display: none;
+    }
 
     & .carousel-indicators [data-bs-target] {
         width: 10px;
@@ -31,5 +38,24 @@
 
     &--card svg {
         color: vars.$primaryButton;
+    }
+}
+
+
+@media (max-width: vars.$layout-breakpoint-small) {
+
+    .CommentsCarousel.mobile {
+        display: flex;
+
+    }
+
+    .CommentsCarousel.desktop {
+        display: none;
+    }
+
+    .CommentsCarousel {
+        &--card {
+            width: 100%;
+        }
     }
 }
