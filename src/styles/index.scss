@@ -9,6 +9,8 @@ $theme-colors: (
   'info': vars.$backGround,
   'danger': #e90606,
   );
+$btn-color: #ffffff !important;
+$btn-hover-color: #ffffff !important;
 
 $pagination-color: vars.$primaryButton;
 $pagination-bg: vars.$backGround;

@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
 import { Alert, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNewNickname } from '../../actions/user';
@@ -15,6 +14,7 @@ import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../acti
 import MyVerticallyCenteredModal from './Modal/Modal';
 import adulte from '../../assets/la-personne.png';
 import enfant from '../../assets/enfant.png';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function MyInfos() {
   const [profil, setProfil] = useState([]);
@@ -42,7 +42,7 @@ function MyInfos() {
       e.stopPropagation();
     } else {
       setValidated(true);
-      await axios.put('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user', {
+      await AxiosPrivate.put('/user', {
         email: email,
         nickname: nickname,
         picture: postImage.picture,
@@ -76,7 +76,7 @@ function MyInfos() {
   };
 
   const handleSubmitMember = async (id) => {
-    await axios.put(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/members/${id}`, {
+    await AxiosPrivate.put(`/members/${id}`, {
       nickname: nicknameMember,
       isAdult: isAdult,
     })
@@ -123,7 +123,7 @@ function MyInfos() {
   };
 
   const getProfil = async () => {
-    await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/user')
+    await AxiosPrivate.get('/user')
       .then((response) => {
         setProfil(response.data);
         setNickname(response.data.nickname);
@@ -137,7 +137,7 @@ function MyInfos() {
   };
 
   const getMembers = async () => {
-    await axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/members')
+    await AxiosPrivate.get('/members')
       .then((response) => {
         setMembers(response.data);
       })
@@ -147,9 +147,9 @@ function MyInfos() {
   };
 
   const removeFromMember = async (id) => {
-    await axios
+    await AxiosPrivate
       .delete(
-        `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/members/${id}`,
+        `/members/${id}`,
       )
       .then(() => {
         dispatch(newAlertMessage('Membre bien supprimé'));
@@ -281,7 +281,7 @@ function MyInfos() {
         </Row>
         <Row className="mb-3 MyInfos-row">
           <Form.Group className="MyInfos-row-group" as={Col} md="4">
-            <Form.Label className="MyInfos-row-group-label">confirmation de mot de passe</Form.Label>
+            <Form.Label className="MyInfos-row-group-label">Confirmation de mot de passe</Form.Label>
             <Form.Control
               className="MyInfos-row-group-input"
               type="password"
