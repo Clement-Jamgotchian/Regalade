@@ -4,6 +4,21 @@ import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
 function StepThree() {
   const [stepNumber, setStepNumber] = useState(1);
+  const [allStep, setAllStep] = useState('');
+  const [allStepLocal, setAllStepLocal] = useState([]);
+  const [oneStep, setOneStep] = useState('');
+  console.log(allStepLocal);
+  console.log(allStep);
+
+  const addStep = () => {
+    const newStep = oneStep;
+    const newSteplocal = {
+      oneStep,
+      number: stepNumber,
+    };
+    setAllStepLocal([...allStepLocal, newSteplocal]);
+    setAllStep(`${allStep} Etape ${stepNumber} ${newStep}`);
+  };
   return (
     <section className="CreateRecipe-3">
 
@@ -25,10 +40,11 @@ function StepThree() {
             placeholder="Ecrire une étape"
             min={0}
             max={1000}
+            onChange={(e) => { setOneStep(e.target.value); }}
           />
         </InputGroup>
       </Row>
-      <Button className="CreateRecipe-form-button" type="button" onClick={() => { setStepNumber(stepNumber + 1); }}>Ajouter une étape</Button>
+      <Button className="CreateRecipe-form-button" type="button" onClick={() => { setStepNumber(stepNumber + 1); addStep(); setOneStep(''); }}>Ajouter une étape</Button>
 
     </section>
   );

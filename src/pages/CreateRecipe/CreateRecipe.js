@@ -19,6 +19,7 @@ function CreateRecipe() {
   const [cookingDuration, setCookingDuration] = useState(0);
   const [difficulty, setDifficulty] = useState(1);
   const [category, setCategory] = useState(1);
+  const [portions, setPortions] = useState(1);
   const [containsIngredients, setContainsIngredients] = useState([]);
 
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function CreateRecipe() {
       difficulty,
       category,
       containsIngredients,
+      portions,
 
     })
       .then(() => {
@@ -67,6 +69,7 @@ function CreateRecipe() {
           category={category}
           setCategory={setCategory}
           setDescritption={setDescritption}
+          setPortions={setPortions}
         />
         <StepTwo
           setupDuration={setupDuration}
