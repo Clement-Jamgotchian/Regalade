@@ -2,16 +2,15 @@
 import { useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
-function StepThree() {
-  const [stepNumber, setStepNumber] = useState(1);
+function StepThree({ step, setStep }) {
   const [allStep, setAllStep] = useState('');
   const [allStepLocal, setAllStepLocal] = useState([]);
+  const stepNumber = 1;
   const [oneStep, setOneStep] = useState('');
-  console.log(allStepLocal);
   console.log(allStep);
-
+  console.log(step);
   const deleteStep = (id) => {
-    setAllStepLocal(...allStepLocal.slice(0, id), ...allStepLocal.slice(id + 1));
+    allStepLocal.splice(id - 1, 1);
   };
 
   const stepView = () => {
@@ -20,37 +19,81 @@ function StepThree() {
         "Il n'y a pas encore d'étapes pour cette recette. Elle doit être super rapide."
       );
     }
-    return (allStepLocal.map((step) => (
-      <InputGroup key={step.number}>
-        <InputGroup.Text>
-          Etape
-          {' '}
-          {step.number}
-        </InputGroup.Text>
-        <InputGroup.Text>{step.oneStep}</InputGroup.Text>
-        <Button
-          className="CreateRecipe-button-step-delete"
-          key={step.number}
-          type="button"
-          onClick={() => {
-            deleteStep(step.number);
-          }}
-        >
-          <img src="" alt="" />
-        </Button>
-      </InputGroup>
+    return (
+    // <InputGroup>
+    //   <ListGroup>
+    //     {numbers.map((number) => (
+
+    //       <InputGroup.Item key={number}>
+    //         Etape
+    //         {' '}
+    //         {number}
+
+    //       </InputGroup.Item>
+
+    //     ))}
+
+      //   </ListGroup>
+      allStepLocal.map((stepLocal) => {
+        // eslint-disable-next-line no-param-reassign
+        stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
+        console.log(stepLocal.number);
+        // setAllStep(`${allStep} Etape ${stepLocal.stepNumber} ${stepLocal.oneStep}`);
+        return (
+          <InputGroup key={stepLocal.number}>
+            <InputGroup.Text>
+              Etape
+              {' '}
+              {allStepLocal.indexOf(stepLocal) + 1}
+            </InputGroup.Text>
+            <InputGroup.Text>{stepLocal.oneStep}</InputGroup.Text>
+            <Button
+              className="CreateRecipe-button-step-delete"
+              type="button"
+              onClick={() => {
+                deleteStep(stepLocal.number);
+              }}
+            >
+              <img src="" alt="" />
+            </Button>
+          </InputGroup>
+        );
+      }));
+    //     <ListGroup>
+    //       {numbers.map((number) => (
+    //         <Button
+    //           className="CreateRecipe-button-step-delete"
+    //           type="button"
+    //           value={number}
+    //           onClick={() => {
+    //             deleteStep(number);
+    //           }}
+    //         >
+    //           <img src="" alt="" />
+    //         </Button>
+    //       ))}
+
+    //     </ListGroup>
+    //   </InputGroup>
+
+    // // </InputGroup>
+    // );
+  };
+
+  const setAllStepInApi = () => {
+    setAllStep(allStepLocal.map((number) => (
+      `Etape ${number.number} ${number.oneStep}`
     )));
+    setStep(allStep.toString());
   };
 
   const addStep = () => {
-    const newStep = oneStep;
     const newSteplocal = {
       oneStep,
-      number: Math.max(...allStepLocal.map((t) => t.number)) + 1,
+      number: stepNumber,
     };
     setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${newStep}`);
-    setStepNumber(stepNumber + 1);
+    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
   };
 
   return (
@@ -62,7 +105,7 @@ function StepThree() {
           <InputGroup.Text>
             Etape
             {' '}
-            {stepNumber}
+            {allStepLocal.length + 1}
           </InputGroup.Text>
           <Form.Control
             as="textarea"
@@ -76,9 +119,10 @@ function StepThree() {
             max={1000}
             onChange={(e) => { setOneStep(e.target.value); }}
           />
+          <Button className="CreateRecipe-form-button" type="button" onClick={() => { addStep(); setOneStep(''); setAllStepInApi(); }}>&#x2B;</Button>
         </InputGroup>
       </Row>
-      <Button className="CreateRecipe-form-button" type="button" onClick={() => { addStep(); setOneStep(''); }}>Ajouter une étape</Button>
+      <Button className="CreateRecipe-form-button" type="button" onClick={() => { setAllStepInApi(); setStep(allStep.toString()); }}>&#x2B;</Button>
       <Row className="mb-3 CreateRecipe-form-row-3">
         {stepView()}
       </Row>
