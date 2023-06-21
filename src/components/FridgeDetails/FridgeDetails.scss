@@ -63,6 +63,10 @@
       color: #fff;
     }
   }
+  &-table {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
 }
 @media (min-width: 990px) {
   .FridgeDetails {

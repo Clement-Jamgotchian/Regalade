@@ -2,7 +2,6 @@ import './Fridge.scss';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
-import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -10,17 +9,22 @@ import fridgeLogo from '../../assets/images/frigo.png';
 import closetLogo from '../../assets/images/placard.png';
 import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
 import { setFridgeValue } from '../../actions/fridge';
+import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const closet = fridgeData.filter((noCold) => noCold.ingredient.isCold === false);
   const fridge = fridgeData.filter((cold) => cold.ingredient.isCold === true);
 
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   const getFridge = () => {
-    axios
+    AxiosPrivate
       .get(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge',
+        '/fridge',
       )
       .then((response) => {
         dispatch(setFridgeValue(response.data));
@@ -31,8 +35,10 @@ function Fridge() {
       });
   };
   const handleDeleteIngredient = (id) => {
-    axios.delete(`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge/${id}`)
-      .then(() => {})
+    AxiosPrivate.delete(`/fridge/${id}`)
+      .then(() => {
+        getFridge();
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -41,8 +47,8 @@ function Fridge() {
   const updateFridgeData = (updatedData, id) => {
     const currentQuantity = updatedData.find((quantity) => quantity.ingredient.id === id).quantity;
     const number = Number(currentQuantity);
-    axios.put(
-      `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge/${id}`,
+    AxiosPrivate.put(
+      `/fridge/${id}`,
       {
         quantity: number,
       },
@@ -67,6 +73,12 @@ function Fridge() {
     updateFridgeData(updatedData, ingredientId);
   };
 
+  const generateRecipes = () => {
+    AxiosPrivate.post('/fridge/suggestion')
+      .then((res) => { console.log(res); })
+      .catch((err) => { console.log(err); });
+  };
+
   useEffect(() => {
     getFridge();
   }, []);
@@ -88,6 +100,8 @@ function Fridge() {
             handleDeleteIngredient={handleDeleteIngredient}
             getFridge={getFridge}
             updateQuantity={updateQuantity}
+            show={show}
+            handleClose={handleClose}
           />
         </Col>
         <Col className="Fridge-closet">
@@ -104,11 +118,16 @@ function Fridge() {
             handleDeleteIngredient={handleDeleteIngredient}
             getFridge={getFridge}
             updateQuantity={updateQuantity}
+            show={show}
+            handleClose={handleClose}
           />
         </Col>
       </Row>
-      <Button className="Fridge-button" variant="primary" size="lg">
-        Block level button
+      <Button variant="outline-primary" onClick={handleShow}>
+        Ajouter un ingrédient
+      </Button>
+      <Button className="Fridge-button" variant="primary" size="lg" onClick={() => { generateRecipes(); }}>
+        Générer une liste de recette
       </Button>
     </Container>
   );
