@@ -131,6 +131,7 @@ function HomepageInscription() {
     dispatch(setInvitedUser(true));
     localStorage.setItem('isLoggedIn', JSON.stringify(false));
     localStorage.setItem('invitedUser', JSON.stringify(true));
+    localStorage.setItem('welcomePageShowed', JSON.stringify(true));
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
   };

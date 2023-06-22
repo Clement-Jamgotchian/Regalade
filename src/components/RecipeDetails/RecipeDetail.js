@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import './RecipeDetails.scss';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import { addRecipeToFavorites, removeRecipeFromFavorites } from '../../actions/favorites';
 import { getDifficultyLabel, getStars } from '../../utils/formatRecipeData';
 
 import cuisine from '../../assets/cuisine.png';
@@ -47,10 +46,6 @@ function RecipeDetails() {
 
   const dispatch = useDispatch();
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  const favoritesRecipes = useSelector((state) => state.favorites.recipes);
-  // eslint-disable-next-line eqeqeq
-  const isFavorite = favoritesRecipes.some((item) => item.id == idRecette);
-  const [favorite, setFavorite] = useState(isFavorite);
   const [cartOn, setCartOn] = useState(false);
   const regex = /ÉTAPE/g;
   const steps = recipe.step?.replace(regex, '<br/><br/> ÉTAPE');
@@ -64,41 +59,6 @@ function RecipeDetails() {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const removeRecipe = async (id) => {
-    await AxiosPrivate
-      .delete(
-        `/favorite/${id}`,
-      )
-      .then(() => {
-        dispatch(removeRecipeFromFavorites(id));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const addToFavorite = async (id) => {
-    await AxiosPrivate
-      .post(
-        `/favorite/${id}`,
-      )
-      .then(() => {
-        dispatch(addRecipeToFavorites(recipe));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const toggleFavorite = (id) => {
-    setFavorite(!favorite);
-    if (favorite) {
-      removeRecipe(id);
-    } else {
-      addToFavorite(id);
-    }
   };
 
   function handleClick() {
@@ -117,7 +77,6 @@ function RecipeDetails() {
       .then((response) => {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
-        setFavorite(isFavorite);
         console.log(response.data);
       })
       .catch(() => {
@@ -149,10 +108,7 @@ function RecipeDetails() {
             isFavorite={cartOn}
           />
           <FavoriteIcon
-            recipeId={idRecette}
-            toggleFavorite={() => {
-              toggleFavorite(idRecette);
-            }}
+            recipe={recipe}
           />
         </div>
         <div className="recipeDetails-header-container">

@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 
 // React components
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 // Import Redux actions
 import { Link } from 'react-router-dom';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
-import { addRecipeToFavorites, removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
+import { removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
@@ -35,7 +35,6 @@ import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
-  const [favorite, setFavorite] = useState(false);
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
 
@@ -81,28 +80,6 @@ function RecipeCard({ recipe }) {
       });
   };
 
-  const addToFavorite = async (id) => {
-    await AxiosPrivate
-      .post(
-        `/favorite/${id}`,
-      )
-      .then(() => {
-        dispatch(addRecipeToFavorites(recipe));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const toggleFavorite = (id) => {
-    setFavorite(!favorite);
-    if (favorite) {
-      removeRecipe(id);
-    } else {
-      addToFavorite(id);
-    }
-  };
-
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favoritesList));
   }, [favoritesList]);
@@ -110,10 +87,7 @@ function RecipeCard({ recipe }) {
   return (
     <Card key={recipe.id} className="RecipeCard">
       <FavoriteIcon
-        recipeId={recipe.id}
-        toggleFavorite={() => {
-          toggleFavorite(recipe.id);
-        }}
+        recipe={recipe}
       />
       <DeleteIcon
         removeRecipe={() => {
