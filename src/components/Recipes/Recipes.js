@@ -15,7 +15,7 @@ function Recipes({ recipes }) {
         <Row>
           {recipes.map((recipe) => (
             <Col key={recipe.id} xs={12} md={4} lg={3}>
-              <RecipeCard recipe={recipe} />
+              <RecipeCard key={recipe.id} recipe={recipe} />
             </Col>
           ))}
         </Row>

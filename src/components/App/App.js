@@ -14,7 +14,6 @@ import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
-import MyRecipes from '../../pages/MyRecipes/MyRecipes';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -37,7 +36,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <MyRecipes />
+                <List />
               </MyLayout>
             ) : (
               <Profil />

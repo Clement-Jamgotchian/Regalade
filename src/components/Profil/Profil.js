@@ -20,7 +20,6 @@ import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
 import Favorites from '../../pages/Favorites/Favorites';
-import MyRecipes from '../../pages/MyRecipes/MyRecipes';
 
 const profilDataNav = [
   {
@@ -101,7 +100,7 @@ function Profil() {
 
   const renderContent = () => {
     if (activePage === '/profil/mes-recettes') {
-      return <MyRecipes />;
+      return <List />;
     }
     if (activePage === '/profil/mes-favorites') {
       return <Favorites />;
