@@ -13,11 +13,13 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
 import { removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Import local utils
 import {
@@ -95,10 +97,10 @@ function RecipeCard({ recipe }) {
         }}
       />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
-        <Card.Img
-          className="RecipeCard--img"
-          variant="top"
+        <LazyLoadImage
+          className="card-img-top RecipeCard--img"
           src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+          effect="blur"
         />
         <Card.Body className="RecipeCard--body">
           <CartIcon

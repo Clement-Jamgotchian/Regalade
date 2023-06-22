@@ -70,7 +70,7 @@ function Ingredients({ departments, ingredients }) {
       )
       .then(() => {
         dispatch(updateCart());
-        dispatch(newAlertMessage('Vos courses ont bien été rangées deans votre frigo !'));
+        dispatch(newAlertMessage('Vos courses ont bien été rangées dans votre frigo !'));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('success'));
         setTimeout(() => {

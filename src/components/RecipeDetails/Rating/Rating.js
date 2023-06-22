@@ -46,7 +46,7 @@ function Rating({ recipe }) {
         setClicked3(false);
         setClicked4(false);
         setClicked5(false);
-        dispatch(newAlertMessage('Merci ! Votre commentaire a bien été envoyé et sera publié après validation.'));
+        dispatch(newAlertMessage('Merci ! Votre commentaire a bien été envoyé.'));
         dispatch(changeAlertVariant('success'));
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
