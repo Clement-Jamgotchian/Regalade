@@ -10,6 +10,7 @@ import closetLogo from '../../assets/images/placard.png';
 import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
 import { setFridgeValue } from '../../actions/fridge';
 import AxiosPrivate from '../../utils/AxiosPrivate';
+import ModalFridge from '../../components/FridgeDetails/ModalFridge/ModalFridge';
 
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
@@ -123,6 +124,11 @@ function Fridge() {
           />
         </Col>
       </Row>
+      <ModalFridge
+        handleClose={handleClose}
+        show={show}
+        getFridge={getFridge}
+      />
       <Button variant="outline-primary" onClick={handleShow}>
         Ajouter un ingrédient
       </Button>

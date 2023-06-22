@@ -36,7 +36,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <MobilePages />
+                <List />
               </MyLayout>
             ) : (
               <Profil />

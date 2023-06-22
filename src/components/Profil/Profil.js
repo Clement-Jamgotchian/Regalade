@@ -1,10 +1,7 @@
 import './Profil.scss';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Pagination } from 'react-bootstrap';
-import AxiosPrivate from '../../utils/AxiosPrivate';
-import Recipes from '../Recipes/Recipes';
 import toque from '../../assets/images/toque.png';
 import caddie from '../../assets/images/caddie.png';
 import utilisateur from '../../assets/images/utilisateur.png';
@@ -66,32 +63,9 @@ const profilDataNav = [
 function Profil() {
   const activePage = useSelector((state) => state.profil.activProfilPage);
   const [screenWidth, setScreenWidth] = useState(false);
-  const [pageCount, setPageCount] = useState(0);
-  const [recipes, setRecipes] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const currentButtonId = useSelector((state) => state.profil.profilButtonId);
-  const linkAPI = useSelector((state) => state.profil.link);
   const dispatch = useDispatch();
-  const pageNumber = useSelector((state) => state.list.pageNumber);
-  const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = `/${linkAPI}`;
-  const request = `?${pageRequest}`;
-
-  const getRecipes = async () => {
-    AxiosPrivate
-      .get(baseUrl + request)
-      .then((response) => {
-        setRecipes(response.data.recipes);
-        setPageCount(response.data.totalPages);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getRecipes();
-  }, [isOpen]);
 
   const handleWidthDimension = () => {
     if (window.innerWidth > 990) {
@@ -126,12 +100,7 @@ function Profil() {
 
   const renderContent = () => {
     if (activePage === '/profil/mes-recettes') {
-      return (
-        <>
-          <Recipes recipes={recipes} />
-          <Pagination setRecipes={setRecipes} pageCount={pageCount} />
-        </>
-      );
+      return <List />;
     }
     if (activePage === '/profil/mes-favorites') {
       return <Favorites />;
