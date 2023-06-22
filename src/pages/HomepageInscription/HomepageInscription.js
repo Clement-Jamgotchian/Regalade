@@ -94,7 +94,8 @@ function HomepageInscription() {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('refreshToken', res.data.refresh_token);
         localStorage.setItem('invitedUser', JSON.stringify(false));
-        navigate('/recettes');
+        localStorage.setItem('welcomePageShowed', JSON.stringify(true));
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);

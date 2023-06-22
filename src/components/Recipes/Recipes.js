@@ -14,8 +14,8 @@ function Recipes({ recipes }) {
       {recipes && (
         <Row>
           {recipes.map((recipe) => (
-            <Col key={recipe.id} xs={12} md={4} lg={3}>
-              <RecipeCard key={recipe.id} recipe={recipe} />
+            <Col key={`col-${recipe.id}`} xs={12} md={4} lg={3}>
+              <RecipeCard recipe={recipe} />
             </Col>
           ))}
         </Row>
@@ -32,7 +32,7 @@ Recipes.propTypes = {
     cookingDuration: PropTypes.number.isRequired,
     setupDuration: PropTypes.number.isRequired,
     difficulty: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.number,
     category: PropTypes.shape({
       title: PropTypes.string.isRequired,
     }).isRequired,
