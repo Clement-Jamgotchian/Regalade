@@ -14,6 +14,7 @@ function StepOne({
   setDisplayOne,
   setDisplayTwo,
   setDisplayThree,
+  setDisplayFour,
   displayOne,
 }) {
   const convertToBase64 = (file) => new Promise((resolve, reject) => {
@@ -34,7 +35,7 @@ function StepOne({
   };
   return (
     <section className="CreateRecipe-1" style={{ display: `${displayOne}` }}>
-      <h2>Etape 1</h2>
+      <h2 className="CreateRecipe-1-title">Etape 1</h2>
       <Row className="mb-3 CreateRecipe-form-row-1">
         <Form.Group className="CreateRecipe-form-row-1-group CreateRecipe-form-row-1-background-1" as={Col} md="4">
           <Form.Label className="CreateRecipe-form-row-1-group-label">Titre</Form.Label>
@@ -134,7 +135,7 @@ function StepOne({
           </div>
         </section>
       </Form.Group>
-      <Button className="CreateRecipe-form-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); }}>Etape 2</Button>
+      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
     </section>
   );
 }

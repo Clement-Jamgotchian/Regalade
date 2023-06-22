@@ -2,8 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
+import Menuphone from '../../components/Menuphone/Menuphone';
 import './CreateRecipe.scss';
+import StepFour from './Step/stepFour';
 import StepOne from './Step/stepOne';
 import StepThree from './Step/stepThree';
 import StepTwo from './Step/stepTwo';
@@ -27,11 +32,29 @@ function CreateRecipe() {
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
 
-  const [displayOne, setDisplayOne] = useState('');
-  const [displayTwo, setDisplayTwo] = useState('none');
+  const [displayOne, setDisplayOne] = useState('none');
+  const [displayTwo, setDisplayTwo] = useState('');
   const [displayThree, setDisplayThree] = useState('none');
+  const [displayFour, setDisplayFour] = useState('none');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/profil/mes-recettes');
+  };
+
+  console.log(
+    title,
+    postImage.picture,
+    cookingDuration,
+    setupDuration,
+    step,
+    difficulty,
+    category,
+    containsIngredients,
+    portions,
+  );
 
   const handleSubmit = async () => {
     if (confirmed === true) {
@@ -46,7 +69,6 @@ function CreateRecipe() {
         category,
         containsIngredients,
         portions,
-
       })
         .then(() => {
           dispatch(newAlertMessage('modifications bien ajoutées'));
@@ -77,6 +99,11 @@ function CreateRecipe() {
 
   return (
     <section className="CreateRecipe">
+      <Header className="CreateRecipe-layout" style={{ display: 'none' }} />
+      <Menuphone className="CreateRecipe-layout" />
+      <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
+        <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
+      </button>
       <h1 className="CreateRecipe-title">Créer une recette</h1>
       <Form className="CreateRecipe-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         {showAlert && (
@@ -101,6 +128,7 @@ function CreateRecipe() {
           setDisplayOne={setDisplayOne}
           setDisplayTwo={setDisplayTwo}
           setDisplayThree={setDisplayThree}
+          setDisplayFour={setDisplayFour}
           displayOne={displayOne}
         />
         <StepTwo
@@ -115,18 +143,30 @@ function CreateRecipe() {
           setDisplayOne={setDisplayOne}
           setDisplayTwo={setDisplayTwo}
           setDisplayThree={setDisplayThree}
+          setDisplayFour={setDisplayFour}
           displayTwo={displayTwo}
         />
         <StepThree
+          containsIngredients={containsIngredients}
+          setContainsIngredients={setContainsIngredients}
+          setDisplayOne={setDisplayOne}
+          setDisplayTwo={setDisplayTwo}
+          setDisplayThree={setDisplayThree}
+          setDisplayFour={setDisplayFour}
+          displayThree={displayThree}
+        />
+        <StepFour
           step={step}
           setStep={setStep}
           setConfirmed={setConfirmed}
           setDisplayOne={setDisplayOne}
           setDisplayTwo={setDisplayTwo}
           setDisplayThree={setDisplayThree}
-          displayThree={displayThree}
+          setDisplayFour={setDisplayFour}
+          displayFour={displayFour}
         />
       </Form>
+      <Footer className="CreateRecipe-layout" />
     </section>
   );
 }

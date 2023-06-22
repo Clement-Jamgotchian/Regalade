@@ -1,124 +1,176 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import AxiosPrivate from '../../../utils/AxiosPrivate';
+
+import vegetables from '../../../assets/vegetables.png';
 
 function StepThree({
-  setStep,
-  setConfirmed,
-  // setDisplayOne,
-  // setDisplayTwo,
-  // setDisplayThree,
+  containsIngredients,
+  setContainsIngredients,
+  setDisplayOne,
+  setDisplayTwo,
+  setDisplayThree,
+  setDisplayFour,
   displayThree,
 }) {
-  const [allStep, setAllStep] = useState('');
-  const [allStepLocal, setAllStepLocal] = useState([]);
-  const stepNumber = allStepLocal.length + 1;
-  const [oneStep, setOneStep] = useState('');
+  const [search, setSearch] = useState('');
+  const [resultIngredients, setResultIngredients] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [ingredientName, setIngredientName] = useState('');
+  const [ingredientId, setIngredientId] = useState();
+  const [unit, setUnit] = useState('');
+  const [allIngredient, setAllIngredient] = useState([]);
 
-  const deleteStep = (id) => {
-    allStepLocal.splice(id - 1, 1);
+  const searchIngredient = async () => {
+    await AxiosPrivate
+      .get(
+        `/ingredients/?search=${search}`,
+      )
+      .then((response) => {
+        setResultIngredients(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
-  const addStep = () => {
-  //   allStepLocal.map((stepLocal) => {
-  //     setOneStep(stepLocal.oneStep);
-  //     setStepNumber(stepLocal.number);
-  // });
-    const newSteplocal = {
-      oneStep,
-      number: stepNumber,
-    };
-    // // eslint-disable-next-line array-callback-return
-    // allStepLocal.map((stepLocal) => {
-    //   // eslint-disable-next-line no-param-reassign
-    //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
-    // });
-    setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
-  };
-
-  const stepView = () => {
-    if (allStepLocal.length === 0) {
+  const searchIngredientView = () => {
+    if (resultIngredients.length === 0) {
       return (
-        "Il n'y a pas encore d'étapes pour cette recette. Elle doit être super rapide."
+        '0 ingrédient trouvé'
       );
     }
-    return (
-
-      allStepLocal.map((stepLocal) => {
-        // eslint-disable-next-line no-param-reassign
-        stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
-        return (
-          <InputGroup key={stepLocal.number}>
-            <InputGroup.Text>
-              Etape
-              {' '}
-              {allStepLocal.indexOf(stepLocal) + 1}
-            </InputGroup.Text>
-            <InputGroup.Text>{stepLocal.oneStep}</InputGroup.Text>
-            <Button
-              className="CreateRecipe-button-step-delete"
-              type="button"
-              onClick={() => {
-                deleteStep(stepLocal.number);
-                setAllStepLocal([...allStepLocal]);
-              }}
-            >
-              <img src="" alt="" />
-            </Button>
-          </InputGroup>
-        );
-      }));
+    return (resultIngredients.map((ingredient) => (
+      <Button
+        className="CreateRecipe-form-row-2-container-ingredients"
+        key={ingredient.id}
+        type="button"
+        onClick={() => {
+          setIngredientName(ingredient.name);
+          setIngredientId(ingredient.id);
+          setUnit(ingredient.unit);
+        }}
+      >
+        {ingredient.name}
+      </Button>
+    )));
   };
 
-  const setAllStepInApi = () => {
-    setAllStep(allStepLocal.map((stepLocal) => (`Etape ${stepLocal.number} ${stepLocal.oneStep}`)));
-    setStep(allStep.toString());
+  const deleteIngredient = (id) => {
+    allIngredient.splice(id - 1, 1);
+    containsIngredients.splice(id - 1, 1);
   };
+
+  const ingredientList = () => (
+    allIngredient.map((ingredient) => {
+      // eslint-disable-next-line no-param-reassign
+      ingredient.number = allIngredient.indexOf(ingredient) + 1;
+      return (
+        <div key={ingredient.id} className="CreateRecipe-form-row-3-card">
+          <img src={vegetables} alt="logo ingredient" className="CreateRecipe-form-row-3-card-img" />
+          <div className="CreateRecipe-form-row-3-card-text">
+            <p className="CreateRecipe-form-row-3-card-text-name">{ingredient.name}</p>
+            <p className="CreateRecipe-form-row-3-card-text-quantity">{ingredient.quantity}</p>
+            <p className="CreateRecipe-form-row-3-card-text-unit">{ingredient.unit}</p>
+          </div>
+          <Button
+            className="CreateRecipe-form-row-3-card-text-delete"
+            type="button"
+            onClick={() => {
+              deleteIngredient(ingredient.number);
+              setAllIngredient([...allIngredient]);
+            }}
+          />
+        </div>
+      );
+    })
+  );
+
+  const addIngredient = () => {
+    const newIngredient = {
+      quantity,
+      ingredients: ingredientId,
+    };
+
+    const newIngredientlocal = {
+      quantity,
+      name: ingredientName,
+      unit,
+      id: ingredientId,
+      number: allIngredient.length + 1,
+    };
+
+    setContainsIngredients([...containsIngredients, newIngredient]);
+    setAllIngredient([...allIngredient, newIngredientlocal]);
+  };
+
+  function viewTwo() {
+    setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none');
+  }
+
+  function viewFour() {
+    setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree('none'); setDisplayFour('');
+  }
 
   useEffect(() => {
-    setAllStepInApi();
-  }, [allStepLocal]);
-
+    searchIngredient();
+  }, [search]);
   return (
     <section className="CreateRecipe-3" style={{ display: `${displayThree}` }}>
-      <h2>Etape 3</h2>
+      <Button className="CreateRecipe-1-button" onClick={() => { viewTwo(); }}>&#x2190;</Button>
+      <h2 className="CreateRecipe-1-title">
+        Etape 3
+      </h2>
+
+      <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">
+        <Form.Label className="CreateRecipe-form-row-2-group-label">Trouver un ingrédient</Form.Label>
+        <Form.Control
+          aria-label="ingrédient"
+          required
+          className="CreateRecipe-form-row-2-group-input"
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Rechercher"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); }}
+        />
+      </Form.Group>
+      <Form.Group className="CreateRecipe-form-row-2-container" as={Col} md="3">
+        {searchIngredientView()}
+      </Form.Group>
       <Row className="mb-3 CreateRecipe-form-row-3">
-        <InputGroup className="CreateRecipe-form-row-3-group" as={Col} md="3">
-          <Form.Label className="CreateRecipe-form-row-3-group-label">Les étapes</Form.Label>
-          <InputGroup.Text>
-            Etape
-            {' '}
-            {allStepLocal.length + 1}
-          </InputGroup.Text>
+        <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">
+          <Form.Label className="CreateRecipe-form-row-2-group-label">Quantité</Form.Label>
           <Form.Control
-            as="textarea"
             required
-            className="CreateRecipe-form-row-3-group-input"
-            type="textarea"
-            name="step"
-            id="step"
-            placeholder="Ecrire une étape"
-            value={oneStep}
+            className="CreateRecipe-form-row-2-group-input"
+            type="number"
+            name="quantity"
+            id="quantity"
+            placeholder="Quantité de l'ingrédient"
             min={0}
             max={1000}
-            onChange={(e) => { setOneStep(e.target.value); }}
+            onChange={(e) => {
+              setQuantity(e.target.value);
+            }}
           />
-          <Button className="CreateRecipe-form-button" type="button" onClick={() => { addStep(); setOneStep(''); setStep(allStep.toString()); }}>&#x2B;</Button>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3 CreateRecipe-form-row-3-ingredient">
+        <InputGroup className="CreateRecipe-form-row-3-text">
+          <InputGroup.Text>{ingredientName}</InputGroup.Text>
+          <InputGroup.Text>{quantity}</InputGroup.Text>
+          <InputGroup.Text>{unit}</InputGroup.Text>
         </InputGroup>
       </Row>
-      <Form.Check
-        required
-        label="Je valide mes étapes"
-        feedback="You must agree before submitting."
-        feedbackType="invalid"
-        onChange={(e) => (e.target.checked ? setConfirmed(true) : setConfirmed(false))}
-        onClick={() => { setStep(allStep.toString()); }}
-      />
-      <Row className="mb-3 CreateRecipe-form-row-3">
-        {stepView()}
+      <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>
+      <Row className="mb-3 CreateRecipe-form-row-3-card-container">
+        {ingredientList()}
       </Row>
-      <Button className="CreateRecipe-form-button" type="submit">Créer</Button>
+
+      <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
+
     </section>
   );
 }

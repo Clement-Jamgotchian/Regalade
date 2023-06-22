@@ -107,11 +107,9 @@ function App() {
         <Route path="/recette/:idRecette" element={<RecipeDetails />} />
         <Route
           path="/recette/creation"
-          element={(
-            <MyLayout>
-              <CreateRecipe />
-            </MyLayout>
-          )}
+          element={
+            <CreateRecipe />
+          }
         />
         <Route
           path="/FAQ"
