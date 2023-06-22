@@ -1,0 +1,14 @@
+.RecipesPage {
+    display: flex;
+    flex-direction: column;
+    
+    & > .card {
+        background-color: #ffffff;
+        border: none;
+        padding: 0.25rem;
+        z-index: -2;
+        margin-bottom: 1rem;
+        width: 100%;
+        box-shadow: 0px 0px 5px #dfd9d0;
+    }
+}

@@ -1,7 +1,8 @@
 // React components
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Alert, Card } from 'react-bootstrap';
 
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
@@ -27,13 +28,16 @@ function RecipesPage() {
   const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
   const baseUrl = '/recipes';
   const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&${pageRequest}` : `?${pageRequest}`;
+  const title = (searchBarValue !== undefined && searchBarValue !== '') ? `Résulats de votre recherche : ${searchBarValue}` : 'Toutes les recettes';
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getRecipes = async () => {
     AxiosPublic.get(baseUrl + request)
       .then((response) => {
         setRecipes(response.data.recipes);
         setPageCount(response.data.totalPages);
+        navigate('/recettes');
       })
       .catch((error) => {
         console.log(error);
@@ -76,8 +80,12 @@ function RecipesPage() {
               {alertMessage}
             </Alert>
           )}
-          <h2>Toutes les recettes</h2>
-          <Recipes recipes={recipes} />
+          <Card>
+            <Card.Body>
+              <h2>{title}</h2>
+              <Recipes recipes={recipes} />
+            </Card.Body>
+          </Card>
           <Pagination setRecipes={setRecipes} pageCount={pageCount} />
         </>
       )
