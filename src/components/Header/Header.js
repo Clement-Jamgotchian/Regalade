@@ -25,6 +25,7 @@ function Header() {
   const isInvited = useSelector((state) => state.user.isInvitedIn);
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
   const pathProfil = isWidthTrue ? '/profil' : '/profil/mes-recettes';
+  const welcomePageShowed = JSON.parse(localStorage.getItem('welcomePageShowed'));
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -134,7 +135,7 @@ function Header() {
           className="Header-burger"
         />
         <Navbar.Brand className="Header-logoMain">
-          <Link to="/recettes">
+          <Link to={welcomePageShowed ? '/' : '/welcome'}>
             <img
               src={logoMain}
               alt="logo du site qui est un panier de fruit et légumes"

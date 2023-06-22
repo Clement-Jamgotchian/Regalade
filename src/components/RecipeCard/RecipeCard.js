@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 
 // React components
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -13,11 +13,13 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
 // Import Redux actions
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
-import { addRecipeToFavorites, removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
+import { removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Import local utils
 import {
@@ -35,7 +37,6 @@ import AxiosPrivate from '../../utils/AxiosPrivate';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
-  const [favorite, setFavorite] = useState(false);
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
 
@@ -81,39 +82,14 @@ function RecipeCard({ recipe }) {
       });
   };
 
-  const addToFavorite = async (id) => {
-    await AxiosPrivate
-      .post(
-        `/favorite/${id}`,
-      )
-      .then(() => {
-        dispatch(addRecipeToFavorites(recipe));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const toggleFavorite = (id) => {
-    setFavorite(!favorite);
-    if (favorite) {
-      removeRecipe(id);
-    } else {
-      addToFavorite(id);
-    }
-  };
-
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favoritesList));
   }, [favoritesList]);
 
   return (
-    <Card className="RecipeCard">
+    <Card key={recipe.id} className="RecipeCard">
       <FavoriteIcon
-        recipeId={recipe.id}
-        toggleFavorite={() => {
-          toggleFavorite(recipe.id);
-        }}
+        recipe={recipe}
       />
       <DeleteIcon
         removeRecipe={() => {
@@ -121,10 +97,10 @@ function RecipeCard({ recipe }) {
         }}
       />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
-        <Card.Img
-          className="RecipeCard--img"
-          variant="top"
+        <LazyLoadImage
+          className="card-img-top RecipeCard--img"
           src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+          effect="blur"
         />
         <Card.Body className="RecipeCard--body">
           <CartIcon

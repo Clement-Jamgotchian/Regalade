@@ -16,7 +16,6 @@ import vegetables from '../../assets/vegetables.png';
 
 // Import styles
 import './IngredientCard.scss';
-import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
 import { updateCart } from '../../actions/cart';
 
 // Axios
@@ -40,12 +39,6 @@ function IngredientCard({ ingredient, quantity }) {
     await AxiosPrivate.delete(`/cart/${ingredientId}`)
       .then(() => {
         dispatch(updateCart());
-        dispatch(newAlertMessage('L\'ingrédient a bien été supprimé de la liste de courses'));
-        dispatch(showOrHideAlert(true));
-        dispatch(changeAlertVariant('success'));
-        setTimeout(() => {
-          dispatch(showOrHideAlert(false));
-        }, '5000');
       })
       .catch((error) => {
         console.log(error);

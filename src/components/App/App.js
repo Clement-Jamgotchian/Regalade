@@ -14,6 +14,7 @@ import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
+import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -21,12 +22,20 @@ function App() {
   return (
     <Container className="App">
       <Routes>
-        <Route path="/" element={<HomepageInscription />} />
+        <Route path="/welcome" element={<HomepageInscription />} />
+        <Route
+          path="/"
+          element={(
+            <MyLayout>
+              <Homepage />
+            </MyLayout>
+)}
+        />
         <Route
           path="/recettes"
           element={(
             <MyLayout>
-              <Homepage />
+              <RecipesPage />
             </MyLayout>
           )}
         />
@@ -36,7 +45,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <MobilePages />
+                <List />
               </MyLayout>
             ) : (
               <Profil />

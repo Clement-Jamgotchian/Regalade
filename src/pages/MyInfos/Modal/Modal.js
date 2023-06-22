@@ -86,7 +86,7 @@ function MyVerticallyCenteredModal(props) {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Select
+            {/* <Form.Select
               onChange={(event) => {
                 if (event.target.value === 'Enfant') {
                   setIsAdult(false);
@@ -99,7 +99,21 @@ function MyVerticallyCenteredModal(props) {
               <option>Adulte ou enfant</option>
               <option>Enfant</option>
               <option>Adulte</option>
-            </Form.Select>
+            </Form.Select> */}
+            <Col>
+              <Form.Check
+                onChange={(event) => {
+                  if (event.target.value === 'on') {
+                    setIsAdult(false);
+                  } else {
+                    setIsAdult(true);
+                  }
+                }}
+                type="switch"
+                id="custom-switch"
+                label="Enfant"
+              />
+            </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer>
@@ -108,7 +122,7 @@ function MyVerticallyCenteredModal(props) {
           >
             Ajouter
           </Button>
-          <Button type="button" onClick={props.onHide}>Close</Button>
+          <Button type="button" onClick={props.onHide}>Fermer</Button>
         </Modal.Footer>
       </Form>
     </Modal>
