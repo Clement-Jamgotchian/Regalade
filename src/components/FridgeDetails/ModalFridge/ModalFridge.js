@@ -6,8 +6,8 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
+import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 function ModalFridge({ show, handleClose, getFridge }) {
   const [isOpenList, setIsOpenList] = useState(false);
@@ -16,7 +16,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
 
   const [allUnits, setAllUnits] = useState([]);
   const [newUnit, setNewUnit] = useState('');
-  const [searchIngredient, setSearchIngredient] = useState('');
+  const [searchIngredients, setSearchIngredient] = useState('');
   const [ingredientById, setIngredientById] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [ingredient, setIngredient] = useState('');
@@ -29,13 +29,15 @@ function ModalFridge({ show, handleClose, getFridge }) {
   const numberIngreId = Number(ingredientById);
   const numberValue = Number(inputValue);
 
-  const baseUrl = 'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/ingredients';
+  const searchIngredient = searchIngredients.charAt(0).toUpperCase() + searchIngredients.slice(1).replace(/([-'`~!@#$§%^&*(){}_|+=?;:'",.<>\\\\/0-9])/gi, '');
+
+  const baseUrl = '/ingredients';
   const request = searchIngredient !== undefined && searchIngredient !== ''
     ? `?search=${searchIngredient}`
     : '';
 
   const getRecipes = async () => {
-    axios
+    AxiosPrivate
       .get(baseUrl + request)
       .then((response) => {
         if (!response || response.length === 0) {
@@ -62,21 +64,24 @@ function ModalFridge({ show, handleClose, getFridge }) {
     const currentQuantity = !quant ? numberValue : quant;
 
     console.log(currentSearch, currentQuantity);
-    axios
+    AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/fridge',
+        '/fridge',
         {
           ingredient: currentSearch,
           quantity: currentQuantity,
         },
       )
+      .then(() => {
+        getFridge();
+      })
       .catch((error) => {
         console.log(error);
       });
   };
 
   const fetchIngredientsList = (quant) => {
-    axios.get(baseUrl)
+    AxiosPrivate.get(baseUrl)
       .then((response) => {
         const idNewIngredients = response.data.find((fruit) => fruit.name === searchIngredient).id;
         handleAddIngredient(quant, idNewIngredients);
@@ -92,9 +97,9 @@ function ModalFridge({ show, handleClose, getFridge }) {
       return;
     }
     const currentQuantity = numberValue;
-    axios
+    AxiosPrivate
       .post(
-        'https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/ingredients',
+        '/ingredients',
         {
           name: searchIngredient,
           isCold: isFridge,
@@ -105,6 +110,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
       .then((response) => {
         console.log(response.data);
         fetchIngredientsList(currentQuantity);
+        getFridge();
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +118,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
   };
 
   const fetchAllUnits = () => {
-    axios.get('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/departments')
+    AxiosPrivate.get('/departments')
       .then((response) => {
         setAllUnits(response.data);
       })
@@ -127,7 +133,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
 
   // Remove all spécial characters and numbers from the input
   const filterInputText = (evt) => {
-    const filteredValue = evt.replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\[\]\\/0-9])/gi, '');
+    const filteredValue = evt.replace(/([-'`~!@#$%^&*(){}_|+=?;:'",.<>\\/0-9])/gi, '');
     setSearchIngredient(filteredValue);
   };
   // Remove everithing except numbers
@@ -164,7 +170,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
   const renderFridge = () => {
     const findInDrige = currentFridge.length > 0
       ? currentFridge.find((fridge) => fridge.ingredient.id === numberIngreId) : null;
-    if (!searchIngredient) {
+    if (!searchIngredient || isFullModal === true) {
       return null;
     }
 
@@ -275,6 +281,7 @@ function ModalFridge({ show, handleClose, getFridge }) {
                         setIngredientById(evt.target.id);
                       }}
                     >
+                      {/* const str2 = str.charAt(0).toUpperCase() + str.slice(1); */}
                       {`${filtered.name} [${filtered.unit}]`}
                     </ListGroup.Item>
                   ))}
@@ -310,7 +317,6 @@ function ModalFridge({ show, handleClose, getFridge }) {
               handleClose();
               setSearchIngredient('');
               setInputValue('');
-              getFridge();
               setIsFullModal(false);
               setIsOpenList(false);
             }}
@@ -325,7 +331,6 @@ function ModalFridge({ show, handleClose, getFridge }) {
               handleClose();
               setSearchIngredient('');
               setInputValue('');
-              getFridge();
               setIsOpenList(false);
             }}
           >
