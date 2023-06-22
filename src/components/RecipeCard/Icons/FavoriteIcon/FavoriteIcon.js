@@ -45,7 +45,7 @@ function FavoriteIcon({ recipeId, toggleFavorite }) {
 }
 
 FavoriteIcon.propTypes = {
-  recipeId: PropTypes.string.isRequired,
+  recipeId: PropTypes.number.isRequired,
   toggleFavorite: PropTypes.func.isRequired,
 };
 

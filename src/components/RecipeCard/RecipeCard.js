@@ -108,7 +108,7 @@ function RecipeCard({ recipe }) {
   }, [favoritesList]);
 
   return (
-    <Card className="RecipeCard">
+    <Card key={recipe.id} className="RecipeCard">
       <FavoriteIcon
         recipeId={recipe.id}
         toggleFavorite={() => {
