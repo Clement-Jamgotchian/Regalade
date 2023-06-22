@@ -2,6 +2,7 @@ import { SET_FRIDGE_VALUE } from '../actions/fridge';
 
 const initialState = {
   fridge: '',
+  show: false,
 };
 
 function reducer(state = initialState, action = {}) {

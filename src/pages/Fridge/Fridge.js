@@ -10,11 +10,18 @@ import closetLogo from '../../assets/images/placard.png';
 import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
 import { setFridgeValue } from '../../actions/fridge';
 import AxiosPrivate from '../../utils/AxiosPrivate';
+import ModalFridge from '../../components/FridgeDetails/ModalFridge/ModalFridge';
+import Recipes from '../../components/Recipes/Recipes';
 
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [fullRecipes, setFullRecipes] = useState([]);
+  const [isRecipes, setIsRecipes] = useState(false);
   const [show, setShow] = useState(false);
+
   const dispatch = useDispatch();
+
   const closet = fridgeData.filter((noCold) => noCold.ingredient.isCold === false);
   const fridge = fridgeData.filter((cold) => cold.ingredient.isCold === true);
 
@@ -22,10 +29,7 @@ function Fridge() {
   const handleClose = () => setShow(false);
 
   const getFridge = () => {
-    AxiosPrivate
-      .get(
-        '/fridge',
-      )
+    AxiosPrivate.get('/fridge')
       .then((response) => {
         dispatch(setFridgeValue(response.data));
         setFridgeData(response.data);
@@ -47,13 +51,12 @@ function Fridge() {
   const updateFridgeData = (updatedData, id) => {
     const currentQuantity = updatedData.find((quantity) => quantity.ingredient.id === id).quantity;
     const number = Number(currentQuantity);
-    AxiosPrivate.put(
-      `/fridge/${id}`,
-      {
-        quantity: number,
-      },
-    )
-      .then((res) => { console.log(res); })
+    AxiosPrivate.put(`/fridge/${id}`, {
+      quantity: number,
+    })
+      .then((res) => {
+        console.log(res);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -75,8 +78,24 @@ function Fridge() {
 
   const generateRecipes = () => {
     AxiosPrivate.post('/fridge/suggestion')
-      .then((res) => { console.log(res); })
-      .catch((err) => { console.log(err); });
+      .then((res) => {
+        setRecipes(res.data.recipes.map((recipe) => recipe.recipe));
+        setFullRecipes(res.data.recipes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handlePourcent = (bin) => {
+    if (bin === 0) {
+      const lowRecipes = fullRecipes.filter((recipe) => recipe.percent < 50);
+      setRecipes(lowRecipes.map((recipe) => recipe.recipe));
+    }
+    if (bin === 1) {
+      const lowRecipes = fullRecipes.filter((recipe) => recipe.percent >= 50);
+      setRecipes(lowRecipes.map((recipe) => recipe.recipe));
+    }
   };
 
   useEffect(() => {
@@ -100,8 +119,6 @@ function Fridge() {
             handleDeleteIngredient={handleDeleteIngredient}
             getFridge={getFridge}
             updateQuantity={updateQuantity}
-            show={show}
-            handleClose={handleClose}
           />
         </Col>
         <Col className="Fridge-closet">
@@ -118,17 +135,53 @@ function Fridge() {
             handleDeleteIngredient={handleDeleteIngredient}
             getFridge={getFridge}
             updateQuantity={updateQuantity}
-            show={show}
-            handleClose={handleClose}
           />
         </Col>
       </Row>
-      <Button variant="outline-primary" onClick={handleShow}>
-        Ajouter un ingrédient
-      </Button>
-      <Button className="Fridge-button" variant="primary" size="lg" onClick={() => { generateRecipes(); }}>
+      <div>
+        <Button variant="outline-primary" onClick={handleShow}>
+          Ajouter un ingrédient
+        </Button>
+      </div>
+      <Button
+        className="Fridge-button"
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          generateRecipes();
+          setIsRecipes(true);
+        }}
+      >
         Générer une liste de recette
       </Button>
+      <ModalFridge
+        handleClose={handleClose}
+        show={show}
+        getFridge={getFridge}
+      />
+      <Container className="Fridge-suggest">
+        {isRecipes && (
+          <div className="Fridge-suggest-buttons">
+            <Button
+              variant="success"
+              onClick={() => {
+                handlePourcent(0);
+              }}
+            >
+              Moins de 50% des ingrédients
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                handlePourcent(1);
+              }}
+            >
+              Plus de 50% des ingrédients
+            </Button>
+          </div>
+        )}
+        <Recipes recipes={recipes} />
+      </Container>
     </Container>
   );
 }

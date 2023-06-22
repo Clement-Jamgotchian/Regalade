@@ -4,18 +4,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import './FridgeDetails.scss';
 import fleche from '../../assets/images/fleche.png';
-import ModalFridge from './ModalFridge/ModalFridge';
 
 function FridgeDetails({
   fridgeData,
   handleDeleteIngredient,
-  getFridge,
   updateQuantity,
-  show,
-  handleClose,
 }) {
   const [isSeeMore, setIsSeeMore] = useState(false);
-
   const sliceTest = isSeeMore ? fridgeData : fridgeData.slice(0, 3);
 
   return (
@@ -44,7 +39,7 @@ function FridgeDetails({
                   </td>
                   <td>{ingredient.name}</td>
                   <td>
-                    <from>
+                    <form>
                       <input
                         className="FridgeDetails-input"
                         id={id}
@@ -57,7 +52,7 @@ function FridgeDetails({
                         }}
                         type="number"
                       />
-                    </from>
+                    </form>
                   </td>
                   <td>{ingredient.unit}</td>
                   <td>
@@ -85,11 +80,6 @@ function FridgeDetails({
               {isSeeMore ? 'Réduire' : 'Voir plus'}
             </Button>
           </div>
-          <ModalFridge
-            handleClose={handleClose}
-            show={show}
-            getFridge={getFridge}
-          />
         </>
       ) : (<p>Vous n&apos;avez pas encore ajouté d&apos;ingrédients</p>) }
     </div>
@@ -113,10 +103,7 @@ FridgeDetails.propTypes = {
     }),
   ).isRequired,
   handleDeleteIngredient: PropTypes.func.isRequired,
-  getFridge: PropTypes.func.isRequired,
   updateQuantity: PropTypes.func.isRequired,
-  show: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
 };
 
 export default FridgeDetails;
