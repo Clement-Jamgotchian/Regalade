@@ -11,7 +11,6 @@ function FridgeDetails({
   updateQuantity,
 }) {
   const [isSeeMore, setIsSeeMore] = useState(false);
-
   const sliceTest = isSeeMore ? fridgeData : fridgeData.slice(0, 3);
 
   return (
@@ -40,7 +39,7 @@ function FridgeDetails({
                   </td>
                   <td>{ingredient.name}</td>
                   <td>
-                    <from>
+                    <form>
                       <input
                         className="FridgeDetails-input"
                         id={id}
@@ -53,7 +52,7 @@ function FridgeDetails({
                         }}
                         type="number"
                       />
-                    </from>
+                    </form>
                   </td>
                   <td>{ingredient.unit}</td>
                   <td>

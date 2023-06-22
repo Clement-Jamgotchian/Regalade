@@ -1,3 +1,5 @@
+@use '../../styles/vars';
+
 .Fridge {
   margin-top: 20px;
   display: flex;
@@ -29,9 +31,25 @@
     color:#fff;
   }
   &-button:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
+  }
+  &-suggest{
+    margin-top: 1rem ;
+    &-buttons{
+      display: flex;
+      border-top: 1px solid vars.$primaryButton;
+      justify-content: space-around;
+      padding-top: 1rem;
+      button{
+        color: #fff;
+        padding: 5px;
+        width: 140px;
+      }
+    }
   }
 }
+
+
 
 @media (min-width: 990px) {
   .Fridge {

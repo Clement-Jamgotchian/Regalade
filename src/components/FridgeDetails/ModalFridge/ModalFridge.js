@@ -63,7 +63,6 @@ function ModalFridge({ show, handleClose, getFridge }) {
     const currentSearch = !ingre ? ingredientById : ingre;
     const currentQuantity = !quant ? numberValue : quant;
 
-    console.log(currentSearch, currentQuantity);
     AxiosPrivate
       .post(
         '/fridge',
@@ -281,7 +280,6 @@ function ModalFridge({ show, handleClose, getFridge }) {
                         setIngredientById(evt.target.id);
                       }}
                     >
-                      {/* const str2 = str.charAt(0).toUpperCase() + str.slice(1); */}
                       {`${filtered.name} [${filtered.unit}]`}
                     </ListGroup.Item>
                   ))}
@@ -346,7 +344,6 @@ ModalFridge.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   getFridge: PropTypes.func.isRequired,
-
 };
 
 export default ModalFridge;
