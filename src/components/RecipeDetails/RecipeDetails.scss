@@ -252,6 +252,13 @@
             margin: 1em 1em;
         }
     }
+
+    
+
+    & .lazy-load-image-background.blur.lazy-load-image-loaded {
+        filter: blur(0);
+        z-index: 0; 
+    }
 }
 
 @media (min-width: 600px) {
@@ -330,6 +337,7 @@
             &-imgAndButton {
                 width: 30vw;
                 position: relative;
+                align-self: flex-start;
             }
     
             &-container {
