@@ -1,0 +1,75 @@
+@use 'src/styles/vars';
+
+.CreateRecipe {
+    padding: 1em 0;
+    text-align: center;
+    color: vars.$primaryButton;
+
+    &-1 {
+        padding: 1em;
+        width: 100%;
+    }
+
+    &-form {
+        &-row {
+            &-1 {
+                margin-bottom: 0 !important;
+                
+                &-background-1 {
+                    background-color: vars.$primaryButton;
+                    padding-bottom: 3em;
+                    width: 100%;
+                    border-radius: 5px 5px 0 0;
+                    border: none;
+                    padding: 1em;
+                    color: vars.$backGround;
+                }
+                &-background-2 {
+                    background-color: vars.$primaryButton;
+                    padding-bottom: 3em;
+                    width: 100%;
+                    border-radius: 0 0 100px 100px;
+                    border: none;
+                    padding: 1em;
+                    height: 10em;
+                    color: vars.$backGround;
+                }
+                &-portions {
+                    margin: 1em 0;
+                }
+                &-group {
+                    
+                    &-range {
+                        margin: 1em 0 2em;
+                    }
+                    &-range::-webkit-slider-runnable-track {
+                        color: blue;
+                        background-color: vars.$primaryButton;
+                        height: 2em;
+                    }
+                    &-range::-webkit-slider-thumb {
+                        background: vars.$secondaryButton;
+                        height: 2.5em;
+                    }
+
+                    &-text{
+                        width: 50%;
+                        margin: auto;
+                    }
+
+                    &-label-plat {
+                        border-top: 1px solid;
+                        width: 70%;
+                        padding-top: 1em;
+                        margin-top: 1em;
+                    }
+
+                    &-check {
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+}
+

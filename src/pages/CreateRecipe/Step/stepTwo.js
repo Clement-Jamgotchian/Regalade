@@ -13,6 +13,10 @@ function StepTwo({
   setCookingDuration,
   containsIngredients,
   setContainsIngredients,
+  setDisplayOne,
+  setDisplayTwo,
+  setDisplayThree,
+  displayTwo,
 }) {
   const [search, setSearch] = useState('');
   const [resultIngredients, setResultIngredients] = useState([]);
@@ -73,11 +77,23 @@ function StepTwo({
     setAllIngredient([...allIngredient, newIngredientlocal]);
   };
 
+  function viewOne() {
+    setDisplayOne(''); setDisplayTwo('none'); setDisplayThree('none');
+  }
+
+  function viewThree() {
+    setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree('');
+  }
+
   useEffect(() => {
     searchIngredient();
   }, [search]);
   return (
-    <section className="CreateRecipe-2">
+    <section className="CreateRecipe-2" style={{ display: `${displayTwo}` }}>
+      <Button onClick={() => { viewOne(); }}>&#x2190;</Button>
+      <h2>
+        Etape 2
+      </h2>
       <div
         key="inline-radio-two"
         className="mb-3"
@@ -200,7 +216,7 @@ function StepTwo({
         ))}
       </Row>
       <Row className="mb-3 CreateRecipe-form-row-2">
-        <Button className="CreateRecipe-form-button" type="button">Etape 3</Button>
+        <Button className="CreateRecipe-form-button" type="button" onClick={() => { viewThree(); }}>Etape 3</Button>
       </Row>
     </section>
   );

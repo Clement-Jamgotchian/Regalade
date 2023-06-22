@@ -1,16 +1,40 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
-function StepThree({ step, setStep }) {
+function StepThree({
+  setStep,
+  setConfirmed,
+  // setDisplayOne,
+  // setDisplayTwo,
+  // setDisplayThree,
+  displayThree,
+}) {
   const [allStep, setAllStep] = useState('');
   const [allStepLocal, setAllStepLocal] = useState([]);
-  const stepNumber = 1;
+  const stepNumber = allStepLocal.length + 1;
   const [oneStep, setOneStep] = useState('');
-  console.log(allStep);
-  console.log(step);
+
   const deleteStep = (id) => {
     allStepLocal.splice(id - 1, 1);
+  };
+
+  const addStep = () => {
+  //   allStepLocal.map((stepLocal) => {
+  //     setOneStep(stepLocal.oneStep);
+  //     setStepNumber(stepLocal.number);
+  // });
+    const newSteplocal = {
+      oneStep,
+      number: stepNumber,
+    };
+    // // eslint-disable-next-line array-callback-return
+    // allStepLocal.map((stepLocal) => {
+    //   // eslint-disable-next-line no-param-reassign
+    //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
+    // });
+    setAllStepLocal([...allStepLocal, newSteplocal]);
+    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
   };
 
   const stepView = () => {
@@ -20,25 +44,10 @@ function StepThree({ step, setStep }) {
       );
     }
     return (
-    // <InputGroup>
-    //   <ListGroup>
-    //     {numbers.map((number) => (
 
-    //       <InputGroup.Item key={number}>
-    //         Etape
-    //         {' '}
-    //         {number}
-
-    //       </InputGroup.Item>
-
-    //     ))}
-
-      //   </ListGroup>
       allStepLocal.map((stepLocal) => {
         // eslint-disable-next-line no-param-reassign
         stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
-        console.log(stepLocal.number);
-        // setAllStep(`${allStep} Etape ${stepLocal.stepNumber} ${stepLocal.oneStep}`);
         return (
           <InputGroup key={stepLocal.number}>
             <InputGroup.Text>
@@ -52,6 +61,7 @@ function StepThree({ step, setStep }) {
               type="button"
               onClick={() => {
                 deleteStep(stepLocal.number);
+                setAllStepLocal([...allStepLocal]);
               }}
             >
               <img src="" alt="" />
@@ -59,46 +69,20 @@ function StepThree({ step, setStep }) {
           </InputGroup>
         );
       }));
-    //     <ListGroup>
-    //       {numbers.map((number) => (
-    //         <Button
-    //           className="CreateRecipe-button-step-delete"
-    //           type="button"
-    //           value={number}
-    //           onClick={() => {
-    //             deleteStep(number);
-    //           }}
-    //         >
-    //           <img src="" alt="" />
-    //         </Button>
-    //       ))}
-
-    //     </ListGroup>
-    //   </InputGroup>
-
-    // // </InputGroup>
-    // );
   };
 
   const setAllStepInApi = () => {
-    setAllStep(allStepLocal.map((number) => (
-      `Etape ${number.number} ${number.oneStep}`
-    )));
+    setAllStep(allStepLocal.map((stepLocal) => (`Etape ${stepLocal.number} ${stepLocal.oneStep}`)));
     setStep(allStep.toString());
   };
 
-  const addStep = () => {
-    const newSteplocal = {
-      oneStep,
-      number: stepNumber,
-    };
-    setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
-  };
+  useEffect(() => {
+    setAllStepInApi();
+  }, [allStepLocal]);
 
   return (
-    <section className="CreateRecipe-3">
-
+    <section className="CreateRecipe-3" style={{ display: `${displayThree}` }}>
+      <h2>Etape 3</h2>
       <Row className="mb-3 CreateRecipe-form-row-3">
         <InputGroup className="CreateRecipe-form-row-3-group" as={Col} md="3">
           <Form.Label className="CreateRecipe-form-row-3-group-label">Les étapes</Form.Label>
@@ -115,17 +99,26 @@ function StepThree({ step, setStep }) {
             name="step"
             id="step"
             placeholder="Ecrire une étape"
+            value={oneStep}
             min={0}
             max={1000}
             onChange={(e) => { setOneStep(e.target.value); }}
           />
-          <Button className="CreateRecipe-form-button" type="button" onClick={() => { addStep(); setOneStep(''); setAllStepInApi(); }}>&#x2B;</Button>
+          <Button className="CreateRecipe-form-button" type="button" onClick={() => { addStep(); setOneStep(''); setStep(allStep.toString()); }}>&#x2B;</Button>
         </InputGroup>
       </Row>
-      <Button className="CreateRecipe-form-button" type="button" onClick={() => { setAllStepInApi(); setStep(allStep.toString()); }}>&#x2B;</Button>
+      <Form.Check
+        required
+        label="Je valide mes étapes"
+        feedback="You must agree before submitting."
+        feedbackType="invalid"
+        onChange={(e) => (e.target.checked ? setConfirmed(true) : setConfirmed(false))}
+        onClick={() => { setStep(allStep.toString()); }}
+      />
       <Row className="mb-3 CreateRecipe-form-row-3">
         {stepView()}
       </Row>
+      <Button className="CreateRecipe-form-button" type="submit">Créer</Button>
     </section>
   );
 }
