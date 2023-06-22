@@ -69,7 +69,7 @@ function RecipesPage() {
 
   return (
     <div className="RecipesPage">
-      {recipes.length > 0 ? (
+      {recipes ? (
         <>
           {showAlert && (
             <Alert
@@ -83,13 +83,28 @@ function RecipesPage() {
           <Card>
             <Card.Body>
               <h2>{title}</h2>
+              { recipes.length === 0 && (<Loader />)}
               <Recipes recipes={recipes} />
             </Card.Body>
           </Card>
           <Pagination setRecipes={setRecipes} pageCount={pageCount} />
         </>
       )
-        : <Loader />}
+        : (
+          <>
+            <Card>
+              <Card.Body>
+                <h2>
+                  Aucun résultat ne correspond à votre recherche :
+                  {' '}
+                  {searchBarValue}
+                </h2>
+                <Recipes recipes={recipes} />
+              </Card.Body>
+            </Card>
+            {/* <Loader /> */}
+          </>
+        )}
     </div>
   );
 }
