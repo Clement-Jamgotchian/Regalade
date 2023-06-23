@@ -14,7 +14,9 @@ import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
+import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
+
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -113,6 +115,12 @@ function App() {
           }
         />
         <Route path="/recette/:idRecette" element={<RecipeDetails />} />
+        <Route
+          path="/recette/creation"
+          element={
+            <CreateRecipe />
+          }
+        />
         <Route
           path="/FAQ"
           element={(
