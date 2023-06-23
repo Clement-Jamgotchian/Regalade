@@ -17,7 +17,6 @@ import MyInfos from '../../pages/MyInfos/MyInfos';
 import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 
-
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
 
