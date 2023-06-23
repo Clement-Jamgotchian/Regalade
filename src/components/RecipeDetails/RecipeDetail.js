@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import './RecipeDetails.scss';
 import PropTypes from 'prop-types';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getDifficultyLabel, getStars } from '../../utils/formatRecipeData';
 
@@ -12,10 +10,8 @@ import cuisine from '../../assets/cuisine.png';
 import cuisson from '../../assets/temps-de-cuisson.png';
 import defaultPicture from '../../assets/pictureDefault.jpg';
 import vegetables from '../../assets/vegetables.png';
-import Header from '../Header/Header';
-import Menuphone from '../Menuphone/Menuphone';
-import Footer from '../Footer/Footer';
 import FavoriteIcon from '../RecipeCard/Icons/FavoriteIcon/FavoriteIcon';
+import CartIcon from '../RecipeCard/Icons/CartIcon/CartIcon';
 import { updateRecipesList } from '../../actions/list';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 // eslint-disable-next-line import/no-named-as-default
@@ -24,22 +20,6 @@ import Rating from './Rating/Rating';
 import CommentsCarousel from './CommentsCarousel/CommentsCarousel';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loader from '../Loader/Loader';
-
-// If user is logged in, we show the cart icon
-function CartIcon({ addToList, isFavorite }) {
-  const location = useLocation();
-  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  const isInPageList = location.pathname === '/profil/mes-repas';
-  const className = isFavorite ? 'recipeDetails-cart__active' : 'recipeDetails-cart';
-
-  if (isLoggedIn && !isInPageList) {
-    return (
-      <button className="recipeDetails-cart" type="button" onClick={(e) => { e.preventDefault(); addToList(); }}>
-        <FontAwesomeIcon className={className} icon={faCartPlus} />
-      </button>
-    );
-  }
-}
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState([]);
@@ -89,14 +69,13 @@ function RecipeDetails() {
 
   return (
     <section className="recipeDetails">
-      <Header className="recipeDetails-layout" style={{ display: 'none' }} />
-      <Menuphone className="recipeDetails-layout" />
       {recipe.title ? (
         <>
           <section
             className="recipeDetails-header"
           >
             <div className="recipeDetails-header-imgAndButton">
+              <div className="overlay" />
               <LazyLoadImage
                 className="recipeDetails-header-image"
                 src={getPicture(recipe)}
@@ -201,7 +180,6 @@ function RecipeDetails() {
         </>
       )
         : (<Loader />)}
-      <Footer className="recipeDetails-layout" />
     </section>
   );
 }

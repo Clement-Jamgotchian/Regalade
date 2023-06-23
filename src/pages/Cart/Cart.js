@@ -7,6 +7,8 @@ import Ingredients from '../../components/Ingredients/Ingredients';
 import { clearIngredientRemoved } from '../../actions/cart';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 
+import './Cart.scss';
+
 function Cart() {
   const [departments, setDepartments] = useState([]);
   const [ingredients, setIngredients] = useState([]);

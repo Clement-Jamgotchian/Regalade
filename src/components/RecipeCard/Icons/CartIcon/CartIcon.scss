@@ -1,17 +1,17 @@
 @use 'src/styles/vars';
 
-.RecipeCard {
-    
-    &--cart {
-        background: none;
-        color: inherit;
-        border: none;
-        padding: 0;
-        font: inherit;
-        cursor: pointer;
-        outline: inherit;
-    }
-
+.CartIcon {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    margin-top: 5px;
     
     &--cart:hover {
         transform: scale(1.4);
@@ -19,9 +19,6 @@
     }
     
     &--cart {
-        position: absolute;
-        right: 1rem;
-        margin-top: 5px;
         background: vars.$secondaryButton;
         padding: 0.5rem 0.5rem 0.5rem 0.4rem;
         border-radius: 50%;

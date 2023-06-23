@@ -114,7 +114,7 @@ function App() {
             )
           }
         />
-        <Route path="/recette/:idRecette" element={<RecipeDetails />} />
+        <Route path="/recette/:idRecette" element={<MyLayout><RecipeDetails /></MyLayout>} />
         <Route
           path="/recette/creation"
           element={
@@ -129,6 +129,7 @@ function App() {
             </MyLayout>
           )}
         />
+        <Route path="/*" element={<MyLayout><h1 className="text-center mb-4">Erreur 404, cette page n&apos;existe pas</h1></MyLayout>} />
       </Routes>
     </Container>
   );
