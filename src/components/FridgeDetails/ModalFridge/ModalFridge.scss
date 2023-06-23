@@ -14,9 +14,33 @@
     }
     &-body{
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
         input{
             width: 40%;
         }
+    }
+    &-list{
+        position: absolute;
+        top: 60px;
+        left:35px;
+    }
+    &-select{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        
+        select{
+            margin-top: 1rem;
+            width: 40%;
+        }
+    }
+    &-alert{
+        position: absolute;
+        width: 60%;
+        top: 77px;
+        right: 15px;
+        text-align: center;
     }
 }

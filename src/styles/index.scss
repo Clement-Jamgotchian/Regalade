@@ -1,6 +1,5 @@
 @use '../styles/vars';
 
-$body-font-family: vars.$font;
 $body-bg: vars.$backGround;
 
 $theme-colors: (
@@ -9,6 +8,8 @@ $theme-colors: (
   'info': vars.$backGround,
   'danger': #e90606,
   );
+// $btn-color: #ffffff !important;
+// $btn-hover-color: #ffffff !important;
 
 $pagination-color: vars.$primaryButton;
 $pagination-bg: vars.$backGround;
@@ -30,6 +31,7 @@ $pagination-hover-border-color: rgba(vars.$primaryButton, .4);
 
 html, body, #root {
   height: 100%;
+  font-family: vars.$font;
 }
 
 @import '~bootstrap/scss/bootstrap';

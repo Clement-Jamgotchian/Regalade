@@ -94,7 +94,8 @@ function HomepageInscription() {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('refreshToken', res.data.refresh_token);
         localStorage.setItem('invitedUser', JSON.stringify(false));
-        navigate('/recettes');
+        localStorage.setItem('welcomePageShowed', JSON.stringify(true));
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -130,6 +131,7 @@ function HomepageInscription() {
     dispatch(setInvitedUser(true));
     localStorage.setItem('isLoggedIn', JSON.stringify(false));
     localStorage.setItem('invitedUser', JSON.stringify(true));
+    localStorage.setItem('welcomePageShowed', JSON.stringify(true));
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
   };

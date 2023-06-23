@@ -1,60 +1,43 @@
 // React components
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Alert, Card } from 'react-bootstrap';
 
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
 
 // Styles import
-import './Homepage.scss';
+import './RecipesPage.scss';
 import Loader from '../../components/Loader/Loader';
+import Pagination from '../../components/Pagination/Pagination';
 import { showOrHideAlert } from '../../actions/list';
 import AxiosPublic from '../../utils/AxiosPublic';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import { addRecipeToFavorites } from '../../actions/favorites';
 
-function Homepage() {
-  const [starterRecipes, setStarterRecipes] = useState([]);
-  const [dishRecipes, setDishRecipes] = useState([]);
-  const [dessertRecipes, setDessertRecipes] = useState([]);
-  const [newRecipes, setNewRecipes] = useState([]);
+function RecipesPage() {
+  const [recipes, setRecipes] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
   const favorites = useSelector((state) => state.favorites.recipes);
-  const pageRequest = pageNumber > 0 ? `?page=${pageNumber}` : '';
-  const baseUrl = '/recipes/home?category=';
-  const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&${pageRequest}` : `${pageRequest}`;
+  const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
+  const baseUrl = '/recipes';
+  const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&${pageRequest}` : `?${pageRequest}`;
+  const title = (searchBarValue !== undefined && searchBarValue !== '') ? `Résulats de votre recherche : ${searchBarValue}` : 'Toutes les recettes';
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getRecipes = async () => {
-    AxiosPublic.get(`${baseUrl}entree${request}`)
+    AxiosPublic.get(baseUrl + request)
       .then((response) => {
-        setStarterRecipes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    AxiosPublic.get(`${baseUrl}plat${request}`)
-      .then((response) => {
-        setDishRecipes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    AxiosPublic.get(`${baseUrl}dessert${request}`)
-      .then((response) => {
-        setDessertRecipes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    AxiosPublic.get(`${baseUrl}new${request}`)
-      .then((response) => {
-        setNewRecipes(response.data);
+        setRecipes(response.data.recipes);
+        setPageCount(response.data.totalPages);
+        navigate('/recettes');
       })
       .catch((error) => {
         console.log(error);
@@ -85,8 +68,8 @@ function Homepage() {
   }, []);
 
   return (
-    <div className="Homepage">
-      {starterRecipes.length > 0 ? (
+    <div className="RecipesPage">
+      {recipes ? (
         <>
           {showAlert && (
             <Alert
@@ -99,36 +82,31 @@ function Homepage() {
           )}
           <Card>
             <Card.Body>
-              <h2>Les nouvelles recettes</h2>
-              <Recipes recipes={newRecipes} />
+              <h2>{title}</h2>
+              { recipes.length === 0 && (<Loader />)}
+              <Recipes recipes={recipes} />
             </Card.Body>
           </Card>
-
-          <Card>
-            <Card.Body>
-              <h2>Les meilleures recettes d&apos;entrées</h2>
-              <Recipes recipes={starterRecipes} />
-            </Card.Body>
-          </Card>
-
-          <Card>
-            <Card.Body>
-              <h2>Les meilleures recettes de plat</h2>
-              <Recipes recipes={dishRecipes} />
-            </Card.Body>
-          </Card>
-
-          <Card>
-            <Card.Body>
-              <h2>Les meilleures recettes de dessert</h2>
-              <Recipes recipes={dessertRecipes} />
-            </Card.Body>
-          </Card>
+          <Pagination setRecipes={setRecipes} pageCount={pageCount} />
         </>
       )
-        : <Loader />}
+        : (
+          <>
+            <Card>
+              <Card.Body>
+                <h2>
+                  Aucun résultat ne correspond à votre recherche :
+                  {' '}
+                  {searchBarValue}
+                </h2>
+                <Recipes recipes={recipes} />
+              </Card.Body>
+            </Card>
+            {/* <Loader /> */}
+          </>
+        )}
     </div>
   );
 }
 
-export default Homepage;
+export default RecipesPage;
