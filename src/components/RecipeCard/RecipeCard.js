@@ -7,6 +7,7 @@ import { Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 // FontAwesome components
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
@@ -14,8 +15,16 @@ import { faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 // Import Redux actions
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { changeAlertVariant, newAlertMessage, showOrHideAlert, updateRecipesList } from '../../actions/list';
-import { removeRecipeFromFavorites, updateFavorites } from '../../actions/favorites';
+import {
+  changeAlertVariant,
+  newAlertMessage,
+  showOrHideAlert,
+  updateRecipesList,
+} from '../../actions/list';
+import {
+  removeRecipeFromFavorites,
+  updateFavorites,
+} from '../../actions/favorites';
 
 // Styles import
 import './RecipeCard.scss';
@@ -34,6 +43,7 @@ import FavoriteIcon from './Icons/FavoriteIcon/FavoriteIcon';
 import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
+import InfoIcon from './Icons/InfoIcon/InfoIcon';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
@@ -41,13 +51,14 @@ function RecipeCard({ recipe }) {
   const favoritesList = useSelector((store) => store.favorites.recipes);
 
   const addToList = async (id) => {
-    await AxiosPrivate
-      .post(
-        `/list/${id}`,
-      )
+    await AxiosPrivate.post(`/list/${id}`)
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
-        dispatch(newAlertMessage('La recette a bien été ajoutée à votre liste de repas.'));
+        dispatch(
+          newAlertMessage(
+            'La recette a bien été ajoutée à votre liste de repas.',
+          ),
+        );
         dispatch(changeAlertVariant('success'));
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
@@ -56,7 +67,9 @@ function RecipeCard({ recipe }) {
       })
       .catch(() => {
         dispatch(changeAlertVariant('danger'));
-        dispatch(newAlertMessage('Cette recette est déjà dans votre liste de repas.'));
+        dispatch(
+          newAlertMessage('Cette recette est déjà dans votre liste de repas.'),
+        );
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
@@ -65,10 +78,7 @@ function RecipeCard({ recipe }) {
   };
 
   const removeRecipe = async (id) => {
-    await AxiosPrivate
-      .delete(
-        `/${linkAPI}/${id}`,
-      )
+    await AxiosPrivate.delete(`/${linkAPI}/${id}`)
       .then(() => {
         if (linkAPI === 'list') {
           dispatch(updateRecipesList({ action: 'removed' }));
@@ -88,9 +98,7 @@ function RecipeCard({ recipe }) {
 
   return (
     <Card key={recipe.id} className="RecipeCard">
-      <FavoriteIcon
-        recipe={recipe}
-      />
+      <FavoriteIcon recipe={recipe} />
       <DeleteIcon
         removeRecipe={() => {
           removeRecipe(recipe.id);
@@ -123,6 +131,7 @@ function RecipeCard({ recipe }) {
             recipeId={recipe.id}
             portions={recipe.userPortions}
           />
+          <InfoIcon recipe={recipe} />
         </Card.Body>
       </Link>
     </Card>
@@ -144,7 +153,7 @@ RecipeCard.propTypes = {
 };
 
 RecipeCard.defaultProps = {
-  recipe: ({
+  recipe: {
     id: -1,
     picture: 'https://picsum.photos/300/500',
     title: 'Titre par défaut',
@@ -152,7 +161,7 @@ RecipeCard.defaultProps = {
     cookingDuration: 15,
     setupDuration: 20,
     difficulty: 1,
-  }),
+  },
 };
 
 export default RecipeCard;
