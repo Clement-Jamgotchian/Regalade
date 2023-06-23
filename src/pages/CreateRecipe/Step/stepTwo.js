@@ -35,7 +35,7 @@ function StepTwo({
         key="inline-radio-two"
         className="mb-3 CreateRecipe-form-row-2-group"
         onChange={(event) => {
-          setDifficulty(event.target.value);
+          setDifficulty(parseInt(event.target.value, 10));
         }}
       >
         <Form.Label className="CreateRecipe-form-row-1-group-label">

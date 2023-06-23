@@ -77,6 +77,7 @@ function CreateRecipe() {
           setTimeout(() => {
             dispatch(showOrHideAlert(false));
           }, '5000');
+          console.log('bienjoué');
         })
         .catch((err) => {
           console.log(err);

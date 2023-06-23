@@ -126,7 +126,6 @@ function StepThree({
         <Form.Label className="CreateRecipe-form-row-2-group-label">Trouver un ingrédient</Form.Label>
         <Form.Control
           aria-label="ingrédient"
-          required
           className="CreateRecipe-form-row-2-group-input"
           type="search"
           name="search"
