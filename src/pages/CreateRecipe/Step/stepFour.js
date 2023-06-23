@@ -10,6 +10,7 @@ function StepFour({
   setDisplayThree,
   setDisplayFour,
   displayFour,
+  loading,
 }) {
   const [allStep, setAllStep] = useState('');
   const [allStepLocal, setAllStepLocal] = useState([]);
@@ -19,7 +20,7 @@ function StepFour({
   const deleteStep = (id) => {
     allStepLocal.splice(id - 1, 1);
   };
-
+  console.log(loading);
   const addStep = () => {
   //   allStepLocal.map((stepLocal) => {
   //     setOneStep(stepLocal.oneStep);
@@ -125,6 +126,7 @@ function StepFour({
         onClick={() => { setStep(allStep.toString()); }}
       />
       <Button className="CreateRecipe-button" type="submit">Créer</Button>
+      <p>{loading === 'true' ? 'Recette dans les fourneaux, veuillez patienter ...' : ''}</p>
     </section>
   );
 }

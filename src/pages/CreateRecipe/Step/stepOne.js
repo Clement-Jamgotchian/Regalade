@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
 import gateau from '../../../assets/gateau.png';
+import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 function StepOne({
   setPostImage,
@@ -17,6 +19,9 @@ function StepOne({
   setDisplayFour,
   displayOne,
 }) {
+  const [categories, setCategories] = useState([]);
+  const img = [entree, plat, gateau];
+
   const convertToBase64 = (file) => new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -27,6 +32,35 @@ function StepOne({
       reject(error);
     };
   });
+
+  const categoryCheckButton = () => (
+    categories.map((category) => (
+      <div key={category.id}>
+        <img src={img[categories.indexOf(category)]} alt="une entrée" />
+        <Form.Check
+          inline
+          label={category.title}
+          name="group1"
+          type="radio"
+          id={category.id}
+          value={category.id}
+        />
+      </div>
+    )));
+
+  const getCategory = () => {
+    AxiosPrivate.get('/categories')
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -76,7 +110,7 @@ function StepOne({
             min={1}
             max={10}
             onChange={(e) => {
-              setPortions((e.target.value));
+              setPortions(parseInt(e.target.value, 10));
             }}
             defaultValue={1}
           />
@@ -93,46 +127,14 @@ function StepOne({
         key="inline-radio-one"
         className="mb-3"
         onChange={(event) => {
-          setCategory(event.target.value);
+          setCategory(parseInt(event.target.value, 10));
         }}
       >
         <Form.Label className="CreateRecipe-form-row-1-group-label-plat">
           Type de plat
         </Form.Label>
         <section className="CreateRecipe-form-row-1-group-check">
-          <div>
-            <img src={entree} alt="une entrée" />
-            <Form.Check
-              inline
-              label="entrée"
-              name="group1"
-              type="radio"
-              id="inline-radio-3"
-              value={1}
-            />
-          </div>
-          <div>
-            <img src={plat} alt="une entrée" />
-            <Form.Check
-              inline
-              label="plat"
-              name="group1"
-              type="radio"
-              id="inline-radio-1"
-              value={2}
-            />
-          </div>
-          <div>
-            <img src={gateau} alt="une entrée" />
-            <Form.Check
-              inline
-              label="dessert"
-              name="group1"
-              type="radio"
-              id="inline-radio-2"
-              value={3}
-            />
-          </div>
+          {categoryCheckButton()}
         </section>
       </Form.Group>
       <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
