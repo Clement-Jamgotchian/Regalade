@@ -11,6 +11,7 @@
     font: inherit;
     cursor: pointer;
     outline: inherit;
+    z-index: 3;
 
     &--favorite:hover, &--favorite__active:hover {
         transform: scale(1.4);
