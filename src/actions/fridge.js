@@ -5,3 +5,11 @@ export const setFridgeValue = (currentFridgeValue) => ({
     fridgeValue: currentFridgeValue,
   },
 });
+
+export const SET_SUGGESTED_RECIPES = 'SET_SUGGESTED_RECIPES';
+export const setSuggestedRecipes = (suggestedList) => ({
+  type: SET_SUGGESTED_RECIPES,
+  payload: {
+    suggest: suggestedList,
+  },
+});

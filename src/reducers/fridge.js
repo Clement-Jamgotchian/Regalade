@@ -1,8 +1,8 @@
-import { SET_FRIDGE_VALUE } from '../actions/fridge';
+import { SET_FRIDGE_VALUE, SET_SUGGESTED_RECIPES } from '../actions/fridge';
 
 const initialState = {
   fridge: '',
-  show: false,
+  listSuggested: [],
 };
 
 function reducer(state = initialState, action = {}) {
@@ -11,6 +11,11 @@ function reducer(state = initialState, action = {}) {
       return {
         ...state,
         fridge: action.payload.fridgeValue,
+      };
+    case SET_SUGGESTED_RECIPES:
+      return {
+        ...state,
+        listSuggested: action.payload.suggest,
       };
     default:
       return state;

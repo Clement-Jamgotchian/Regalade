@@ -1,14 +1,17 @@
 import './Fridge.scss';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Pagination from '../../components/Pagination/Pagination';
+
 import fridgeLogo from '../../assets/images/frigo.png';
 import closetLogo from '../../assets/images/placard.png';
 import FridgeDetails from '../../components/FridgeDetails/FridgeDetails';
-import { setFridgeValue } from '../../actions/fridge';
+import { setFridgeValue, setSuggestedRecipes } from '../../actions/fridge';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import ModalFridge from '../../components/FridgeDetails/ModalFridge/ModalFridge';
 import Recipes from '../../components/Recipes/Recipes';
@@ -16,9 +19,8 @@ import Recipes from '../../components/Recipes/Recipes';
 function Fridge() {
   const [fridgeData, setFridgeData] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [fullRecipes, setFullRecipes] = useState([]);
-  const [isRecipes, setIsRecipes] = useState(false);
   const [show, setShow] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -80,22 +82,12 @@ function Fridge() {
     AxiosPrivate.post('/fridge/suggestion')
       .then((res) => {
         setRecipes(res.data.recipes.map((recipe) => recipe.recipe));
-        setFullRecipes(res.data.recipes);
+        dispatch(setSuggestedRecipes(res.data.recipes));
+        setPageCount(res.data.totalPages);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const handlePourcent = (bin) => {
-    if (bin === 0) {
-      const lowRecipes = fullRecipes.filter((recipe) => recipe.percent < 50);
-      setRecipes(lowRecipes.map((recipe) => recipe.recipe));
-    }
-    if (bin === 1) {
-      const lowRecipes = fullRecipes.filter((recipe) => recipe.percent >= 50);
-      setRecipes(lowRecipes.map((recipe) => recipe.recipe));
-    }
   };
 
   useEffect(() => {
@@ -149,7 +141,6 @@ function Fridge() {
         size="lg"
         onClick={() => {
           generateRecipes();
-          setIsRecipes(true);
         }}
       >
         Générer une liste de recette
@@ -160,27 +151,8 @@ function Fridge() {
         getFridge={getFridge}
       />
       <Container className="Fridge-suggest">
-        {isRecipes && (
-          <div className="Fridge-suggest-buttons">
-            <Button
-              variant="success"
-              onClick={() => {
-                handlePourcent(0);
-              }}
-            >
-              Moins de 50% des ingrédients
-            </Button>
-            <Button
-              variant="success"
-              onClick={() => {
-                handlePourcent(1);
-              }}
-            >
-              Plus de 50% des ingrédients
-            </Button>
-          </div>
-        )}
         <Recipes recipes={recipes} />
+        <Pagination pageCount={pageCount} className="Fridge-suggest-page" />
       </Container>
     </Container>
   );

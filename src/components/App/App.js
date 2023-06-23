@@ -10,12 +10,12 @@ import Profil from '../Profil/Profil';
 import Faq from '../../pages/Faq/Faq';
 import Homepage from '../../pages/Homepage/Homepage';
 import List from '../../pages/List/List';
-import MobilePages from '../../pages/MobilePages/MobilePages';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
 import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
+import Favorites from '../../pages/Favorites/Favorites';
 
 
 function App() {
@@ -59,7 +59,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <MobilePages />
+                <Favorites />
               </MyLayout>
             ) : (
               <Profil />
