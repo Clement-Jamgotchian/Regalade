@@ -25,13 +25,28 @@
         width: 100%;
         box-shadow: 0px 0px 5px #dfd9d0;
     }
+
+    & button>a {
+        color: vars.$primaryButton;
+        text-decoration: none;
+    }
+    & button:hover a {
+        color: #ffffff;
+    }
 }
 
 @media (max-width: vars.$layout-breakpoint-small) {
-.Homepage > .card {
-    background-color: transparent; 
-    border: none;
-    padding: 0;
-    box-shadow: none;
-    text-align: center;
-}}
+    .Homepage {
+        & > .card {
+            background-color: transparent; 
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            text-align: center;
+        }
+
+        & .hstack {
+            flex-direction: column;
+        }
+    }
+}

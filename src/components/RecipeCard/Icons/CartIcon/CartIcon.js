@@ -18,14 +18,14 @@ function CartIcon({ addToList }) {
   if (isLoggedIn && !isInPageList) {
     return (
       <button
-        className="RecipeCard--buttonFavoriteToggle"
+        className="CartIcon"
         type="button"
         onClick={(e) => {
           e.preventDefault();
           addToList();
         }}
       >
-        <FontAwesomeIcon className="RecipeCard--cart" icon={faCartPlus} />
+        <FontAwesomeIcon className="CartIcon--cart" icon={faCartPlus} />
       </button>
     );
   }

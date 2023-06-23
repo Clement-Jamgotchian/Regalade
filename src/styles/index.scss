@@ -34,4 +34,9 @@ html, body, #root {
   font-family: vars.$font;
 }
 
+.btn:hover {
+  color: #ffffff !important;
+}
+
+
 @import '~bootstrap/scss/bootstrap';
