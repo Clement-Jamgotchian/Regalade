@@ -49,7 +49,8 @@ function RecipeDetails() {
   }
 
   const getPicture = (value) => {
-    if (value.picture === null) {
+    console.log(value.picture);
+    if (value.picture === null || value.picture === '') {
       return defaultPicture;
     }
     return `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${value.picture}`;
