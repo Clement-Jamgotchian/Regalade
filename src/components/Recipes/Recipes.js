@@ -8,14 +8,14 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 // Styles import
 import './Recipes.scss';
 
-function Recipes({ recipes }) {
+function Recipes({ recipes, generateRecipes }) {
   return (
     <div className="Recipes--content">
       {recipes && (
         <Row>
           {recipes.map((recipe) => (
             <Col key={`col-${recipe.id}`} xs={12} md={4} lg={3}>
-              <RecipeCard recipe={recipe} />
+              <RecipeCard recipe={recipe} generateRecipes={generateRecipes} />
             </Col>
           ))}
         </Row>
@@ -37,6 +37,11 @@ Recipes.propTypes = {
       title: PropTypes.string.isRequired,
     }).isRequired,
   })).isRequired,
+  generateRecipes: PropTypes.func,
+};
+
+Recipes.defaultProps = {
+  generateRecipes: null,
 };
 
 export default Recipes;

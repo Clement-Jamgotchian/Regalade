@@ -44,10 +44,14 @@ import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
+
 import defaultPicture from '../../assets/pictureDefault.jpg';
 import EditIcon from './Icons/EditIcon/EditIcon';
 
-function RecipeCard({ recipe }) {
+import CookedIcon from './Icons/CookedIcon/CookedIcon';
+
+
+function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
@@ -63,6 +67,7 @@ function RecipeCard({ recipe }) {
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
       .then(() => {
+        generateRecipes();
         dispatch(updateRecipesList({ action: 'added' }));
         dispatch(
           newAlertMessage(
@@ -127,6 +132,7 @@ function RecipeCard({ recipe }) {
               addToList(recipe.id);
             }}
           />
+          <CookedIcon recipeId={recipe.id} />
           <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
           <Card.Text className="RecipeCard--rating">
             {getStars(recipe.rating)}
@@ -161,6 +167,7 @@ RecipeCard.propTypes = {
     portions: PropTypes.number,
     userPortions: PropTypes.number,
   }),
+  generateRecipes: PropTypes.func,
 };
 
 RecipeCard.defaultProps = {
@@ -173,6 +180,7 @@ RecipeCard.defaultProps = {
     setupDuration: 20,
     difficulty: 1,
   },
+  generateRecipes: null,
 };
 
 export default RecipeCard;
