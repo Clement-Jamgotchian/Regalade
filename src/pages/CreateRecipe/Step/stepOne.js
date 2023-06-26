@@ -5,6 +5,7 @@ import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
 import gateau from '../../../assets/gateau.png';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
+import pizza from '../../../assets/iconePizza.png';
 
 function StepOne({
   setPostImage,
@@ -69,7 +70,12 @@ function StepOne({
   };
   return (
     <section className="CreateRecipe-1" style={{ display: `${displayOne}` }}>
-      <h2 className="CreateRecipe-1-title">Etape 1</h2>
+      <h2 className="CreateRecipe-1-title">
+        Etape 1
+        <div>
+          <img src={pizza} alt="part de pizza" />
+        </div>
+      </h2>
       <Row className="mb-3 CreateRecipe-form-row-1">
         <Form.Group className="CreateRecipe-form-row-1-group CreateRecipe-form-row-1-background-1" as={Col} md="4">
           <Form.Label className="CreateRecipe-form-row-1-group-label">Titre</Form.Label>

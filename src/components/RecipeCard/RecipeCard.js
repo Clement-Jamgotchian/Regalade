@@ -50,7 +50,6 @@ import EditIcon from './Icons/EditIcon/EditIcon';
 
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
 
-
 function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
   const linkAPI = useSelector((state) => state.profil.link);

@@ -5,6 +5,7 @@ import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
 import ModalIngredient from './ModalIngredient';
+import pizza from '../../../assets/iconePizza.png';
 
 function StepThree({
   containsIngredients,
@@ -39,6 +40,20 @@ function StepThree({
         console.log(error);
       });
   };
+
+  const updateQuantity = (newQuantity, ingredientNumber) => {
+    const updatedData = allIngredient.map((item) => {
+      if (item.id === ingredientNumber) {
+        return {
+          ...item,
+          quantity: newQuantity,
+        };
+      }
+      return item;
+    });
+    setAllIngredient(updatedData);
+  };
+
   const searchIngredientView = () => {
     if (resultIngredients.length === 0) {
       return (
@@ -75,7 +90,18 @@ function StepThree({
           <img src={vegetables} alt="logo ingredient" className="CreateRecipe-form-row-3-card-img" />
           <div className="CreateRecipe-form-row-3-card-text">
             <p className="CreateRecipe-form-row-3-card-text-name">{ingredient.name}</p>
-            <p className="CreateRecipe-form-row-3-card-text-quantity">{ingredient.quantity}</p>
+            <input
+              className="FridgeDetails-input"
+              id={ingredient.id}
+              value={ingredient.quantity}
+              onChange={(event) => {
+                updateQuantity(
+                  event.currentTarget.value,
+                  ingredient.id,
+                );
+              }}
+              type="number"
+            />
             <p className="CreateRecipe-form-row-3-card-text-unit">{ingredient.unit}</p>
           </div>
           <Button
@@ -125,6 +151,11 @@ function StepThree({
       <Button className="CreateRecipe-1-button" onClick={() => { viewTwo(); }}>&#x2190;</Button>
       <h2 className="CreateRecipe-1-title">
         Etape 3
+        <div>
+          <img src={pizza} alt="part de pizza" />
+          <img src={pizza} alt="part de pizza" />
+          <img src={pizza} alt="part de pizza" />
+        </div>
       </h2>
 
       <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">

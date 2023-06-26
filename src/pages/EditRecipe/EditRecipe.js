@@ -46,6 +46,8 @@ function EditRecipe() {
     navigate('/profil/mes-recettes');
   };
 
+  console.log(recipeToEdit);
+
   const defaultValueRecipe = () => {
     if (recipeToEdit.category.title === 'Plat') {
       return 2;
@@ -91,7 +93,6 @@ function EditRecipe() {
     containsIngredients,
     portions,
   );
-  console.log(recipeToEdit);
 
   const handleSubmit = async () => {
     if (confirmed === true) {
@@ -115,8 +116,8 @@ function EditRecipe() {
           setTimeout(() => {
             dispatch(showOrHideAlert(false));
           }, '5000');
-          console.log('bienjoué');
           setLoading(false);
+          navigate('/profil/mes-recettes');
         })
         .catch((err) => {
           console.log(err);

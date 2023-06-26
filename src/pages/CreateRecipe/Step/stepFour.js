@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import pizza from '../../../assets/iconePizza.png';
 
 function StepFour({
   setStep,
@@ -36,7 +37,7 @@ function StepFour({
     //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
     // });
     setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
+    setAllStep(`${allStep} ÉTAPE ${stepNumber} ø ${oneStep}`);
   };
 
   function viewThree() {
@@ -57,7 +58,7 @@ function StepFour({
         return (
           <InputGroup key={stepLocal.number} className="CreateRecipe-form-row-4-step">
             <InputGroup.Text>
-              Etape
+              Étape
               {' '}
               {allStepLocal.indexOf(stepLocal) + 1}
             </InputGroup.Text>
@@ -78,7 +79,7 @@ function StepFour({
   };
 
   const setAllStepInApi = () => {
-    setAllStep(allStepLocal.map((stepLocal) => (`Etape ${stepLocal.number} ${stepLocal.oneStep}`)));
+    setAllStep(allStepLocal.map((stepLocal) => (`ÉTAPE ${stepLocal.number} ø ${stepLocal.oneStep}`)));
     setStep(allStep.toString());
   };
 
@@ -89,12 +90,21 @@ function StepFour({
   return (
     <section className="CreateRecipe-4" style={{ display: `${displayFour}` }}>
       <Button className="CreateRecipe-1-button" onClick={() => { viewThree(); }}>&#x2190;</Button>
-      <h2 className="CreateRecipe-1-title">Etape 4</h2>
+      <h2 className="CreateRecipe-1-title">
+        Etape 4
+        {' '}
+        <div>
+          <img src={pizza} alt="part de pizza" />
+          <img src={pizza} alt="part de pizza" />
+          <img src={pizza} alt="part de pizza" />
+          <img src={pizza} alt="part de pizza" />
+        </div>
+      </h2>
       <Row className="mb-3 CreateRecipe-form-row-3">
         <Form.Group className="CreateRecipe-form-row-4-group" as={Col} md="3">
           <Form.Label className="CreateRecipe-form-row-4-group-label">Les étapes</Form.Label>
           <InputGroup.Text className="CreateRecipe-form-row-4-group-text">
-            Etape
+            Étape
             {' '}
             {allStepLocal.length + 1}
           </InputGroup.Text>

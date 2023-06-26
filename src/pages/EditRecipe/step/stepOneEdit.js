@@ -34,13 +34,13 @@ function StepOneEdit({
   });
 
   const defaultValueRecipe = () => {
-    if (recipeToEdit.category.title === 'Plat') {
-      return 2;
-    }
-    if (recipeToEdit.category.title === 'Entrée') {
-      return 1;
-    }
-    return 3;
+    // eslint-disable-next-line array-callback-return, consistent-return
+    categories.map((category) => {
+      if (recipeToEdit.category.title === category.title) {
+        setCategory(category.id);
+        return category.id;
+      }
+    });
   };
 
   const categoryCheckButton = () => (
@@ -67,7 +67,6 @@ function StepOneEdit({
         console.log(err);
       });
   };
-  console.log(recipeToEdit.category.title);
 
   useEffect(() => {
     getCategory();
@@ -93,6 +92,7 @@ function StepOneEdit({
             placeholder="Titre de la recette"
             defaultValue={recipeToEdit.title}
             onChange={(e) => { setTitle(e.target.value); }}
+            readonly="readonly"
           />
         </Form.Group>
       </Row>

@@ -17,11 +17,12 @@ function StepFourEdit({
   const [allStepLocal, setAllStepLocal] = useState([]);
   const stepNumber = allStepLocal.length + 1;
   const [oneStep, setOneStep] = useState('');
+  // const [test, setTest] = useState([]);
 
   const deleteStep = (id) => {
     allStepLocal.splice(id - 1, 1);
   };
-  console.log(loading);
+
   const addStep = () => {
   //   allStepLocal.map((stepLocal) => {
   //     setOneStep(stepLocal.oneStep);
@@ -37,24 +38,30 @@ function StepFourEdit({
     //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
     // });
     setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
+    setAllStep(`${allStep} ÉTAPE ${stepNumber} ${oneStep}`);
   };
 
   const addStepEdit = () => {
-    console.log(recipeToEdit.step);
-    const newSteplocal = {
-      oneStep,
-      number: stepNumber,
-    };
-      // // eslint-disable-next-line array-callback-return
-      // allStepLocal.map((stepLocal) => {
-      //   // eslint-disable-next-line no-param-reassign
-      //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
-      // });
-    setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} Etape ${stepNumber} ${oneStep}`);
-  };
+    const regex = /ETAPE [0-9]* ø /g;
+    const recipesStep = recipeToEdit.step.split(regex);
+    console.log(recipesStep);
+    // eslint-disable-next-line array-callback-return, consistent-return
+    const retest = recipesStep.map((step) => {
+      const newSteplocal = {
+        oneStep: step,
+        number: stepNumber + 1,
+      };
+      return newSteplocal;
+    });
 
+    // // eslint-disable-next-line array-callback-return
+    // allStepLocal.map((stepLocal) => {
+    //   // eslint-disable-next-line no-param-reassign
+    //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
+    // });
+    setAllStepLocal(retest);
+  };
+  console.log(allStepLocal);
   function viewThree() {
     setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree(''); setDisplayFour('none');
   }
@@ -68,12 +75,15 @@ function StepFourEdit({
     return (
 
       allStepLocal.map((stepLocal) => {
+        if (stepLocal.oneStep === '') {
+          allStepLocal.splice(allStepLocal.indexOf(stepLocal), 1);
+        }
         // eslint-disable-next-line no-param-reassign
         stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
         return (
           <InputGroup key={stepLocal.number} className="CreateRecipe-form-row-4-step">
             <InputGroup.Text>
-              Etape
+              ÉTAPE
               {' '}
               {allStepLocal.indexOf(stepLocal) + 1}
             </InputGroup.Text>
@@ -94,7 +104,7 @@ function StepFourEdit({
   };
 
   const setAllStepInApi = () => {
-    setAllStep(allStepLocal.map((stepLocal) => (`Etape ${stepLocal.number} ${stepLocal.oneStep}`)));
+    setAllStep(allStepLocal.map((stepLocal) => (`ÉTAPE ${stepLocal.number} ${stepLocal.oneStep}`)));
     setStep(allStep.toString());
   };
 
@@ -114,7 +124,7 @@ function StepFourEdit({
         <Form.Group className="CreateRecipe-form-row-4-group" as={Col} md="3">
           <Form.Label className="CreateRecipe-form-row-4-group-label">Les étapes</Form.Label>
           <InputGroup.Text className="CreateRecipe-form-row-4-group-text">
-            Etape
+            ÉTAPE
             {' '}
             {allStepLocal.length + 1}
           </InputGroup.Text>
