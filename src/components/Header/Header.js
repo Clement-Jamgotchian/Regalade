@@ -192,7 +192,7 @@ function Header() {
                   onClick={() => {
                     dispatch(setTokenUser(null));
                     dispatch(setConnectedUser(false));
-                    dispatch(setInvitedUser(false));
+                    dispatch(setInvitedUser(true));
                     dispatch(clearRecipes());
                     localStorage.removeItem('isLoggedIn');
                     localStorage.removeItem('token');
