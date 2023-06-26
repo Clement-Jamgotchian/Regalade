@@ -46,7 +46,7 @@ import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
 
-function RecipeCard({ recipe }) {
+function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
@@ -54,6 +54,7 @@ function RecipeCard({ recipe }) {
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
       .then(() => {
+        generateRecipes();
         dispatch(updateRecipesList({ action: 'added' }));
         dispatch(
           newAlertMessage(
@@ -152,6 +153,7 @@ RecipeCard.propTypes = {
     portions: PropTypes.number,
     userPortions: PropTypes.number,
   }),
+  generateRecipes: PropTypes.func,
 };
 
 RecipeCard.defaultProps = {
@@ -164,6 +166,7 @@ RecipeCard.defaultProps = {
     setupDuration: 20,
     difficulty: 1,
   },
+  generateRecipes: null,
 };
 
 export default RecipeCard;

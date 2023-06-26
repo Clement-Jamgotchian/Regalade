@@ -27,6 +27,9 @@
             border-bottom: 2px solid vars.$secondaryButton;
         }
     }
+    &-titles{
+        color: vars.$primaryButton !important;
+    }
 
 }
 
