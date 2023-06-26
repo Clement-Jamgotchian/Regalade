@@ -45,11 +45,13 @@ import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
+import defaultPicture from '../../assets/default.jpeg';
 
 function RecipeCard({ recipe }) {
   const dispatch = useDispatch();
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
+  const picture = recipe.picture ? `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}` : defaultPicture;
 
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
@@ -108,7 +110,7 @@ function RecipeCard({ recipe }) {
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
         <LazyLoadImage
           className="card-img-top RecipeCard--img"
-          src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+          src={picture}
           effect="blur"
         />
         <Card.Body className="RecipeCard--body">
