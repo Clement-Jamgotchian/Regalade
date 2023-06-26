@@ -25,9 +25,10 @@ function InfoIcon({ recipe }) {
   const recipes = useSelector((state) => state.fridge.listSuggested
     .map((sugRecipes) => sugRecipes));
 
-  const currentRecipe = recipes.find((recipess) => recipess.recipe.id === recipe.id);
+  const currentRecipe = recipes && recipes.find((recipess) => recipess.recipe.id === recipe.id);
 
-  const title = currentRecipe && currentRecipe.ingredientsToBuy.length > 0 ? 'Il vous manque : ' : 'Vous avez tout !';
+  const titleTobuy = currentRecipe && currentRecipe.ingredientsToBuy.length > 0 ? 'Il vous manque' : 'Vous avez tout !';
+  const titleToComplete = currentRecipe && currentRecipe.ingredientsToComplete.length > 0 ? 'A completer' : '';
 
   const percent = currentRecipe && currentRecipe.percent;
 
@@ -42,9 +43,17 @@ function InfoIcon({ recipe }) {
           overlay={(
             <Tooltip id="tooltip-left">
               <ListGroup variant="flush" className="Info-list">
-                <ListGroup.Item className="fw-bold">{title}</ListGroup.Item>
-                {currentRecipe.ingredientsToBuy.map((ingredients) => (
-                  <ListGroup.Item className="Info-text">
+                <ListGroup.Item className="fw-bold Info-titles">{titleTobuy}</ListGroup.Item>
+                {currentRecipe && currentRecipe.ingredientsToBuy.map((ingredients) => (
+                  <ListGroup.Item key={ingredients.ingredient.name} className="Info-text">
+                    <p>{ingredients.ingredient.name}</p>
+                    <p>{ingredients.quantity}</p>
+                    <p>{ingredients.ingredient.unit}</p>
+                  </ListGroup.Item>
+                ))}
+                <ListGroup.Item className="fw-bold Info-titles">{titleToComplete}</ListGroup.Item>
+                {currentRecipe && currentRecipe.ingredientsToComplete.map((ingredients) => (
+                  <ListGroup.Item key={ingredients.ingredient.name} className="Info-text">
                     <p>{ingredients.ingredient.name}</p>
                     <p>{ingredients.quantity}</p>
                     <p>{ingredients.ingredient.unit}</p>
@@ -67,7 +76,17 @@ function InfoIcon({ recipe }) {
 }
 
 InfoIcon.propTypes = {
-  recipe: PropTypes.func.isRequired,
+  recipe: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    picture: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    rating: PropTypes.number,
+    cookingDuration: PropTypes.number.isRequired,
+    setupDuration: PropTypes.number.isRequired,
+    difficulty: PropTypes.number.isRequired,
+    portions: PropTypes.number,
+    userPortions: PropTypes.number,
+  }).isRequired,
 };
 
 export default InfoIcon;
