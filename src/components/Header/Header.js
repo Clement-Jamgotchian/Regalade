@@ -8,6 +8,7 @@ import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 import logoConnexion from '../../assets/images/connexion.png';
+import logoDeconnexion from '../../assets/images/deconnexion.png';
 import { setSearchValue } from '../../actions/header';
 import {
   setActivPage,
@@ -203,7 +204,7 @@ function Header() {
                 >
                   <img
                     className="Header-utilsLink-logo"
-                    src={logoConnexion}
+                    src={logoDeconnexion}
                     alt="logo d'un utilisateur"
                     title="Déconnexion"
                   />

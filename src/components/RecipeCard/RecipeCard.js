@@ -49,6 +49,7 @@ import defaultPicture from '../../assets/pictureDefault.jpg';
 import EditIcon from './Icons/EditIcon/EditIcon';
 
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
+import defaultPicture from '../../assets/default.jpeg';
 
 
 function RecipeCard({ recipe, generateRecipes }) {

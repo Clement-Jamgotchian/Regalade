@@ -62,7 +62,6 @@ function RecipeDetails() {
       .then((response) => {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
-        console.log(response.data);
       })
       .catch(() => {
         console.log('erreur dans recette detaillé');
