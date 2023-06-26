@@ -20,6 +20,9 @@ import Rating from './Rating/Rating';
 import CommentsCarousel from './CommentsCarousel/CommentsCarousel';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loader from '../Loader/Loader';
+import Header from '../Header/Header';
+import Menuphone from '../Menuphone/Menuphone';
+import Footer from '../Footer/Footer';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState([]);
@@ -70,6 +73,8 @@ function RecipeDetails() {
 
   return (
     <section className="recipeDetails">
+      <Header />
+      <Menuphone />
       {recipe.title ? (
         <>
           <section
@@ -181,6 +186,7 @@ function RecipeDetails() {
         </>
       )
         : (<Loader />)}
+      <Footer />
     </section>
   );
 }

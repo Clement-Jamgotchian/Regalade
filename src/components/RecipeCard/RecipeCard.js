@@ -114,7 +114,7 @@ function RecipeCard({ recipe }) {
           removeRecipe(recipe.id);
         }}
       />
-      <EditIcon />
+      <EditIcon recipe={recipe} />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
         <LazyLoadImage
           className="card-img-top RecipeCard--img"
