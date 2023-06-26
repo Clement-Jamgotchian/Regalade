@@ -20,6 +20,9 @@ import Rating from './Rating/Rating';
 import CommentsCarousel from './CommentsCarousel/CommentsCarousel';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loader from '../Loader/Loader';
+import Header from '../Header/Header';
+import Menuphone from '../Menuphone/Menuphone';
+import Footer from '../Footer/Footer';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState([]);
@@ -47,7 +50,8 @@ function RecipeDetails() {
   }
 
   const getPicture = (value) => {
-    if (value.picture === null) {
+    console.log(value.picture);
+    if (value.picture === null || value.picture === '') {
       return defaultPicture;
     }
     return `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${value.picture}`;
@@ -67,6 +71,8 @@ function RecipeDetails() {
 
   return (
     <section className="recipeDetails">
+      <Header />
+      <Menuphone />
       {recipe.title ? (
         <>
           <section
@@ -176,6 +182,7 @@ function RecipeDetails() {
         </>
       )
         : (<Loader />)}
+      <Footer />
     </section>
   );
 }
