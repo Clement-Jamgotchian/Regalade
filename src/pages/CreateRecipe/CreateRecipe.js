@@ -26,14 +26,15 @@ function CreateRecipe() {
   const [category, setCategory] = useState(1);
   const [portions, setPortions] = useState(1);
   const [containsIngredients, setContainsIngredients] = useState([]);
+  const [loading, setLoading] = useState('false');
 
   const [confirmed, setConfirmed] = useState(false);
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
 
-  const [displayOne, setDisplayOne] = useState('none');
-  const [displayTwo, setDisplayTwo] = useState('');
+  const [displayOne, setDisplayOne] = useState('');
+  const [displayTwo, setDisplayTwo] = useState('none');
   const [displayThree, setDisplayThree] = useState('none');
   const [displayFour, setDisplayFour] = useState('none');
 
@@ -58,6 +59,7 @@ function CreateRecipe() {
 
   const handleSubmit = async () => {
     if (confirmed === true) {
+      setLoading('true');
       await axios.post('https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/api/recipes', {
         title,
         descritption,
@@ -78,6 +80,7 @@ function CreateRecipe() {
             dispatch(showOrHideAlert(false));
           }, '5000');
           console.log('bienjoué');
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -102,7 +105,7 @@ function CreateRecipe() {
     <section className="CreateRecipe">
       <Header className="CreateRecipe-layout" style={{ display: 'none' }} />
       <Menuphone className="CreateRecipe-layout" />
-      <button type="button" className="recipeDetails-header-cancelButton" onClick={handleClick}>
+      <button type="button" className="CreateRecipe-cancelButton" onClick={handleClick}>
         <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
       </button>
       <h1 className="CreateRecipe-title">Créer une recette</h1>
@@ -165,6 +168,8 @@ function CreateRecipe() {
           setDisplayThree={setDisplayThree}
           setDisplayFour={setDisplayFour}
           displayFour={displayFour}
+          loading={loading}
+          setLoading={setLoading}
         />
       </Form>
       <Footer className="CreateRecipe-layout" />

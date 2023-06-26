@@ -4,6 +4,7 @@ import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
+import ModalIngredient from './ModalIngredient';
 
 function StepThree({
   containsIngredients,
@@ -21,6 +22,10 @@ function StepThree({
   const [ingredientId, setIngredientId] = useState();
   const [unit, setUnit] = useState('');
   const [allIngredient, setAllIngredient] = useState([]);
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   const searchIngredient = async () => {
     await AxiosPrivate
@@ -88,12 +93,12 @@ function StepThree({
 
   const addIngredient = () => {
     const newIngredient = {
-      quantity,
-      ingredients: ingredientId,
+      quantity: parseInt(quantity),
+      ingredient: ingredientId,
     };
 
     const newIngredientlocal = {
-      quantity,
+      quantity: parseInt(quantity),
       name: ingredientName,
       unit,
       id: ingredientId,
@@ -138,6 +143,9 @@ function StepThree({
       <Form.Group className="CreateRecipe-form-row-2-container" as={Col} md="3">
         {searchIngredientView()}
       </Form.Group>
+      <Button variant="outline-primary" className="CreateRecipe-form-row-2-group-buttonNewIngredient" onClick={handleShow}>
+        L&apos;ingrédient n&apos;existe pas ?
+      </Button>
       <Row className="mb-3 CreateRecipe-form-row-3">
         <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">
           <Form.Label className="CreateRecipe-form-row-2-group-label">Quantité</Form.Label>
@@ -151,23 +159,27 @@ function StepThree({
             min={0}
             max={1000}
             onChange={(e) => {
-              setQuantity(e.target.value);
+              setQuantity(parseInt(e.target.value, 10));
             }}
           />
         </Form.Group>
       </Row>
       <Row className="mb-3 CreateRecipe-form-row-3-ingredient">
+        <Form.Label className="CreateRecipe-form-row-2-group-label">Mon ingredient</Form.Label>
         <InputGroup className="CreateRecipe-form-row-3-text">
           <InputGroup.Text>{ingredientName}</InputGroup.Text>
           <InputGroup.Text>{quantity}</InputGroup.Text>
           <InputGroup.Text>{unit}</InputGroup.Text>
         </InputGroup>
       </Row>
+      <ModalIngredient
+        handleClose={handleClose}
+        show={show}
+      />
       <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>
       <Row className="mb-3 CreateRecipe-form-row-3-card-container">
         {ingredientList()}
       </Row>
-
       <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
 
     </section>
