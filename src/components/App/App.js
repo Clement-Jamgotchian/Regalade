@@ -18,6 +18,7 @@ import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
 import ProtectedRoute from '../../utils/ProtectedRoutes';
+import EditRecipe from '../../pages/EditRecipe/EditRecipe';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -57,7 +58,6 @@ function App() {
               )
             }
           />
-
           <Route
             path="/profil/mes-favorites"
             element={
@@ -119,6 +119,12 @@ function App() {
             }
           />
           <Route path="/recette/creation" element={<CreateRecipe />} />
+          <Route
+            path="/recette/modification"
+            element={
+              <EditRecipe />
+            }
+          />
         </Route>
         <Route
           path="/recette/:idRecette"

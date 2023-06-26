@@ -44,12 +44,26 @@ import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
+
+import defaultPicture from '../../assets/pictureDefault.jpg';
+import EditIcon from './Icons/EditIcon/EditIcon';
+
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
+import defaultPicture from '../../assets/default.jpeg';
+
 
 function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
   const linkAPI = useSelector((state) => state.profil.link);
   const favoritesList = useSelector((store) => store.favorites.recipes);
+
+  const getPicture = (value) => {
+    console.log(value.picture);
+    if (value.picture === null || value.picture === '') {
+      return defaultPicture;
+    }
+    return `https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${value.picture}`;
+  };
 
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
@@ -106,10 +120,11 @@ function RecipeCard({ recipe, generateRecipes }) {
           removeRecipe(recipe.id);
         }}
       />
+      <EditIcon recipe={recipe} />
       <Link className="RecipeCard--link" to={`/recette/${recipe.id}`}>
         <LazyLoadImage
           className="card-img-top RecipeCard--img"
-          src={`https://regalade.lesliecordier.fr/projet-o-lala-la-regalade-back/public/${recipe.picture}`}
+          src={getPicture(recipe)}
           effect="blur"
         />
         <Card.Body className="RecipeCard--body">
