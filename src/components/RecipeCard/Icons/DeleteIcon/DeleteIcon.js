@@ -14,9 +14,9 @@ import './DeleteIcon.scss';
 // If recipe is in the list or favorite page, we show the delete icon instead of the favorite icon
 function DeleteIcon({ removeRecipe }) {
   const location = useLocation();
-  const hideDeleteButton = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
+  const showDeleteButton = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
 
-  if (hideDeleteButton) {
+  if (showDeleteButton) {
     return (
       <button className="RecipeCard--deleteButton" type="button" onClick={removeRecipe}>
         <FontAwesomeIcon icon={faXmark} />

@@ -29,7 +29,6 @@ function RecipeDetails() {
 
   const dispatch = useDispatch();
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  const [cartOn, setCartOn] = useState(false);
   const regex = /ÉTAPE/g;
   const steps = recipe.step?.replace(regex, '<br/><br/> ÉTAPE');
 
@@ -37,7 +36,6 @@ function RecipeDetails() {
     await AxiosPrivate.post(`/list/${id}`)
       .then(() => {
         dispatch(updateRecipesList({ action: 'added' }));
-        setCartOn(true);
       })
       .catch((error) => {
         console.log(error);
@@ -85,11 +83,9 @@ function RecipeDetails() {
                 <p className="recipeDetails-header-cancelButton-image">&#10005;</p>
               </button>
               <CartIcon
-                isLoggedIn={isLoggedIn}
                 addToList={() => {
                   addToList(idRecette);
                 }}
-                isFavorite={cartOn}
               />
               <FavoriteIcon
                 recipe={recipe}
@@ -186,7 +182,6 @@ function RecipeDetails() {
 
 CartIcon.propTypes = {
   addToList: PropTypes.func.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
 };
 
 export default RecipeDetails;

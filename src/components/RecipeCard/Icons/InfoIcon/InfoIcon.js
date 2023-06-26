@@ -16,7 +16,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// If user is logged in, we show the cart icon
 function InfoIcon({ recipe }) {
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const location = useLocation();
@@ -67,7 +66,29 @@ function InfoIcon({ recipe }) {
 }
 
 InfoIcon.propTypes = {
-  recipe: PropTypes.func.isRequired,
+  recipe: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    picture: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    rating: PropTypes.number,
+    cookingDuration: PropTypes.number.isRequired,
+    setupDuration: PropTypes.number.isRequired,
+    difficulty: PropTypes.number.isRequired,
+    portions: PropTypes.number,
+    userPortions: PropTypes.number,
+  }),
+};
+
+InfoIcon.defaultProps = {
+  recipe: {
+    id: -1,
+    picture: 'https://picsum.photos/300/500',
+    title: 'Titre par défaut',
+    rating: 3.5,
+    cookingDuration: 15,
+    setupDuration: 20,
+    difficulty: 1,
+  },
 };
 
 export default InfoIcon;

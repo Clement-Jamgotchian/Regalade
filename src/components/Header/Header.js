@@ -14,6 +14,8 @@ import {
   setCurrentButtonId,
   setLink,
 } from '../../actions/profil';
+import { setConnectedUser, setInvitedUser, setTokenUser } from '../../actions/user';
+import { clearRecipes } from '../../actions/favorites';
 
 function Header() {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -149,7 +151,7 @@ function Header() {
           </p>
           <Nav>
             <Link
-              to={isInvited ? '/' : pathProfil}
+              to={isInvited ? '/welcome' : pathProfil}
               onClick={() => {
                 dispatch(setCurrentButtonId(1));
                 dispatch(setLink('recipes/my'));
@@ -161,26 +163,52 @@ function Header() {
                 className="Header-utilsLink-logo"
                 src={isInvited ? logoConnexion : logoUser}
                 alt="logo d'un utilisateur'"
+                title="Mon profil"
               />
             </Link>
           </Nav>
           <Nav>
             {isInvited === false && (
-              <Link
-                to="/profil"
-                className="nav-link"
-                onClick={() => {
-                  dispatch(setCurrentButtonId(5));
-                  dispatch(setActivPage('/profil/mes-courses'));
-                }}
-              >
-                <img
-                  style={{ marginLeft: '15px' }}
-                  className="Header-utilsLink-logo"
-                  src={logoCart}
-                  alt="logo d'un utilisateur'"
-                />
-              </Link>
+              <>
+                <Link
+                  to="/profil"
+                  className="nav-link"
+                  onClick={() => {
+                    dispatch(setCurrentButtonId(5));
+                    dispatch(setActivPage('/profil/mes-courses'));
+                  }}
+                >
+                  <img
+                    style={{ marginLeft: '15px' }}
+                    className="Header-utilsLink-logo"
+                    src={logoCart}
+                    alt="logo d'un utilisateur'"
+                    title="Ma liste de courses"
+                  />
+                </Link>
+                <Link
+                  to="/welcome"
+                  onClick={() => {
+                    dispatch(setTokenUser(null));
+                    dispatch(setConnectedUser(false));
+                    dispatch(setInvitedUser(false));
+                    dispatch(clearRecipes());
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('refreshToken');
+                    localStorage.removeItem('invitedUser');
+                    localStorage.removeItem('welcomePageShowed');
+                  }}
+                  className="nav-link"
+                >
+                  <img
+                    className="Header-utilsLink-logo"
+                    src={logoConnexion}
+                    alt="logo d'un utilisateur"
+                    title="Déconnexion"
+                  />
+                </Link>
+              </>
             )}
           </Nav>
         </Nav>
