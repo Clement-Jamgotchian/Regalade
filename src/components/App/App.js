@@ -1,5 +1,6 @@
 import { Container } from 'react-bootstrap';
 import './App.scss';
+
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +14,7 @@ import List from '../../pages/List/List';
 import Fridge from '../../pages/Fridge/Fridge';
 import Cart from '../../pages/Cart/Cart';
 import MyInfos from '../../pages/MyInfos/MyInfos';
+import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
 
@@ -112,7 +114,13 @@ function App() {
             )
           }
         />
-        <Route path="/recette/:idRecette" element={<RecipeDetails />} />
+        <Route path="/recette/:idRecette" element={<MyLayout><RecipeDetails /></MyLayout>} />
+        <Route
+          path="/recette/creation"
+          element={
+            <CreateRecipe />
+          }
+        />
         <Route
           path="/FAQ"
           element={(
@@ -121,6 +129,7 @@ function App() {
             </MyLayout>
           )}
         />
+        <Route path="/*" element={<MyLayout><h1 className="text-center mb-4">Erreur 404, cette page n&apos;existe pas</h1></MyLayout>} />
       </Routes>
     </Container>
   );

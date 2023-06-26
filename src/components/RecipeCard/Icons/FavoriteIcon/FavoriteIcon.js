@@ -30,7 +30,7 @@ function FavoriteIcon({ recipe }) {
   const location = useLocation();
   const hideFavoriteIcon = location.pathname === '/profil/mes-repas' || location.pathname === '/profil/mes-favorites';
 
-  const className = isFavorite ? 'RecipeCard--favorite__active' : 'RecipeCard--favorite';
+  const className = isFavorite ? 'FavoriteIcon--favorite__active' : 'FavoriteIcon--favorite';
   const icon = isFavorite ? faHeart : farHeart;
   const dispatch = useDispatch();
 
@@ -76,7 +76,7 @@ function FavoriteIcon({ recipe }) {
   if (isLoggedIn && !hideFavoriteIcon) {
     return (
       <button
-        className="RecipeCard--buttonFavoriteToggle"
+        className="FavoriteIcon"
         type="button"
         onClick={toggleFavorite}
       >

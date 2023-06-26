@@ -44,6 +44,7 @@ import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
+import CookedIcon from './Icons/CookedIcon/CookedIcon';
 
 function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
@@ -117,6 +118,7 @@ function RecipeCard({ recipe, generateRecipes }) {
               addToList(recipe.id);
             }}
           />
+          <CookedIcon recipeId={recipe.id} />
           <Card.Title className="RecipeCard--title">{recipe.title}</Card.Title>
           <Card.Text className="RecipeCard--rating">
             {getStars(recipe.rating)}

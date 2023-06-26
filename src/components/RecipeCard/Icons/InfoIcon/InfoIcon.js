@@ -16,7 +16,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// If user is logged in, we show the cart icon
 function InfoIcon({ recipe }) {
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const location = useLocation();

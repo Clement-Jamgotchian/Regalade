@@ -1,9 +1,13 @@
 @use '../../styles/vars';
 
 .App {
-  // text-align: center;
-  display: flex;
   height: 100%;
-  flex-direction: column;
-  // background-color: vars.$backGround;
+}
+
+
+@media (max-width: vars.$layout-breakpoint-small) {
+
+  .App {
+    padding: 0;
+  }
 }

@@ -86,7 +86,7 @@ CommentsCarousel.propTypes = {
     content: PropTypes.string,
     rating: PropTypes.number.isRequired,
     user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string,
     }),
   })).isRequired,
 };

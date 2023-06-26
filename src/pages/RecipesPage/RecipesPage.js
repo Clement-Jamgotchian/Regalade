@@ -1,8 +1,8 @@
 // React components
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Alert, Card } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 // Local components
 import Recipes from '../../components/Recipes/Recipes';
@@ -19,34 +19,31 @@ import { addRecipeToFavorites } from '../../actions/favorites';
 function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const [title, setTitle] = useState('Toutes les recettes');
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
   const alertVariant = useSelector((state) => state.list.alertVariant);
   const favorites = useSelector((state) => state.favorites.recipes);
-  const pageRequest = pageNumber > 0 ? `page=${pageNumber}` : '';
-  const baseUrl = '/recipes';
-  const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&${pageRequest}` : `?${pageRequest}`;
-  const title = (searchBarValue !== undefined && searchBarValue !== '') ? `Résulats de votre recherche : ${searchBarValue}` : 'Toutes les recettes';
+  const page = pageNumber > 0 ? `&page=${pageNumber}` : '';
+  const baseUrl = '/recipes?';
+  const location = useLocation();
+  const locationSearch = (location.search).split('&');
+  const filterRequest = (locationSearch[0]).replace(/\?/g, '');
+  const searchRequest = (searchBarValue !== undefined && searchBarValue !== '') ? `&search=${searchBarValue}` : '';
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const getRecipes = async () => {
-    AxiosPublic.get(baseUrl + request)
+    AxiosPublic.get(baseUrl + filterRequest + searchRequest + page)
       .then((response) => {
         setRecipes(response.data.recipes);
         setPageCount(response.data.totalPages);
-        navigate('/recettes');
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    getRecipes();
-  }, [searchBarValue]);
 
   const getFavorites = async () => {
     await AxiosPrivate
@@ -61,11 +58,29 @@ function RecipesPage() {
       });
   };
 
+  const getTitle = () => {
+    if (searchBarValue !== undefined && searchBarValue !== '') {
+      setTitle(`Résulats de votre recherche : ${searchBarValue}`);
+    }
+    if (locationSearch[0].includes('category')) {
+      const name = decodeURIComponent((locationSearch[1]).replace(/name=/, ''));
+      setTitle(`Toutes les recettes de la catégorie : ${name}`);
+    }
+    if (location.search === '') {
+      setTitle('Toutes les recettes');
+    }
+  };
+
   useEffect(() => {
     if (favorites.length === 0) {
       getFavorites();
     }
   }, []);
+
+  useEffect(() => {
+    getRecipes();
+    getTitle();
+  }, [searchBarValue, location.search]);
 
   return (
     <div className="RecipesPage">
@@ -80,18 +95,20 @@ function RecipesPage() {
               {alertMessage}
             </Alert>
           )}
-          <Card>
-            <Card.Body>
-              <h2>{title}</h2>
-              { recipes.length === 0 && (<Loader />)}
-              <Recipes recipes={recipes} />
-            </Card.Body>
-          </Card>
+          <section>
+            <Card>
+              <Card.Body>
+                <h2>{title}</h2>
+                { recipes.length === 0 && (<Loader />)}
+                <Recipes recipes={recipes} />
+              </Card.Body>
+            </Card>
+          </section>
           <Pagination setRecipes={setRecipes} pageCount={pageCount} />
         </>
       )
         : (
-          <>
+          <section>
             <Card>
               <Card.Body>
                 <h2>
@@ -103,7 +120,7 @@ function RecipesPage() {
               </Card.Body>
             </Card>
             {/* <Loader /> */}
-          </>
+          </section>
         )}
     </div>
   );

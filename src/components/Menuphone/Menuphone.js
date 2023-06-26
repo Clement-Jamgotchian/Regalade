@@ -21,7 +21,7 @@ function Menuphone() {
         </Link>
       )}
       {isInvited === false && (
-        <Link to="/list">
+        <Link to="/profil/mes-courses">
           <img alt="icone d'un caddie" src={caddie} />
         </Link>
       )}
