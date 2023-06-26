@@ -5,7 +5,7 @@ import {
 export const initialState = {
   isLoggedIn: true,
   isLoading: false,
-  isInvitedIn: false,
+  isInvitedIn: true,
   tokenUser: '',
   nicknameUser: '',
 };
