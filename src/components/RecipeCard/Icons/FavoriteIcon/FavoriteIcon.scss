@@ -1,0 +1,48 @@
+@use 'src/styles/vars';
+
+.FavoriteIcon {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    z-index: 3;
+
+    &--favorite:hover, &--favorite__active:hover {
+        transform: scale(1.4);
+        transition: transform 1s ease;
+    }
+
+    &--favorite {
+        color: vars.$primaryButton !important;
+        z-index: 2;
+        transition: transform 1s ease;
+        background: #ffffff !important;
+        padding: 0.5rem !important;
+        border-radius: 50%;
+
+        &__active {
+            color: vars.$primaryButton !important;
+            z-index: 2;
+            transition: transform 1s ease;
+            background: #ffffff !important;
+            padding: 0.5rem !important;
+            border-radius: 50%;
+        }
+    }
+
+    
+}
+
+@media (max-width: vars.$layout-breakpoint-small) {
+    .FavoriteIcon {
+        &--favorite {
+            color: vars.$primaryButton !important;
+        }
+    }
+}

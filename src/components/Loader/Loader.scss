@@ -1,0 +1,113 @@
+.loader {
+    margin: auto;
+    height: 10em;
+    position: relative;
+    text-align: center;
+    
+    &-item {
+        margin: auto;
+        width: 10em;
+        position: absolute;
+    }
+
+    &-tomate {
+        animation: Loader1 infinite 1.2s ease-in-out;
+        animation-delay: -700ms;
+    }
+    &-trancheTomate {
+        animation: Loader2 infinite 1.2s ease-in-out;
+        animation-delay: -800ms;
+    }
+    &-pain {
+        width: 7em;
+        animation: Loader3 infinite 1.2s ease-in-out;
+        animation-delay: -900ms;
+    }
+    &-concombre {
+        animation: Loader4 infinite 1.2s ease-in-out;
+        animation-delay: -600ms;
+    }
+    &-huile {
+        
+        animation: Loader5 infinite 1.2s ease-in-out;
+        animation-delay: -500ms;
+    }
+    &-pomme {
+        
+        animation: Loader6 infinite 1.2s ease-in-out;
+        animation-delay: -400ms;
+    }
+
+
+    @keyframes Loader1 {
+        0% {
+            transform: translateX(-6em) translateY(6em);
+        }
+        50% {
+            transform: translateX(-6em) translateY(2em);
+        }
+        100% {
+            transform: translateX(-6em) translateY(6em);
+        }
+    }
+
+    @keyframes Loader2 {
+        0% {
+            transform: translateX(-9em) translateY(1.5em);
+        }
+        50% {
+            transform:  translateX(-9em) translateY(-2.5em);
+        }
+        100% {
+            transform:  translateX(-9em) translateY(1.5em);
+        }
+    }
+
+    @keyframes Loader3 {
+        0% {
+            transform: translateX(-9.5em) translateY(4.5em);
+        }
+        50% {
+            transform:  translateX(-9.5em) translateY(0.5em);
+        }
+        100% {
+            transform:  translateX(-9.5em) translateY(4.5em);
+        }
+    }
+
+    @keyframes Loader4 {
+        0% {
+            transform: translateX(-4em) translateY(3.6em);
+        }
+        50% {
+            transform:  translateX(-4em) translateY(-0.6em);
+        }
+        100% {
+            transform:  translateX(-4em) translateY(3.6em);
+        }
+    }
+
+    @keyframes Loader5 {
+        0% {
+            transform: translateX(-3em) translateY(4.5em);
+        }
+        50% {
+            transform:  translateX(-3em) translateY(0em);
+        }
+        100% {
+            transform:  translateX(-3em) translateY(4.5em);
+        }
+    }
+
+    @keyframes Loader6 {
+        0% {
+            transform: translateX(2em) translateY(1em);
+        }
+        50% {
+            transform:  translateX(2em) translateY(-4em);
+        }
+        100% {
+            transform:  translateX(2em) translateY(1em);
+        }
+    }
+}

@@ -1,0 +1,33 @@
+@use 'src/styles/vars';
+
+.CartIcon {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    margin-top: 5px;
+    
+    &--cart:hover {
+        transform: scale(1.4);
+        transition: transform 1s ease;
+    }
+    
+    &--cart {
+        background: vars.$secondaryButton;
+        padding: 0.5rem 0.5rem 0.5rem 0.4rem;
+        border-radius: 50%;
+        color: #ffffff;
+        z-index: 2;
+        transition: 1s ease ;
+    }
+
+    &--cart__added {
+        opacity: 0.5;
+    }
+}

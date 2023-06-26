@@ -1,0 +1,41 @@
+@use '../../../../styles/vars';
+
+.Info{
+    &-icon{
+        position: absolute;
+        right: 1rem;
+        bottom: 3rem;
+    }
+    &-list{
+        div{
+            background-color: transparent !important;
+            color: #fff;
+        }
+        text-align: left;
+    }
+    &-text{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        p{
+            margin: 0 5px 0 0;
+        }
+        p:first-child{
+            font-weight: 600;
+        }
+        p:nth-child(2){
+            border-bottom: 2px solid vars.$secondaryButton;
+        }
+    }
+
+}
+
+@media (max-width: vars.$layout-breakpoint-small) {
+    .Info {
+        &-icon {
+            color: vars.$primaryButton !important;
+            top: 1rem;
+            left: 1rem;
+        }
+    }
+}

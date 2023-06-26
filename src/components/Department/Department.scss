@@ -1,0 +1,12 @@
+@use 'src/styles/vars';
+
+.Department {
+    text-align: left;
+
+    &--title {
+        font-size: 1.5rem;
+        color: vars.$text;
+        margin-top: 1rem;
+        margin-bottom: 0.75rem;
+    }
+}

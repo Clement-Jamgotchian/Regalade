@@ -1,24 +1,42 @@
-@use 'vars';
+@use '../styles/vars';
 
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+$body-bg: vars.$backGround;
 
 $theme-colors: (
   'primary': vars.$primaryButton,
   'success': vars.$secondaryButton,
   'info': vars.$backGround,
-);
+  'danger': #e90606,
+  );
+// $btn-color: #ffffff !important;
+// $btn-hover-color: #ffffff !important;
+
+$pagination-color: vars.$primaryButton;
+$pagination-bg: vars.$backGround;
+$pagination-border-color: vars.$backGround;
+
+$pagination-active-bg: vars.$primaryButton;
+$pagination-active-border-color: vars.$primaryButton;
+
+$pagination-disabled-bg: vars.$backGround;
+$pagination-disabled-color: #acafb1;
+
+$pagination-focus-color: vars.$primaryButton;
+$pagination-focus-bg: rgba(vars.$primaryButton, .4); 
+$pagination-focus-box-shadow: rgba(vars.$primaryButton, .4); 
+
+$pagination-hover-color: #ffffff;
+$pagination-hover-bg: rgba(vars.$primaryButton, .4); 
+$pagination-hover-border-color: rgba(vars.$primaryButton, .4);
+
+html, body, #root {
+  height: 100%;
+  font-family: vars.$font;
+}
+
+.btn:hover {
+  color: #ffffff !important;
+}
+
 
 @import '~bootstrap/scss/bootstrap';

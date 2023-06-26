@@ -1,10 +1,20 @@
 import { combineReducers } from 'redux';
-// import recipesReducer from './recipes';
-// import userReducer from './user';
+import headerReducer from './header';
+import userReducer from './user';
+import listReducer from './list';
+import favoritesReducer from './favorites';
+import profilReducer from './profil';
+import fridgeReducer from './fridge';
+import cartReducer from './cart';
 
 const rootReducer = combineReducers({
-//   recipes: recipesReducer,
-//   user: userReducer,
+  header: headerReducer,
+  user: userReducer,
+  list: listReducer,
+  favorites: favoritesReducer,
+  profil: profilReducer,
+  fridge: fridgeReducer,
+  cart: cartReducer,
 });
 
 export default rootReducer;

@@ -1,0 +1,55 @@
+@use 'src/styles/vars';
+
+.List {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    &--addButton a, &--generateCartButton a {
+        text-decoration: none;
+        color: #ffffff;
+        margin-left: 5px;
+    }
+    &--addButton svg, &--generateCartButton svg {
+        color: #ffffff;
+    }
+
+    &--addButton, &--generateCartButton {
+        width: 250px;
+        text-decoration: none;
+        align-self: end;
+        margin: 7px;
+    }
+
+    &--removeAllButton {
+        width: 150px;
+        text-decoration: none;
+        align-self: start;
+    }
+
+    & .alert {
+        width: 100%;
+        border-radius: 10px;
+        height: 60px;
+    }
+}
+
+@media (max-width: vars.$layout-breakpoint-small) {
+    .List {
+        & .alert {
+            height: 80px;
+        }
+
+        & .hstack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-self: center; 
+        }
+
+        & .gap-3 {
+            gap: initial !important;
+        }
+    }
+}
