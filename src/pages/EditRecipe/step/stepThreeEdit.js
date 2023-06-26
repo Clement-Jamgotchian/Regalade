@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
@@ -25,6 +25,8 @@ function StepThreeEdit({
   const [allIngredient, setAllIngredient] = useState([]);
   const [show, setShow] = useState(false);
 
+  console.log(allIngredient);
+
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
@@ -42,6 +44,53 @@ function StepThreeEdit({
 
       setAllIngredient([...allIngredient, newIngredientlocal]);
     });
+  };
+
+  const addIngredient = () => {
+    const newIngredient = {
+      quantity: parseInt(quantity),
+      ingredient: ingredientId,
+    };
+
+    const newIngredientlocal = {
+      quantity: parseInt(quantity),
+      name: ingredientName,
+      unit,
+      id: ingredientId,
+      number: allIngredient.length + 1,
+    };
+
+    setContainsIngredients([...containsIngredients, newIngredient]);
+    setAllIngredient([...allIngredient, newIngredientlocal]);
+  };
+
+  const renderIngredient = () => {
+    const findInList = containsIngredients.length > 0
+      ? containsIngredients.find((ingredient) => ingredient.ingredient.id === ingredientId) : null;
+    if (findInList) {
+      return (
+        <Alert bg="alert">
+          Ingrédient déjà dans le frigo !
+        </Alert>
+      );
+    }
+    console.log(findInList);
+    // eslint-disable-next-line max-len
+    console.log(containsIngredients.find((ingredient) => ingredient.ingredient.id === ingredientId));
+    return <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>;
+  };
+
+  const updateQuantity = (newQuantity, ingredientNumber) => {
+    const updatedData = allIngredient.map((item) => {
+      if (item.id === ingredientNumber) {
+        return {
+          ...item,
+          quantity: newQuantity,
+        };
+      }
+      return item;
+    });
+    setAllIngredient(updatedData);
   };
 
   useEffect(() => {
@@ -96,7 +145,18 @@ function StepThreeEdit({
           <img src={vegetables} alt="logo ingredient" className="CreateRecipe-form-row-3-card-img" />
           <div className="CreateRecipe-form-row-3-card-text">
             <p className="CreateRecipe-form-row-3-card-text-name">{ingredient.name}</p>
-            <p className="CreateRecipe-form-row-3-card-text-quantity">{ingredient.quantity}</p>
+            <input
+              className="FridgeDetails-input"
+              id={ingredient.id}
+              value={ingredient.quantity}
+              onChange={(event) => {
+                updateQuantity(
+                  event.currentTarget.value,
+                  ingredient.id,
+                );
+              }}
+              type="number"
+            />
             <p className="CreateRecipe-form-row-3-card-text-unit">{ingredient.unit}</p>
           </div>
           <Button
@@ -111,24 +171,6 @@ function StepThreeEdit({
       );
     })
   );
-
-  const addIngredient = () => {
-    const newIngredient = {
-      quantity: parseInt(quantity),
-      ingredient: ingredientId,
-    };
-
-    const newIngredientlocal = {
-      quantity: parseInt(quantity),
-      name: ingredientName,
-      unit,
-      id: ingredientId,
-      number: allIngredient.length + 1,
-    };
-
-    setContainsIngredients([...containsIngredients, newIngredient]);
-    setAllIngredient([...allIngredient, newIngredientlocal]);
-  };
 
   function viewTwo() {
     setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none');
@@ -196,7 +238,7 @@ function StepThreeEdit({
         handleClose={handleClose}
         show={show}
       />
-      <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>
+      { renderIngredient()}
       <Row className="mb-3 CreateRecipe-form-row-3-card-container">
         {ingredientList()}
       </Row>
