@@ -17,7 +17,6 @@ import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
 
-
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
 
