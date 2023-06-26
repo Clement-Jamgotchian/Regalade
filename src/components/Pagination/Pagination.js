@@ -5,32 +5,59 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePageNumber, updateRecipesList } from '../../actions/list';
 import AxiosPublic from '../../utils/AxiosPublic';
+import AxiosPrivate from '../../utils/AxiosPrivate';
+import { setSuggestedRecipes } from '../../actions/fridge';
 
 function Pagination({ setRecipes, pageCount }) {
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
   const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-repas';
+  const isInPageList = location.pathname === '/recettes';
+  const isInPageFridge = location.pathname === '/profil/mes-ingredients';
   const dispatch = useDispatch();
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected + 1;
-    const endpoint = isInPageList ? '/list' : '/recipes';
-    const request = (searchBarValue !== undefined && searchBarValue !== '') ? `?search=${searchBarValue}&page=${selectedPage}` : `?page=${selectedPage}`;
+    const endpoint = '/recipes';
+    const endpoints = isInPageFridge ? '/fridge/suggestion' : '/list';
+    const request = searchBarValue !== undefined && searchBarValue !== ''
+      ? `?search=${searchBarValue}&page=${selectedPage}`
+      : `?page=${selectedPage}`;
 
-    AxiosPublic.get(endpoint + request)
-      .then((response) => {
-        if (isInPageList) {
-          const recipes = response.data.recipesList.map((item) => item.recipe);
-          setRecipes(recipes);
-          dispatch(changePageNumber(selectedPage));
-          dispatch(updateRecipesList({ action: 'paginate', length: response.data.recipes.length }));
-        } else {
+    if (isInPageList) {
+      AxiosPublic.get(endpoint + request)
+        .then((response) => {
           setRecipes(response.data.recipes);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      AxiosPrivate.get(endpoints + request)
+        .then((response) => {
+          if (isInPageFridge) {
+            const recipes = response.data.recipes.map(
+              (recipe) => recipe.recipe,
+            );
+            setRecipes(recipes);
+            dispatch(setSuggestedRecipes(response.data.recipes));
+          } else {
+            const recipes = response.data.recipesList.map(
+              (item) => item.recipe,
+            );
+            setRecipes(recipes);
+            dispatch(changePageNumber(selectedPage));
+            dispatch(
+              updateRecipesList({
+                action: 'paginate',
+                length: response.data.recipes.length,
+              }),
+            );
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (

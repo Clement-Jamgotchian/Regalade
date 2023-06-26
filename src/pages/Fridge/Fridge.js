@@ -79,7 +79,7 @@ function Fridge() {
   };
 
   const generateRecipes = () => {
-    AxiosPrivate.post('/fridge/suggestion')
+    AxiosPrivate.get('/fridge/suggestion')
       .then((res) => {
         setRecipes(res.data.recipes.map((recipe) => recipe.recipe));
         dispatch(setSuggestedRecipes(res.data.recipes));
@@ -151,8 +151,8 @@ function Fridge() {
         getFridge={getFridge}
       />
       <Container className="Fridge-suggest">
-        <Recipes recipes={recipes} />
-        <Pagination pageCount={pageCount} className="Fridge-suggest-page" />
+        <Recipes recipes={recipes} generateRecipes={generateRecipes} />
+        <Pagination setRecipes={setRecipes} pageCount={pageCount} className="Fridge-suggest-page" />
       </Container>
     </Container>
   );

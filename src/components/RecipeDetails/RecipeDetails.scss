@@ -9,6 +9,13 @@
     color: vars.$text;
     position: relative;
 
+    .container-header {
+        display: none;
+    }
+    .Footer {
+        display: none;
+    }
+
     .Menuphone {
         display: none;
     }
@@ -44,9 +51,9 @@
             position: absolute;
             flex-direction: column;
             align-items: center;
-            top: 5rem;
+            top: 8vh;
             z-index: 2;
-
+            height: 35vh;
             & p {
                 color: #ffffff;
             }
@@ -99,13 +106,16 @@
     &-preparation {
         display: flex;
         width:80%;
-        justify-content: space-around;
-        transform: translateY(80px);
+        justify-content: center;
+        height: 28vh;
+        align-items: flex-end;
+
+        transform: translateY(6vh);
         
         
         &-image {
             width: 2.5em;
-            margin: auto;
+            margin: 0 auto;
         }
         &-time {
             display: flex;
@@ -227,8 +237,8 @@
         color: vars.$text;
         margin: 0;
 
-        &-header-container {
-            display: block;
+        .container-header {
+            display: inherit;
         }
     
         .Footer {
@@ -278,9 +288,10 @@
             align-items: self-start;
 
             &-imgAndButton {
-                width: 30vw;
+                width: 30%;
                 position: relative;
                 align-self: flex-start;
+                height: 20vh;
             }
     
             &-container {
@@ -288,7 +299,8 @@
                 position: inherit;
                 text-align: center;
                 width: 70%;
-                // height: 30vh;
+                height: 22vh;
+                top: 0;
                 border-radius: 0 200px 0px 0px;
                 justify-content: start;
                 padding-top: 2em;
@@ -298,7 +310,7 @@
             &-image {
                 display: block;
                 width: 100%;
-                height: 30vh;
+                height: 20vh;
                 border-radius: 10px 0px 0px 0px;
                 object-fit: cover;
             }
@@ -327,10 +339,11 @@
             display: flex;
             transform: none;
             justify-content: space-between;
-            transform: translateY(40px);
-            justify-content: center;    
+            transform: translateY(0px);
+            justify-content: center;   
+            height:fit-content; 
             &-image {
-                width: 2.5em;
+                width: 2em;
                 margin: auto;
             }
             &-time {
