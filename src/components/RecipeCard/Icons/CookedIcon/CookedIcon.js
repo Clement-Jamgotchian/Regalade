@@ -45,11 +45,11 @@ function CookedIcon({ recipeId }) {
         </button>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Êtes-vous sûr ?</Modal.Title>
+            <Modal.Title>C&apos;était bon ?</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            La recette sera supprimée de votre liste de repas, et
-            tous les ingrédients de cette recette seront supprimés de votre frigo.
+            Maintenant que la recette a été réalisée, elle peut être supprimée de votre liste
+            de repas, et tous les ingrédients de cette recette seront supprimés de votre frigo.
             <br />
             Voulez-vous continuer ?
           </Modal.Body>
