@@ -27,6 +27,7 @@ function EditRecipe() {
   const [portions, setPortions] = useState(1);
   const [containsIngredients, setContainsIngredients] = useState([]);
   const [loading, setLoading] = useState('false');
+  const [user, setUser] = useState([]);
   const recipeToEdit = useSelector((state) => state.recipe.recipe);
 
   const [confirmed, setConfirmed] = useState(false);
@@ -138,9 +139,23 @@ function EditRecipe() {
     }
   };
 
+  const getUser = async () => {
+    await AxiosPrivate
+      .get(
+        '/user',
+      )
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  console.log(user);
   useEffect(() => {
     setRecipeToEdit();
     ingredientToEdit();
+    getUser();
   }, []);
 
   return (

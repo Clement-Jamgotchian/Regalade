@@ -56,7 +56,6 @@ function RecipeCard({ recipe, generateRecipes }) {
   const favoritesList = useSelector((store) => store.favorites.recipes);
 
   const getPicture = (value) => {
-    console.log(value.picture);
     if (value.picture === null || value.picture === '') {
       return defaultPicture;
     }
