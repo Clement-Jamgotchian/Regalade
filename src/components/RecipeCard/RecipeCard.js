@@ -44,11 +44,10 @@ import CartIcon from './Icons/CartIcon/CartIcon';
 import DeleteIcon from './Icons/DeleteIcon/DeleteIcon';
 import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
+import EditIcon from './Icons/EditIcon/EditIcon';
+import CookedIcon from './Icons/CookedIcon/CookedIcon';
 
 import defaultPicture from '../../assets/pictureDefault.jpg';
-import EditIcon from './Icons/EditIcon/EditIcon';
-
-import CookedIcon from './Icons/CookedIcon/CookedIcon';
 
 function RecipeCard({ recipe, generateRecipes }) {
   const dispatch = useDispatch();
@@ -64,25 +63,23 @@ function RecipeCard({ recipe, generateRecipes }) {
 
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
-      .then(() => {
-        generateRecipes();
-        dispatch(updateRecipesList({ action: 'added' }));
-        dispatch(
-          newAlertMessage(
-            'La recette a bien été ajoutée à votre liste de repas.',
-          ),
-        );
+      .then((response) => {
+        console.log(response);
+        if (generateRecipes) {
+          generateRecipes();
+        }
+        dispatch(newAlertMessage('La recette a bien été ajoutée à votre liste de repas.'));
         dispatch(changeAlertVariant('success'));
+        dispatch(updateRecipesList({ action: 'added' }));
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
         }, '4000');
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         dispatch(changeAlertVariant('danger'));
-        dispatch(
-          newAlertMessage('Cette recette est déjà dans votre liste de repas.'),
-        );
+        dispatch(newAlertMessage('Cette recette est déjà dans votre liste de repas.'));
         dispatch(showOrHideAlert(true));
         setTimeout(() => {
           dispatch(showOrHideAlert(false));
@@ -138,7 +135,14 @@ function RecipeCard({ recipe, generateRecipes }) {
           <Card.Text className="RecipeCard--content">
             <FontAwesomeIcon icon={farClock} />
             {getTotalDuration(recipe.cookingDuration, recipe.setupDuration)}
-            <span> / </span>
+            <span
+              key={`duration-${recipe.id}`}
+            >
+              {' '}
+              /
+              {' '}
+
+            </span>
             <FontAwesomeIcon icon={faChartSimple} />
             {getDifficultyLabel(recipe.difficulty)}
           </Card.Text>
