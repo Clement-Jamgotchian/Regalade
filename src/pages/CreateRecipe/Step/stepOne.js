@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
 import gateau from '../../../assets/gateau.png';
@@ -11,6 +11,7 @@ function StepOne({
   setPostImage,
   title,
   setTitle,
+  category,
   setCategory,
   setPortions,
   portions,
@@ -35,16 +36,16 @@ function StepOne({
   });
 
   const categoryCheckButton = () => (
-    categories.map((category) => (
-      <div key={category.id}>
-        <img src={img[categories.indexOf(category)]} alt="une entrée" />
+    categories.map((categ) => (
+      <div key={categ.id}>
+        <img src={img[categories.indexOf(categ)]} alt="une entrée" />
         <Form.Check
           inline
-          label={category.title}
+          label={categ.title}
           name="group1"
           type="radio"
-          id={category.id}
-          value={category.id}
+          id={categ.id}
+          value={categ.id}
         />
       </div>
     )));
@@ -62,6 +63,22 @@ function StepOne({
   useEffect(() => {
     getCategory();
   }, []);
+
+  const useButton = () => {
+    if (title === '' || category === 1) {
+      return (
+        <div>
+          <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }} disabled>Etape 2</Button>
+          <Alert bg="alert">
+            Il te manque des informations...
+          </Alert>
+        </div>
+      );
+    }
+    return (
+      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
+    );
+  };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -143,7 +160,7 @@ function StepOne({
           {categoryCheckButton()}
         </section>
       </Form.Group>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
+      {useButton()}
     </section>
   );
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
@@ -135,6 +135,29 @@ function StepThree({
     setAllIngredient([...allIngredient, newIngredientlocal]);
   };
 
+  const renderIngredient = () => {
+    const findInList = allIngredient.length > 0
+      ? allIngredient.find((ingredient) => ingredient.id === ingredientId) : null;
+    if (findInList) {
+      return (
+        <Alert bg="alert">
+          Ingrédient déjà dans la liste !
+        </Alert>
+      );
+    }
+    return (
+      <Button
+        className="CreateRecipe-form-button"
+        type="button"
+        onClick={() => {
+          addIngredient();
+        }}
+      >
+        &#x2B; Ajouter l&apos;ingredient
+      </Button>
+    );
+  };
+
   function viewTwo() {
     setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none');
   }
@@ -142,6 +165,24 @@ function StepThree({
   function viewFour() {
     setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree('none'); setDisplayFour('');
   }
+
+  const useButton = () => {
+    if (allIngredient.length > 0) {
+      return (
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
+      );
+    }
+    return (
+      <div>
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }} disabled>
+          Etape 4
+        </Button>
+        <Alert bg="alert">
+          Tu n&apos;as pas d&apos;ingrédient ? C&apos;est un peu fade comme recette...
+        </Alert>
+      </div>
+    );
+  };
 
   useEffect(() => {
     searchIngredient();
@@ -189,6 +230,7 @@ function StepThree({
             placeholder="Quantité de l'ingrédient"
             min={0}
             max={1000}
+            value={quantity}
             onChange={(e) => {
               setQuantity(parseInt(e.target.value, 10));
             }}
@@ -207,12 +249,11 @@ function StepThree({
         handleClose={handleClose}
         show={show}
       />
-      <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>
+      { renderIngredient()}
       <Row className="mb-3 CreateRecipe-form-row-3-card-container">
         {ingredientList()}
       </Row>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
-
+      {useButton()}
     </section>
   );
 }

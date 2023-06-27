@@ -195,6 +195,7 @@ function ModalIngredient({ show, handleClose }) {
             <option>Quel rayon ?</option>
             {allUnits.map((unit) => (
               <option
+                key={unit.id}
                 value={unit.id}
               >
                 {unit.name}

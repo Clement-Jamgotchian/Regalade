@@ -56,13 +56,13 @@ function StepFour({
         // eslint-disable-next-line no-param-reassign
         stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
         return (
-          <InputGroup key={stepLocal.number} className="CreateRecipe-form-row-4-step">
-            <InputGroup.Text>
-              Étape
+          <Form.Group key={stepLocal.number} className="CreateRecipe-form-row-4-step">
+            <Form.Text className="CreateRecipe-form-row-4-step-title">
+              ÉTAPE
               {' '}
               {allStepLocal.indexOf(stepLocal) + 1}
-            </InputGroup.Text>
-            <InputGroup.Text>{stepLocal.oneStep}</InputGroup.Text>
+            </Form.Text>
+            <Form.Text className="CreateRecipe-form-row-4-step-text">{stepLocal.oneStep}</Form.Text>
             <Button
               className="CreateRecipe-form-row-4-delete"
               type="button"
@@ -73,7 +73,7 @@ function StepFour({
             >
               <img src="" alt="" />
             </Button>
-          </InputGroup>
+          </Form.Group>
         );
       }));
   };
@@ -81,6 +81,18 @@ function StepFour({
   const setAllStepInApi = () => {
     setAllStep(allStepLocal.map((stepLocal) => (`ÉTAPE ${stepLocal.number} ${stepLocal.oneStep}`)));
     setStep(allStep.toString());
+  };
+
+  const useButton = () => {
+    if (allStepLocal.length === 0) {
+      return (
+        <Button className="CreateRecipe-button" type="submit" disabled>Créer</Button>
+      );
+    }
+    return (
+      <Button className="CreateRecipe-button" type="submit">Créer</Button>
+
+    );
   };
 
   useEffect(() => {
@@ -135,7 +147,7 @@ function StepFour({
         onChange={(e) => (e.target.checked ? setConfirmed(true) : setConfirmed(false))}
         onClick={() => { setStep(allStep.toString()); }}
       />
-      <Button className="CreateRecipe-button" type="submit">Créer</Button>
+      {useButton()}
       <p>{loading === 'true' ? 'Recette dans les fourneaux, veuillez patienter ...' : ''}</p>
     </section>
   );
