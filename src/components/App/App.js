@@ -17,9 +17,9 @@ import MyInfos from '../../pages/MyInfos/MyInfos';
 import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
-import ProtectedRoute from '../../utils/ProtectedRoutes';
 import EditRecipe from '../../pages/EditRecipe/EditRecipe';
 import ListCreate from '../../pages/ListCreate/ListeCreate';
+import ProtectedRoute from '../../utils/ProtectedRoutes';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
