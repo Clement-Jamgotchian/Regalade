@@ -17,10 +17,12 @@ import MyInfos from '../../pages/MyInfos/MyInfos';
 import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
+import ProtectedRoute from '../../utils/ProtectedRoutes';
 import EditRecipe from '../../pages/EditRecipe/EditRecipe';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
+  const isUserInvited = useSelector((state) => state.user.isInvitedIn);
 
   return (
     <Container className="App">
@@ -32,7 +34,7 @@ function App() {
             <MyLayout>
               <Homepage />
             </MyLayout>
-)}
+          )}
         />
         <Route
           path="/recettes"
@@ -42,91 +44,95 @@ function App() {
             </MyLayout>
           )}
         />
-        <Route path="/profil" element={<Profil />} />
+        <Route element={<ProtectedRoute isUserInvited={isUserInvited} />}>
+          <Route path="/profil" element={<Profil />} />
+          <Route
+            path="/profil/mes-recettes"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <List />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route
+            path="/profil/mes-favorites"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <Favorites />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route
+            path="/profil/mes-ingredients"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <Fridge />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route
+            path="/profil/mes-repas"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <List />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route
+            path="/profil/mes-courses"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <Cart />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route
+            path="/profil/mes-infos"
+            element={
+              isWidthTrue ? (
+                <MyLayout>
+                  <MyInfos />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
+          />
+          <Route path="/recette/creation" element={<CreateRecipe />} />
+          <Route
+            path="/recette/modification"
+            element={
+              <EditRecipe />
+            }
+          />
+        </Route>
         <Route
-          path="/profil/mes-recettes"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <List />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-favorites"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Favorites />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-ingredients"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Fridge />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-repas"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <List />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-courses"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Cart />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route
-          path="/profil/mes-infos"
-          element={
-            isWidthTrue ? (
-              <MyLayout>
-                <MyInfos />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
-        />
-        <Route path="/recette/:idRecette" element={<RecipeDetails />} />
-        <Route
-          path="/recette/creation"
-          element={
-            <CreateRecipe />
-          }
-        />
-        <Route
-          path="/recette/modification"
-          element={
-            <EditRecipe />
-          }
+          path="/recette/:idRecette"
+          element={(
+            <MyLayout>
+              <RecipeDetails />
+            </MyLayout>
+          )}
         />
         <Route
           path="/FAQ"
@@ -136,7 +142,16 @@ function App() {
             </MyLayout>
           )}
         />
-        <Route path="/*" element={<MyLayout><h1 className="text-center mb-4">Erreur 404, cette page n&apos;existe pas</h1></MyLayout>} />
+        <Route
+          path="/*"
+          element={(
+            <MyLayout>
+              <h1 className="text-center mb-4">
+                Erreur 404, cette page n&apos;existe pas
+              </h1>
+            </MyLayout>
+          )}
+        />
       </Routes>
     </Container>
   );
