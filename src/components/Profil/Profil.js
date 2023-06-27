@@ -59,6 +59,12 @@ const profilDataNav = [
     picture: utilisateur,
     link: '/profil/mes-infos',
   },
+  {
+    id: 7,
+    title: 'Deconnexion',
+    picture: utilisateur,
+    link: '/deconnexion',
+  },
 ];
 
 function Profil() {
