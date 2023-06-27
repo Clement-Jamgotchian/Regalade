@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
-import pizza from '../../../assets/iconePizza.png';
 
 function StepFour({
   setStep,
@@ -104,13 +103,6 @@ function StepFour({
       <Button className="CreateRecipe-1-button" onClick={() => { viewThree(); }}>&#x2190;</Button>
       <h2 className="CreateRecipe-1-title">
         Etape 4
-        {' '}
-        <div>
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-        </div>
       </h2>
       <Row className="mb-3 CreateRecipe-form-row-3">
         <Form.Group className="CreateRecipe-form-row-4-group" as={Col} md="3">

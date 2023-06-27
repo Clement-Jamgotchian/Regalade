@@ -5,7 +5,6 @@ import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
 import ModalIngredient from './ModalIngredient';
-import pizza from '../../../assets/iconePizza.png';
 
 function StepThree({
   containsIngredients,
@@ -192,11 +191,6 @@ function StepThree({
       <Button className="CreateRecipe-1-button" onClick={() => { viewTwo(); }}>&#x2190;</Button>
       <h2 className="CreateRecipe-1-title">
         Etape 3
-        <div>
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-        </div>
       </h2>
 
       <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">
