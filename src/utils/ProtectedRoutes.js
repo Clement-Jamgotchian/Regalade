@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function ProtectedRoute({ isUserInvited }) {
-  if (isUserInvited === true) {
+  if (isUserInvited === true || !isUserInvited) {
     return <Navigate to="/welcome" replace />;
   }
 
