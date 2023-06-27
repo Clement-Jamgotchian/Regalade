@@ -83,18 +83,18 @@
             color: vars.$primaryButton;
             background-color: rgba(240, 248, 255, 0);
             border: none;
-            position: absolute;
             top: 0;
             left: 0;
             width: 30px;
             height: 30px;
             font-size: 2em;
-            z-index: 3;
     
             &-image {
                 width: 30px;
                 height: 30px;
                 color: vars.$primaryButton;
+                z-index: 10;
+                position: absolute;
 
             }
             

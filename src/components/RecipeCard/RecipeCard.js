@@ -63,8 +63,7 @@ function RecipeCard({ recipe, generateRecipes }) {
 
   const addToList = async (id) => {
     await AxiosPrivate.post(`/list/${id}`)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         if (generateRecipes) {
           generateRecipes();
         }

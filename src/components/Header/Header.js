@@ -25,7 +25,7 @@ function Header() {
   const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
   const nickname = useSelector((state) => state.user.nicknameUser);
-  const isInvited = useSelector((state) => state.user.isInvitedIn);
+  const isInvited = JSON.parse(localStorage.getItem('invitedUser'));
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
   const pathProfil = isWidthTrue ? '/profil' : '/profil/mes-recettes';
   const welcomePageShowed = JSON.parse(localStorage.getItem('welcomePageShowed'));
