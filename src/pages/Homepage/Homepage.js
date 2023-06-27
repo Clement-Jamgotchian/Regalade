@@ -37,21 +37,21 @@ function Homepage() {
   const navigate = useNavigate();
 
   const getRecipes = async () => {
-    AxiosPublic.get(`${baseUrl}28${request}`)
+    AxiosPublic.get(`${baseUrl}1${request}`)
       .then((response) => {
         setStarterRecipes(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    AxiosPublic.get(`${baseUrl}29${request}`)
+    AxiosPublic.get(`${baseUrl}2${request}`)
       .then((response) => {
         setDishRecipes(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    AxiosPublic.get(`${baseUrl}30${request}`)
+    AxiosPublic.get(`${baseUrl}3${request}`)
       .then((response) => {
         setDessertRecipes(response.data);
       })
