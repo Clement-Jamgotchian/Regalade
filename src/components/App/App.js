@@ -23,7 +23,7 @@ import ListCreate from '../../pages/ListCreate/ListeCreate';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
-  const isUserInvited = useSelector((state) => state.user.isInvitedIn);
+  const isUserInvited = useSelector((state) => state.user.tokenUser);
 
   return (
     <Container className="App">
