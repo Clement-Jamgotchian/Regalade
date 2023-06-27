@@ -22,7 +22,7 @@ import EditRecipe from '../../pages/EditRecipe/EditRecipe';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
-  const isUserInvited = useSelector((state) => state.user.isInvitedIn);
+  const isUserInvited = useSelector((state) => state.user.tokenUser);
 
   return (
     <Container className="App">
