@@ -22,9 +22,15 @@
 
     & .CartIcon {
         right: 0.5rem;
-        bottom: 0.5rem;
+        bottom: 2rem;
         z-index: 3;
     }
+
+    & .EditIcon {
+        bottom: 2em;
+        top: auto;
+    }
+
     & .FavoriteIcon {
         top: 0.5rem;
         right: 0.5rem;
@@ -45,6 +51,8 @@
         justify-content: flex-end;
         margin-bottom: 8em;
         position: relative;
+
+        
 
         &-container {
             display: flex;
@@ -83,8 +91,9 @@
             color: vars.$primaryButton;
             background-color: rgba(240, 248, 255, 0);
             border: none;
+            position: absolute;
             top: 0;
-            left: 0;
+            left: 0.5em;
             width: 30px;
             height: 30px;
             font-size: 2em;

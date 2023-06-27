@@ -13,7 +13,7 @@ function EditIcon({ recipe }) {
   const navigate = useNavigate();
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const location = useLocation();
-  const isInPageList = location.pathname === '/profil/mes-favorites' || location.pathname === '/profil/mes-recettes' || location.pathname === '/recettes' || location.pathname === '/';
+  const isInPageList = location.pathname === '/profil/mes-favorites' || location.pathname === '/profil/mes-recettes' || location.pathname === '/recettes' || location.pathname === '/' || location.pathname === `/recette/${recipe.id}`;
   const dispatch = useDispatch();
 
   const getRecipe = async () => {

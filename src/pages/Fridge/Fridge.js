@@ -143,7 +143,7 @@ function Fridge() {
           generateRecipes();
         }}
       >
-        Générer une liste de recette
+        Suggérer des recettes
       </Button>
       <ModalFridge
         handleClose={handleClose}

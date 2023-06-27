@@ -23,6 +23,7 @@ import Loader from '../Loader/Loader';
 import Header from '../Header/Header';
 import Menuphone from '../Menuphone/Menuphone';
 import Footer from '../Footer/Footer';
+import EditIcon from '../RecipeCard/Icons/EditIcon/EditIcon';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState([]);
@@ -92,6 +93,7 @@ function RecipeDetails() {
                   addToList(idRecette);
                 }}
               />
+              <EditIcon className="recipeDetails-header-edit" recipe={recipe} />
               <FavoriteIcon
                 recipe={recipe}
               />

@@ -7,7 +7,7 @@ function Footer() {
     <div className="Footer">
       <Nav className="justify-content-center" activeKey="/home" bg="info">
         <Nav.Item>
-          <Nav.Link href="/home">Mentions légales</Nav.Link>
+          <Nav.Link eventkey="link-1">Mentions légales</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventkey="link-1">Confidentialités</Nav.Link>
