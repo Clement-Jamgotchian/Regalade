@@ -69,6 +69,7 @@ function CreateRecipe() {
           }, '5000');
           console.log('bienjoué');
           setLoading(false);
+          navigate('/profil/mes-recettes');
         })
         .catch((err) => {
           console.log(err);

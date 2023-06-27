@@ -5,7 +5,7 @@ import {
 export const initialState = {
   isLoggedIn: true,
   isLoading: false,
-  isInvitedIn: true,
+  isInvitedIn: false,
   tokenUser: '',
   nicknameUser: '',
 };
@@ -27,7 +27,7 @@ const reducer = (state = initialState, action = {}) => {
     case SET_NICKNAME_USER:
       return {
         ...state,
-        nicknameUser: action.payload.nicknameUser,
+        nicknameUser: action.payload.newNicknameValue,
       };
 
     case SET_LOADING_VALUE:

@@ -21,6 +21,7 @@ function EditIcon({ recipe }) {
       .then((res) => {
         dispatch(setRecipeToEdit(res.data));
         navigate('/recette/modification');
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

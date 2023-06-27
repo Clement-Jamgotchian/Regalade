@@ -7,6 +7,7 @@
     .container-header {
         display: none;
     }
+
     .Footer {
         display: none;
     }
@@ -204,6 +205,7 @@
             }
             &-4 {
                 position: relative;
+                margin-top: 1em;
                 &-checked {
                     font-size: 1.5em;
                     margin: auto;
@@ -213,7 +215,7 @@
                 }
                 &-delete {
                     position: absolute;
-                    top: -1em;
+                    top: 0em;
                     right: 1em;
                     width: 30px;
                     height: 30px;
@@ -225,7 +227,18 @@
                     background-size: contain;
                 }
                 &-step {
-                    margin-top: 1.5em;
+                    display: flex;
+                    margin-top: 1em;
+                    position: relative;
+                    flex-direction: column;
+                    &-title {
+                        background-color: white;
+                    }
+                    &-text {
+                        margin: 1em auto;
+                        width: 100%;
+                        padding: 1em;
+                    }
                 }
 
                 &-group {
@@ -321,7 +334,7 @@
 
 
     .CreateRecipe-form-row-4-group-button {
-        width: 20%;
+        width: 30%;
     }
 
     .CreateRecipe-form-row-4-checked {
@@ -341,5 +354,15 @@
         
     }
 
+    .CreateRecipe-form-row-4-step-title {
+        width: 10em;
+        margin: auto;
+    }
+    .CreateRecipe-form-row-4-step-text {
+        font-size: 1.2em;
+    }
+    .CreateRecipe-form-row-4-delete {
+        right: 20em;
+    }
 
 }

@@ -46,7 +46,6 @@ import AxiosPrivate from '../../utils/AxiosPrivate';
 import InfoIcon from './Icons/InfoIcon/InfoIcon';
 import EditIcon from './Icons/EditIcon/EditIcon';
 import CookedIcon from './Icons/CookedIcon/CookedIcon';
-
 import defaultPicture from '../../assets/pictureDefault.jpg';
 
 function RecipeCard({ recipe, generateRecipes }) {

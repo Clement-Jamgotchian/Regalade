@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Alert, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNewNickname } from '../../actions/user';
+import { setNicknameUser } from '../../actions/user';
 import utilisateur from '../../assets/images/utilisateur.png';
 import { changeAlertVariant, newAlertMessage, showOrHideAlert } from '../../actions/list';
 import MyVerticallyCenteredModal from './Modal/Modal';
@@ -81,7 +81,7 @@ function MyInfos() {
       isAdult: isAdult,
     })
       .then(() => {
-        dispatch(newAlertMessage('modifications de membres bien ajoutées'));
+        dispatch(newAlertMessage('modifications de membre bien ajoutées'));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('success'));
         setTimeout(() => {
@@ -128,8 +128,7 @@ function MyInfos() {
         setProfil(response.data);
         setNickname(response.data.nickname);
         setEmail(response.data.email);
-        dispatch(setNewNickname(response.data.nickname));
-        console.log(response.data);
+        dispatch(setNicknameUser(response.data.nickname));
       })
       .catch((err) => {
         console.log(err);
