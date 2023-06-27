@@ -42,9 +42,8 @@ function StepFourEdit({
   };
 
   const addStepEdit = () => {
-    const regex = /ETAPE [0-9]* ø /g;
+    const regex = /ÉTAPE [0-9]* /g;
     const recipesStep = recipeToEdit.step.split(regex);
-    console.log(recipesStep);
     // eslint-disable-next-line array-callback-return, consistent-return
     const retest = recipesStep.map((step) => {
       const newSteplocal = {
@@ -81,13 +80,13 @@ function StepFourEdit({
         // eslint-disable-next-line no-param-reassign
         stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
         return (
-          <InputGroup key={stepLocal.number} className="CreateRecipe-form-row-4-step">
-            <InputGroup.Text>
+          <Form.Group key={stepLocal.number} className="CreateRecipe-form-row-4-step">
+            <Form.Text className="CreateRecipe-form-row-4-step-title">
               ÉTAPE
               {' '}
               {allStepLocal.indexOf(stepLocal) + 1}
-            </InputGroup.Text>
-            <InputGroup.Text>{stepLocal.oneStep}</InputGroup.Text>
+            </Form.Text>
+            <Form.Text className="CreateRecipe-form-row-4-step-text">{stepLocal.oneStep}</Form.Text>
             <Button
               className="CreateRecipe-form-row-4-delete"
               type="button"
@@ -98,7 +97,7 @@ function StepFourEdit({
             >
               <img src="" alt="" />
             </Button>
-          </InputGroup>
+          </Form.Group>
         );
       }));
   };

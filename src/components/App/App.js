@@ -18,6 +18,7 @@ import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
 import EditRecipe from '../../pages/EditRecipe/EditRecipe';
+import ListCreate from '../../pages/ListCreate/ListeCreate';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -48,7 +49,7 @@ function App() {
           element={
             isWidthTrue ? (
               <MyLayout>
-                <List />
+                <ListCreate />
               </MyLayout>
             ) : (
               <Profil />

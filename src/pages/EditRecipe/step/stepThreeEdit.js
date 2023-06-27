@@ -30,7 +30,7 @@ function StepThreeEdit({
 
   const ingredientToEdit = () => {
     // eslint-disable-next-line array-callback-return
-    recipeToEdit.containsIngredients.map((ingredient) => {
+    const transformIngredient = recipeToEdit.containsIngredients.map((ingredient) => {
       const newIngredientlocal = {
         quantity: parseInt(ingredient.quantity),
         name: ingredient.ingredient.name,
@@ -40,10 +40,10 @@ function StepThreeEdit({
         key: ingredient.ingredient.id,
       };
 
-      setAllIngredient([...allIngredient, newIngredientlocal]);
+      return newIngredientlocal;
     });
+    setAllIngredient(transformIngredient);
   };
-
   const addIngredient = () => {
     const newIngredient = {
       quantity: parseInt(quantity),

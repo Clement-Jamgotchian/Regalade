@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import {
   setConnectedUser,
   setInvitedUser,
-  setNewNickname,
+  setNicknameUser,
   setTokenUser,
 } from '../../actions/user';
 
@@ -121,7 +121,7 @@ function HomepageInscription() {
           console.log(res.data.nickname);
           dispatch(setTokenUser());
           dispatch(setConnectedUser(true));
-          dispatch(setNewNickname(res.data.nickname));
+          dispatch(setNicknameUser(res.data.nickname));
           handleSubmit();
         })
         .catch(() => {
@@ -328,7 +328,7 @@ function HomepageInscription() {
           Se connecter / S&apos;inscrire
         </button>
 
-        <Link to="/recettes" className="formSign-button" onClick={inviteUser}>
+        <Link to="/" className="formSign-button" onClick={inviteUser}>
           Aller vers le site
         </Link>
       </section>

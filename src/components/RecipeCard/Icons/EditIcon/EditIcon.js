@@ -15,13 +15,13 @@ function EditIcon({ recipe }) {
   const location = useLocation();
   const isInPageList = location.pathname === '/profil/mes-favorites' || location.pathname === '/profil/mes-recettes' || location.pathname === '/recettes' || location.pathname === '/';
   const dispatch = useDispatch();
-  console.log(recipe);
 
   const getRecipe = async () => {
     await AxiosPrivate.get(`/recipes/${recipe.id}`)
       .then((res) => {
         dispatch(setRecipeToEdit(res.data));
         navigate('/recette/modification');
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

@@ -22,7 +22,7 @@ function MyVerticallyCenteredModal(props) {
       isAdult,
     })
       .then(() => {
-        dispatch(newAlertMessage('Un membres a bien été ajoutées'));
+        dispatch(newAlertMessage('Un membre a bien été ajouté'));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('success'));
         setTimeout(() => {
@@ -36,7 +36,7 @@ function MyVerticallyCenteredModal(props) {
       })
       .catch((err) => {
         console.log(err);
-        dispatch(newAlertMessage("Le membre n'a pas pu être ajoutées"));
+        dispatch(newAlertMessage("Le membre n'a pas pu être ajouté"));
         dispatch(showOrHideAlert(true));
         dispatch(changeAlertVariant('danger'));
         setTimeout(() => {

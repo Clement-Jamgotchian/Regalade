@@ -27,7 +27,6 @@ function EditRecipe() {
   const [portions, setPortions] = useState(1);
   const [containsIngredients, setContainsIngredients] = useState([]);
   const [loading, setLoading] = useState('false');
-  const [user, setUser] = useState([]);
   const recipeToEdit = useSelector((state) => state.recipe.recipe);
 
   const [confirmed, setConfirmed] = useState(false);
@@ -49,16 +48,6 @@ function EditRecipe() {
 
   console.log(recipeToEdit);
 
-  const defaultValueRecipe = () => {
-    if (recipeToEdit.category.title === 'Plat') {
-      return 2;
-    }
-    if (recipeToEdit.category.title === 'Entrée') {
-      return 1;
-    }
-    return 3;
-  };
-
   const ingredientToEdit = () => {
     // eslint-disable-next-line array-callback-return
     recipeToEdit.containsIngredients.map((ingredient) => {
@@ -79,7 +68,6 @@ function EditRecipe() {
     setSetupDuration(recipeToEdit.setupDuration);
     setCookingDuration(recipeToEdit.cookingDuration);
     setDifficulty(recipeToEdit.difficulty);
-    setCategory(defaultValueRecipe());
     setPortions(recipeToEdit.portions);
   };
 
@@ -139,23 +127,9 @@ function EditRecipe() {
     }
   };
 
-  const getUser = async () => {
-    await AxiosPrivate
-      .get(
-        '/user',
-      )
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  console.log(user);
   useEffect(() => {
     setRecipeToEdit();
     ingredientToEdit();
-    getUser();
   }, []);
 
   return (

@@ -37,7 +37,7 @@ function StepFour({
     //   stepLocal.number = allStepLocal.indexOf(stepLocal) + 1;
     // });
     setAllStepLocal([...allStepLocal, newSteplocal]);
-    setAllStep(`${allStep} ÉTAPE ${stepNumber} ø ${oneStep}`);
+    setAllStep(`${allStep} ÉTAPE ${stepNumber} ${oneStep}`);
   };
 
   function viewThree() {
@@ -79,7 +79,7 @@ function StepFour({
   };
 
   const setAllStepInApi = () => {
-    setAllStep(allStepLocal.map((stepLocal) => (`ÉTAPE ${stepLocal.number} ø ${stepLocal.oneStep}`)));
+    setAllStep(allStepLocal.map((stepLocal) => (`ÉTAPE ${stepLocal.number} ${stepLocal.oneStep}`)));
     setStep(allStep.toString());
   };
 
