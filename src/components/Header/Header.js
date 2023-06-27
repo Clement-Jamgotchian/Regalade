@@ -148,6 +148,7 @@ function Header() {
         <Nav className="Header-utilsLink">
           <p>
             Bienvenue
+            {' '}
             {nickname}
           </p>
           <Nav>

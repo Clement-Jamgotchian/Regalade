@@ -52,7 +52,7 @@ function App() {
             element={
               isWidthTrue ? (
                 <MyLayout>
-                  <List />
+                  <ListCreate />
                 </MyLayout>
               ) : (
                 <Profil />
