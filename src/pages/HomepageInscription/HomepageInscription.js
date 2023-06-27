@@ -30,7 +30,7 @@ import cancel from '../../assets/cancel.png';
 function HomepageInscription() {
   // view state
   const [currDegUp, setCurrDegUp] = useState(180);
-  const [currDegIn, setCurrDegIn] = useState(0);
+  const [currDegIn, setCurrDegIn] = useState(360);
   const [logoDeg, setLogoDeg] = useState(0);
   const [displayUp, setDisplayUp] = useState('none');
   const [displayIn, setDisplayIn] = useState('');
@@ -62,7 +62,7 @@ function HomepageInscription() {
       setIndexIn(10);
     }
     if (e.target.className === 'formSign-signinButton') {
-      setCurrDegUp(360);
+      setCurrDegUp(0);
       setCurrDegIn(180);
       setLogoDeg(0);
       setDisplayUp('');
