@@ -32,7 +32,7 @@ function RecipeDetails() {
 
   const dispatch = useDispatch();
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  const regex = /ÉTAPE/g;
+  const regex = /(ÉTAPE [0-9]*)/g;
   const steps = recipe.step?.replace(regex, '<br/><br/> ÉTAPE');
 
   const addToList = async (id) => {
