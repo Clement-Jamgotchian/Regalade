@@ -45,18 +45,6 @@ function CreateRecipe() {
     navigate('/profil/mes-recettes');
   };
 
-  console.log(
-    title,
-    postImage.picture,
-    cookingDuration,
-    setupDuration,
-    step,
-    difficulty,
-    category,
-    containsIngredients,
-    portions,
-  );
-
   const handleSubmit = async () => {
     if (confirmed === true) {
       setLoading('true');

@@ -35,7 +35,7 @@ function App() {
             <MyLayout>
               <Homepage />
             </MyLayout>
-)}
+          )}
         />
         <Route
           path="/recettes"
@@ -50,38 +50,38 @@ function App() {
           <Route
             path="/profil/mes-recettes"
             element={
-            isWidthTrue ? (
-              <MyLayout>
-                <ListCreate />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
+              isWidthTrue ? (
+                <MyLayout>
+                  <List />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
           />
           <Route
             path="/profil/mes-favorites"
             element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Favorites />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
+              isWidthTrue ? (
+                <MyLayout>
+                  <Favorites />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
           />
           <Route
             path="/profil/mes-ingredients"
             element={
-            isWidthTrue ? (
-              <MyLayout>
-                <Fridge />
-              </MyLayout>
-            ) : (
-              <Profil />
-            )
-          }
+              isWidthTrue ? (
+                <MyLayout>
+                  <Fridge />
+                </MyLayout>
+              ) : (
+                <Profil />
+              )
+            }
           />
           <Route
             path="/profil/mes-repas"
@@ -129,12 +129,14 @@ function App() {
             path="/recette/modification"
             element={
               <EditRecipe />
-          }
+            }
           />
         </Route>
         <Route
           path="/recette/:idRecette"
-          element={<RecipeDetails />}
+          element={(
+            <RecipeDetails />
+          )}
         />
         <Route
           path="/FAQ"

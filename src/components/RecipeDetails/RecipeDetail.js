@@ -33,8 +33,6 @@ function RecipeDetails() {
   const dispatch = useDispatch();
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const regex = /ÉTAPE/g;
-  // const regexFix = / ø /g;
-  // const stepsFix = recipe.step?.replace(regexFix, '');
   const steps = recipe.step?.replace(regex, '<br/><br/> ÉTAPE');
 
   const addToList = async (id) => {
@@ -64,7 +62,6 @@ function RecipeDetails() {
       .then((response) => {
         setContainsIngrediants(response.data.containsIngredients);
         setRecipe(response.data);
-        console.log(response.data);
       })
       .catch(() => {
         console.log('erreur dans recette detaillé');

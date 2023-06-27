@@ -41,7 +41,6 @@ function Ingredients({ departments, ingredients }) {
       )
       .then((response) => {
         dispatch(clearCartDeleted());
-        console.log(response.data);
         if (response.data.length === 1) {
           dispatch(newAlertMessage('Vous avez déjà tout ce dont vous avez besoin dans votre frigo !'));
         } else {

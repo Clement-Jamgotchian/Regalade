@@ -8,6 +8,7 @@ import logoMain from '../../assets/images/logoMain.png';
 import logoUser from '../../assets/images/logoUser.png';
 import logoCart from '../../assets/images/logoCart.png';
 import logoConnexion from '../../assets/images/connexion.png';
+import logoDeconnexion from '../../assets/images/deconnexion.png';
 import { setSearchValue } from '../../actions/header';
 import {
   setActivPage,
@@ -24,7 +25,7 @@ function Header() {
   const [closingButton, setClosingButton] = useState(false);
   const [searchBarValue, setSearchBarValue] = useState('');
   const nickname = useSelector((state) => state.user.nicknameUser);
-  const isInvited = useSelector((state) => state.user.isInvitedIn);
+  const isInvited = JSON.parse(localStorage.getItem('invitedUser'));
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
   const pathProfil = isWidthTrue ? '/profil' : '/profil/mes-recettes';
   const welcomePageShowed = JSON.parse(localStorage.getItem('welcomePageShowed'));
@@ -191,7 +192,7 @@ function Header() {
                   onClick={() => {
                     dispatch(setTokenUser(null));
                     dispatch(setConnectedUser(false));
-                    dispatch(setInvitedUser(false));
+                    dispatch(setInvitedUser(true));
                     dispatch(clearRecipes());
                     localStorage.removeItem('isLoggedIn');
                     localStorage.removeItem('token');
@@ -203,7 +204,7 @@ function Header() {
                 >
                   <img
                     className="Header-utilsLink-logo"
-                    src={logoConnexion}
+                    src={logoDeconnexion}
                     alt="logo d'un utilisateur"
                     title="Déconnexion"
                   />

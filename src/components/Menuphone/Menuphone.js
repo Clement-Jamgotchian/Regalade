@@ -25,7 +25,7 @@ function Menuphone() {
           <img alt="icone d'un caddie" src={caddie} />
         </Link>
       )}
-      <Link to={isInvited ? '/' : '/profil'}>
+      <Link to={isInvited ? '/welcome' : '/profil'}>
         <img
           alt="logo du profil utilisateur"
           src={isInvited ? connexion : user}
