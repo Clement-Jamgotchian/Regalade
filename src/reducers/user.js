@@ -27,7 +27,7 @@ const reducer = (state = initialState, action = {}) => {
     case SET_NICKNAME_USER:
       return {
         ...state,
-        nicknameUser: action.payload.nicknameUser,
+        nicknameUser: action.payload.newNicknameValue,
       };
 
     case SET_LOADING_VALUE:

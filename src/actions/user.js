@@ -4,8 +4,6 @@ export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 
 export const SET_TOKEN_USER = 'SET_TOKEN_USER';
 
-export const SET_NICKNAME_USER = 'SET_NICKNAME_USER';
-
 export const SET_INVITED_USER = 'SET_INVITED_USER';
 
 export const setLoadingValue = (newLoadValue) => ({
@@ -40,9 +38,10 @@ export const setTokenUser = (newTokenValue) => ({
   },
 });
 
-export const setNewNickname = (newNicknameValue) => ({
-  type: SET_TOKEN_USER,
+export const SET_NICKNAME_USER = 'SET_NICKNAME_USER';
+export const setNicknameUser = (value) => ({
+  type: SET_NICKNAME_USER,
   payload: {
-    nicknameUser: newNicknameValue,
+    newNicknameValue: value,
   },
 });

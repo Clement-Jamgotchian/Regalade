@@ -46,15 +46,7 @@ function EditRecipe() {
     navigate('/profil/mes-recettes');
   };
 
-  const defaultValueRecipe = () => {
-    if (recipeToEdit.category.title === 'Plat') {
-      return 2;
-    }
-    if (recipeToEdit.category.title === 'Entrée') {
-      return 1;
-    }
-    return 3;
-  };
+  console.log(recipeToEdit);
 
   const ingredientToEdit = () => {
     // eslint-disable-next-line array-callback-return
@@ -76,7 +68,6 @@ function EditRecipe() {
     setSetupDuration(recipeToEdit.setupDuration);
     setCookingDuration(recipeToEdit.cookingDuration);
     setDifficulty(recipeToEdit.difficulty);
-    setCategory(defaultValueRecipe());
     setPortions(recipeToEdit.portions);
   };
 
@@ -91,7 +82,6 @@ function EditRecipe() {
     containsIngredients,
     portions,
   );
-  console.log(recipeToEdit);
 
   const handleSubmit = async () => {
     if (confirmed === true) {
@@ -115,8 +105,8 @@ function EditRecipe() {
           setTimeout(() => {
             dispatch(showOrHideAlert(false));
           }, '5000');
-          console.log('bienjoué');
           setLoading(false);
+          navigate('/profil/mes-recettes');
         })
         .catch((err) => {
           console.log(err);

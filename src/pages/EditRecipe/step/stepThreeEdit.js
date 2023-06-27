@@ -25,14 +25,12 @@ function StepThreeEdit({
   const [allIngredient, setAllIngredient] = useState([]);
   const [show, setShow] = useState(false);
 
-  console.log(allIngredient);
-
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   const ingredientToEdit = () => {
     // eslint-disable-next-line array-callback-return
-    recipeToEdit.containsIngredients.map((ingredient) => {
+    const transformIngredient = recipeToEdit.containsIngredients.map((ingredient) => {
       const newIngredientlocal = {
         quantity: parseInt(ingredient.quantity),
         name: ingredient.ingredient.name,
@@ -42,10 +40,10 @@ function StepThreeEdit({
         key: ingredient.ingredient.id,
       };
 
-      setAllIngredient([...allIngredient, newIngredientlocal]);
+      return newIngredientlocal;
     });
+    setAllIngredient(transformIngredient);
   };
-
   const addIngredient = () => {
     const newIngredient = {
       quantity: parseInt(quantity),
@@ -66,7 +64,7 @@ function StepThreeEdit({
 
   const renderIngredient = () => {
     const findInList = containsIngredients.length > 0
-      ? containsIngredients.find((ingredient) => ingredient.ingredient.id === ingredientId) : null;
+      ? containsIngredients.find((ingredient) => ingredient.ingredient === ingredientId) : null;
     if (findInList) {
       return (
         <Alert bg="alert">
@@ -74,9 +72,6 @@ function StepThreeEdit({
         </Alert>
       );
     }
-    console.log(findInList);
-    // eslint-disable-next-line max-len
-    console.log(containsIngredients.find((ingredient) => ingredient.ingredient.id === ingredientId));
     return <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>;
   };
 

@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
 import gateau from '../../../assets/gateau.png';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
+import { setNicknameUser } from '../../../actions/user';
 
 function StepOneEdit({
   setPostImage,
@@ -21,6 +23,10 @@ function StepOneEdit({
 }) {
   const [categories, setCategories] = useState([]);
   const img = [entree, plat, gateau];
+  const [user, setUser] = useState([]);
+  const nickname = useSelector((state) => state.user.nicknameUser);
+
+  const dispatch = useDispatch();
 
   const convertToBase64 = (file) => new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -34,13 +40,13 @@ function StepOneEdit({
   });
 
   const defaultValueRecipe = () => {
-    if (recipeToEdit.category.title === 'Plat') {
-      return 2;
-    }
-    if (recipeToEdit.category.title === 'Entrée') {
-      return 1;
-    }
-    return 3;
+    // eslint-disable-next-line array-callback-return, consistent-return
+    categories.map((category) => {
+      if (recipeToEdit.category.title === category.title) {
+        setCategory(category.id);
+        return category.id;
+      }
+    });
   };
 
   const categoryCheckButton = () => (
@@ -67,10 +73,53 @@ function StepOneEdit({
         console.log(err);
       });
   };
-  console.log(recipeToEdit.category.title);
+  const getUser = async () => {
+    await AxiosPrivate
+      .get(
+        '/user',
+      )
+      .then((response) => {
+        setUser(response.data);
+        dispatch(setNicknameUser(response.data.nickname));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  // eslint-disable-next-line consistent-return
+  const editTitle = () => {
+    if (user.id === recipeToEdit.user.id) {
+      return (
+        <Form.Control
+          required
+          className="CreateRecipe-form-row-1-group-input"
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Titre de la recette"
+          defaultValue={recipeToEdit.title}
+          onChange={(e) => { setTitle(e.target.value); }}
+        />
+      );
+    }
+    return (
+      <Form.Control
+        required
+        className="CreateRecipe-form-row-1-group-input"
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Titre de la recette"
+        defaultValue={`${recipeToEdit.title} par ${nickname}`}
+        onChange={(e) => { setTitle(e.target.value); }}
+        readonly="readonly"
+      />
+    );
+  };
 
   useEffect(() => {
     getCategory();
+    getUser();
   }, []);
 
   const handleFileUpload = async (e) => {
@@ -84,16 +133,7 @@ function StepOneEdit({
       <Row className="mb-3 CreateRecipe-form-row-1">
         <Form.Group className="CreateRecipe-form-row-1-group CreateRecipe-form-row-1-background-1" as={Col} md="4">
           <Form.Label className="CreateRecipe-form-row-1-group-label">Titre</Form.Label>
-          <Form.Control
-            required
-            className="CreateRecipe-form-row-1-group-input"
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Titre de la recette"
-            defaultValue={recipeToEdit.title}
-            onChange={(e) => { setTitle(e.target.value); }}
-          />
+          {editTitle()}
         </Form.Group>
       </Row>
       <Row className="mb-3 CreateRecipe-form-row-1">

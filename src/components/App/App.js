@@ -19,6 +19,7 @@ import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
 import ProtectedRoute from '../../utils/ProtectedRoutes';
 import EditRecipe from '../../pages/EditRecipe/EditRecipe';
+import ListCreate from '../../pages/ListCreate/ListeCreate';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
@@ -85,40 +86,45 @@ function App() {
           <Route
             path="/profil/mes-repas"
             element={
-              isWidthTrue ? (
-                <MyLayout>
-                  <List />
-                </MyLayout>
-              ) : (
-                <Profil />
-              )
-            }
+            isWidthTrue ? (
+              <MyLayout>
+                <List />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
           />
           <Route
             path="/profil/mes-courses"
             element={
-              isWidthTrue ? (
-                <MyLayout>
-                  <Cart />
-                </MyLayout>
-              ) : (
-                <Profil />
-              )
-            }
+            isWidthTrue ? (
+              <MyLayout>
+                <Cart />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
           />
           <Route
             path="/profil/mes-infos"
             element={
-              isWidthTrue ? (
-                <MyLayout>
-                  <MyInfos />
-                </MyLayout>
-              ) : (
-                <Profil />
-              )
-            }
+            isWidthTrue ? (
+              <MyLayout>
+                <MyInfos />
+              </MyLayout>
+            ) : (
+              <Profil />
+            )
+          }
           />
-          <Route path="/recette/creation" element={<CreateRecipe />} />
+          <Route
+            path="/recette/creation"
+            element={
+              <CreateRecipe />
+          }
+          />
           <Route
             path="/recette/modification"
             element={
@@ -148,7 +154,7 @@ function App() {
                 Erreur 404, cette page n&apos;existe pas
               </h1>
             </MyLayout>
-          )}
+      )}
         />
       </Routes>
     </Container>
