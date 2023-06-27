@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
 import gateau from '../../../assets/gateau.png';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
-import pizza from '../../../assets/iconePizza.png';
 
 function StepOne({
   setPostImage,
   title,
   setTitle,
+  category,
   setCategory,
   setPortions,
   portions,
@@ -35,16 +35,16 @@ function StepOne({
   });
 
   const categoryCheckButton = () => (
-    categories.map((category) => (
-      <div key={category.id}>
-        <img src={img[categories.indexOf(category)]} alt="une entrée" />
+    categories.map((categ) => (
+      <div key={categ.id}>
+        <img src={img[categories.indexOf(categ)]} alt="une entrée" />
         <Form.Check
           inline
-          label={category.title}
+          label={categ.title}
           name="group1"
           type="radio"
-          id={category.id}
-          value={category.id}
+          id={categ.id}
+          value={categ.id}
         />
       </div>
     )));
@@ -63,6 +63,22 @@ function StepOne({
     getCategory();
   }, []);
 
+  const useButton = () => {
+    if (title === '' || category === 1) {
+      return (
+        <div>
+          <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }} disabled>Etape 2</Button>
+          <Alert bg="alert">
+            Il te manque des informations...
+          </Alert>
+        </div>
+      );
+    }
+    return (
+      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
+    );
+  };
+
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
@@ -72,9 +88,6 @@ function StepOne({
     <section className="CreateRecipe-1" style={{ display: `${displayOne}` }}>
       <h2 className="CreateRecipe-1-title">
         Etape 1
-        <div>
-          <img src={pizza} alt="part de pizza" />
-        </div>
       </h2>
       <Row className="mb-3 CreateRecipe-form-row-1">
         <Form.Group className="CreateRecipe-form-row-1-group CreateRecipe-form-row-1-background-1" as={Col} md="4">
@@ -143,7 +156,7 @@ function StepOne({
           {categoryCheckButton()}
         </section>
       </Form.Group>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
+      {useButton()}
     </section>
   );
 }

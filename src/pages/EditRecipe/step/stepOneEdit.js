@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import entree from '../../../assets/entrees.png';
 import plat from '../../../assets/plat.png';
@@ -10,7 +10,9 @@ import { setNicknameUser } from '../../../actions/user';
 
 function StepOneEdit({
   setPostImage,
+  title,
   setTitle,
+  category,
   setCategory,
   setPortions,
   portions,
@@ -41,25 +43,25 @@ function StepOneEdit({
 
   const defaultValueRecipe = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    categories.map((category) => {
-      if (recipeToEdit.category.title === category.title) {
-        setCategory(category.id);
-        return category.id;
+    categories.map((categ) => {
+      if (recipeToEdit.category.title === categ.title) {
+        setCategory(categ.id);
+        return categ.id;
       }
     });
   };
 
   const categoryCheckButton = () => (
-    categories.map((category) => (
-      <div key={category.id}>
-        <img src={img[categories.indexOf(category)]} alt="une entrée" />
+    categories.map((categ) => (
+      <div key={categ.id}>
+        <img src={img[categories.indexOf(categ)]} alt="une entrée" />
         <Form.Check
           inline
-          label={category.title}
+          label={categ.title}
           name="group1"
           type="radio"
-          id={category.id}
-          value={category.id}
+          id={categ.id}
+          value={categ.id}
         />
       </div>
     )));
@@ -114,6 +116,22 @@ function StepOneEdit({
         onChange={(e) => { setTitle(e.target.value); }}
         readonly="readonly"
       />
+    );
+  };
+
+  const useButton = () => {
+    if (title === '' || category === 1) {
+      return (
+        <div>
+          <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }} disabled>Etape 2</Button>
+          <Alert bg="alert">
+            Il te manque des informations...
+          </Alert>
+        </div>
+      );
+    }
+    return (
+      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
     );
   };
 
@@ -189,7 +207,7 @@ function StepOneEdit({
           {categoryCheckButton()}
         </section>
       </Form.Group>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none'); }}>Etape 2</Button>
+      {useButton()}
     </section>
   );
 }

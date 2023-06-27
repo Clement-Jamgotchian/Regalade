@@ -4,7 +4,6 @@ import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 import easy from '../../../assets/easy.png';
 import moyen from '../../../assets/moyen.png';
 import hard from '../../../assets/hard.png';
-import pizza from '../../../assets/iconePizza.png';
 
 function StepTwo({
   setupDuration,
@@ -31,10 +30,6 @@ function StepTwo({
       <Button className="CreateRecipe-1-button" onClick={() => { viewOne(); }}>&#x2190;</Button>
       <h2 className="CreateRecipe-1-title">
         Etape 2
-        <div>
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-        </div>
       </h2>
       <Form.Group
         key="inline-radio-two"
