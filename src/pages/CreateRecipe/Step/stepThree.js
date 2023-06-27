@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import AxiosPrivate from '../../../utils/AxiosPrivate';
 
 import vegetables from '../../../assets/vegetables.png';
 import ModalIngredient from './ModalIngredient';
-import pizza from '../../../assets/iconePizza.png';
 
 function StepThree({
   containsIngredients,
@@ -135,6 +134,29 @@ function StepThree({
     setAllIngredient([...allIngredient, newIngredientlocal]);
   };
 
+  const renderIngredient = () => {
+    const findInList = allIngredient.length > 0
+      ? allIngredient.find((ingredient) => ingredient.id === ingredientId) : null;
+    if (findInList) {
+      return (
+        <Alert bg="alert">
+          Ingrédient déjà dans la liste !
+        </Alert>
+      );
+    }
+    return (
+      <Button
+        className="CreateRecipe-form-button"
+        type="button"
+        onClick={() => {
+          addIngredient();
+        }}
+      >
+        &#x2B; Ajouter l&apos;ingredient
+      </Button>
+    );
+  };
+
   function viewTwo() {
     setDisplayOne('none'); setDisplayTwo(''); setDisplayThree('none'); setDisplayFour('none');
   }
@@ -142,6 +164,24 @@ function StepThree({
   function viewFour() {
     setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree('none'); setDisplayFour('');
   }
+
+  const useButton = () => {
+    if (allIngredient.length > 0) {
+      return (
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
+      );
+    }
+    return (
+      <div>
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }} disabled>
+          Etape 4
+        </Button>
+        <Alert bg="alert">
+          Tu n&apos;as pas d&apos;ingrédient ? C&apos;est un peu fade comme recette...
+        </Alert>
+      </div>
+    );
+  };
 
   useEffect(() => {
     searchIngredient();
@@ -151,11 +191,6 @@ function StepThree({
       <Button className="CreateRecipe-1-button" onClick={() => { viewTwo(); }}>&#x2190;</Button>
       <h2 className="CreateRecipe-1-title">
         Etape 3
-        <div>
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-          <img src={pizza} alt="part de pizza" />
-        </div>
       </h2>
 
       <Form.Group className="CreateRecipe-form-row-2-group" as={Col} md="3">
@@ -189,6 +224,7 @@ function StepThree({
             placeholder="Quantité de l'ingrédient"
             min={0}
             max={1000}
+            value={quantity}
             onChange={(e) => {
               setQuantity(parseInt(e.target.value, 10));
             }}
@@ -207,12 +243,11 @@ function StepThree({
         handleClose={handleClose}
         show={show}
       />
-      <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>
+      { renderIngredient()}
       <Row className="mb-3 CreateRecipe-form-row-3-card-container">
         {ingredientList()}
       </Row>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
-
+      {useButton()}
     </section>
   );
 }

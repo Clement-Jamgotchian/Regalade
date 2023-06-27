@@ -63,16 +63,26 @@ function StepThreeEdit({
   };
 
   const renderIngredient = () => {
-    const findInList = containsIngredients.length > 0
-      ? containsIngredients.find((ingredient) => ingredient.ingredient === ingredientId) : null;
+    const findInList = allIngredient.length > 0
+      ? allIngredient.find((ingredient) => ingredient.name === ingredientId) : null;
     if (findInList) {
       return (
         <Alert bg="alert">
-          Ingrédient déjà dans le frigo !
+          Ingrédient déjà dans la liste !
         </Alert>
       );
     }
-    return <Button className="CreateRecipe-form-button" type="button" onClick={addIngredient}>&#x2B; Ajouter l&apos;ingredient</Button>;
+    return (
+      <Button
+        className="CreateRecipe-form-button"
+        type="button"
+        onClick={() => {
+          addIngredient();
+        }}
+      >
+        &#x2B; Ajouter l&apos;ingredient
+      </Button>
+    );
   };
 
   const updateQuantity = (newQuantity, ingredientNumber) => {
@@ -175,6 +185,24 @@ function StepThreeEdit({
     setDisplayOne('none'); setDisplayTwo('none'); setDisplayThree('none'); setDisplayFour('');
   }
 
+  const useButton = () => {
+    if (allIngredient.length > 0) {
+      return (
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
+      );
+    }
+    return (
+      <div>
+        <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }} disabled>
+          Etape 4
+        </Button>
+        <Alert bg="alert">
+          Tu n&apos;as pas d&apos;ingrédient ? C&apos;est un peu fade comme recette...
+        </Alert>
+      </div>
+    );
+  };
+
   useEffect(() => {
     searchIngredient();
   }, [search]);
@@ -237,8 +265,7 @@ function StepThreeEdit({
       <Row className="mb-3 CreateRecipe-form-row-3-card-container">
         {ingredientList()}
       </Row>
-      <Button className="CreateRecipe-button" type="button" onClick={() => { viewFour(); }}>Etape 4</Button>
-
+      {useButton()}
     </section>
   );
 }

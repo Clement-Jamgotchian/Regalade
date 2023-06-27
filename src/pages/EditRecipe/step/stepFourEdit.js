@@ -107,6 +107,18 @@ function StepFourEdit({
     setStep(allStep.toString());
   };
 
+  const useButton = () => {
+    if (allStepLocal.length === 0) {
+      return (
+        <Button className="CreateRecipe-button" type="submit" disabled>Modifier</Button>
+      );
+    }
+    return (
+      <Button className="CreateRecipe-button" type="submit">Modifier</Button>
+
+    );
+  };
+
   useEffect(() => {
     addStepEdit();
   }, []);
@@ -154,7 +166,7 @@ function StepFourEdit({
         onChange={(e) => (e.target.checked ? setConfirmed(true) : setConfirmed(false))}
         onClick={() => { setStep(allStep.toString()); }}
       />
-      <Button className="CreateRecipe-button" type="submit">Modifier</Button>
+      {useButton()}
       <p>{loading === 'true' ? 'Recette dans les fourneaux, veuillez patienter ...' : ''}</p>
     </section>
   );

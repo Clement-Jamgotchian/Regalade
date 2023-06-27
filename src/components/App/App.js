@@ -45,11 +45,10 @@ function App() {
             </MyLayout>
           )}
         />
-        <Route element={<ProtectedRoute isUserInvited={isUserInvited} />}>
-          <Route path="/profil" element={<Profil />} />
-          <Route
-            path="/profil/mes-recettes"
-            element={
+        <Route path="/profil" element={<Profil />} />
+        <Route
+          path="/profil/mes-recettes"
+          element={
               isWidthTrue ? (
                 <MyLayout>
                   <ListCreate />
@@ -58,10 +57,10 @@ function App() {
                 <Profil />
               )
             }
-          />
-          <Route
-            path="/profil/mes-favorites"
-            element={
+        />
+        <Route
+          path="/profil/mes-favorites"
+          element={
               isWidthTrue ? (
                 <MyLayout>
                   <Favorites />
@@ -70,10 +69,10 @@ function App() {
                 <Profil />
               )
             }
-          />
-          <Route
-            path="/profil/mes-ingredients"
-            element={
+        />
+        <Route
+          path="/profil/mes-ingredients"
+          element={
               isWidthTrue ? (
                 <MyLayout>
                   <Fridge />
@@ -82,10 +81,10 @@ function App() {
                 <Profil />
               )
             }
-          />
-          <Route
-            path="/profil/mes-repas"
-            element={
+        />
+        <Route
+          path="/profil/mes-repas"
+          element={
             isWidthTrue ? (
               <MyLayout>
                 <List />
@@ -94,10 +93,10 @@ function App() {
               <Profil />
             )
           }
-          />
-          <Route
-            path="/profil/mes-courses"
-            element={
+        />
+        <Route
+          path="/profil/mes-courses"
+          element={
             isWidthTrue ? (
               <MyLayout>
                 <Cart />
@@ -106,10 +105,10 @@ function App() {
               <Profil />
             )
           }
-          />
-          <Route
-            path="/profil/mes-infos"
-            element={
+        />
+        <Route
+          path="/profil/mes-infos"
+          element={
             isWidthTrue ? (
               <MyLayout>
                 <MyInfos />
@@ -118,20 +117,19 @@ function App() {
               <Profil />
             )
           }
-          />
-          <Route
-            path="/recette/creation"
-            element={
-              <CreateRecipe />
+        />
+        <Route
+          path="/recette/creation"
+          element={
+            <CreateRecipe />
           }
-          />
-          <Route
-            path="/recette/modification"
-            element={
-              <EditRecipe />
+        />
+        <Route
+          path="/recette/modification"
+          element={
+            <EditRecipe />
             }
-          />
-        </Route>
+        />
         <Route
           path="/recette/:idRecette"
           element={(
