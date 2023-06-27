@@ -217,7 +217,6 @@ function Header() {
         <Navbar.Collapse
           id="responsive-navbar-nav"
           className="Header-link"
-          // exemple: className={`Header-link ${showTopBtn ? 'btn-show' : ''}`}
         >
           <Nav className="mr-auto ">
             <Nav>
