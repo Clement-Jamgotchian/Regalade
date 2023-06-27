@@ -17,11 +17,13 @@ import MyInfos from '../../pages/MyInfos/MyInfos';
 import CreateRecipe from '../../pages/CreateRecipe/CreateRecipe';
 import RecipesPage from '../../pages/RecipesPage/RecipesPage';
 import Favorites from '../../pages/Favorites/Favorites';
+import ProtectedRoute from '../../utils/ProtectedRoutes';
 import EditRecipe from '../../pages/EditRecipe/EditRecipe';
 import ListCreate from '../../pages/ListCreate/ListeCreate';
 
 function App() {
   const isWidthTrue = useSelector((state) => state.profil.isTrueWidth);
+  const isUserInvited = useSelector((state) => state.user.isInvitedIn);
 
   return (
     <Container className="App">
@@ -43,10 +45,11 @@ function App() {
             </MyLayout>
           )}
         />
-        <Route path="/profil" element={<Profil />} />
-        <Route
-          path="/profil/mes-recettes"
-          element={
+        <Route element={<ProtectedRoute isUserInvited={isUserInvited} />}>
+          <Route path="/profil" element={<Profil />} />
+          <Route
+            path="/profil/mes-recettes"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <ListCreate />
@@ -55,10 +58,10 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route
-          path="/profil/mes-favorites"
-          element={
+          />
+          <Route
+            path="/profil/mes-favorites"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <Favorites />
@@ -67,10 +70,10 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route
-          path="/profil/mes-ingredients"
-          element={
+          />
+          <Route
+            path="/profil/mes-ingredients"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <Fridge />
@@ -79,10 +82,10 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route
-          path="/profil/mes-repas"
-          element={
+          />
+          <Route
+            path="/profil/mes-repas"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <List />
@@ -91,10 +94,10 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route
-          path="/profil/mes-courses"
-          element={
+          />
+          <Route
+            path="/profil/mes-courses"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <Cart />
@@ -103,10 +106,10 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route
-          path="/profil/mes-infos"
-          element={
+          />
+          <Route
+            path="/profil/mes-infos"
+            element={
             isWidthTrue ? (
               <MyLayout>
                 <MyInfos />
@@ -115,19 +118,23 @@ function App() {
               <Profil />
             )
           }
-        />
-        <Route path="/recette/:idRecette" element={<RecipeDetails />} />
-        <Route
-          path="/recette/creation"
-          element={
-            <CreateRecipe />
+          />
+          <Route
+            path="/recette/creation"
+            element={
+              <CreateRecipe />
           }
-        />
-        <Route
-          path="/recette/modification"
-          element={
-            <EditRecipe />
+          />
+          <Route
+            path="/recette/modification"
+            element={
+              <EditRecipe />
           }
+          />
+        </Route>
+        <Route
+          path="/recette/:idRecette"
+          element={<RecipeDetails />}
         />
         <Route
           path="/FAQ"
@@ -137,7 +144,16 @@ function App() {
             </MyLayout>
           )}
         />
-        <Route path="/*" element={<MyLayout><h1 className="text-center mb-4">Erreur 404, cette page n&apos;existe pas</h1></MyLayout>} />
+        <Route
+          path="/*"
+          element={(
+            <MyLayout>
+              <h1 className="text-center mb-4">
+                Erreur 404, cette page n&apos;existe pas
+              </h1>
+            </MyLayout>
+      )}
+        />
       </Routes>
     </Container>
   );
