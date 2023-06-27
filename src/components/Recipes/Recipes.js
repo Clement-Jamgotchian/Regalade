@@ -1,6 +1,7 @@
 // React components
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
+import { useEffect } from 'react';
 
 // Local components
 import RecipeCard from '../RecipeCard/RecipeCard';
@@ -9,6 +10,10 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 import './Recipes.scss';
 
 function Recipes({ recipes, generateRecipes }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [recipes]);
+
   return (
     <div className="Recipes--content">
       {recipes && (

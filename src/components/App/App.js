@@ -129,9 +129,7 @@ function App() {
         <Route
           path="/recette/:idRecette"
           element={(
-            <MyLayout>
-              <RecipeDetails />
-            </MyLayout>
+            <RecipeDetails />
           )}
         />
         <Route
