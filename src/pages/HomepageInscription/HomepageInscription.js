@@ -134,6 +134,7 @@ function HomepageInscription() {
   };
 
   const inviteUser = () => {
+    console.log('invited');
     dispatch(setInvitedUser(true));
     localStorage.setItem('isLoggedIn', JSON.stringify(false));
     localStorage.setItem('invitedUser', JSON.stringify(true));

@@ -21,6 +21,7 @@ function RecipesPage() {
   const [pageCount, setPageCount] = useState(0);
   const [title, setTitle] = useState('Toutes les recettes');
   const searchBarValue = useSelector((store) => store.header.searchBarValue);
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const pageNumber = useSelector((state) => state.list.pageNumber);
   const showAlert = useSelector((state) => state.list.showAlert);
   const alertMessage = useSelector((state) => state.list.alertMessage);
@@ -72,7 +73,7 @@ function RecipesPage() {
   };
 
   useEffect(() => {
-    if (favorites.length === 0) {
+    if (isLoggedIn && favorites.length === 0) {
       getFavorites();
     }
   }, []);

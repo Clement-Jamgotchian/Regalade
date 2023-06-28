@@ -85,7 +85,7 @@ function Homepage() {
   };
 
   useEffect(() => {
-    if (favorites.length === 0) {
+    if (isLoggedIn && favorites.length === 0) {
       getFavorites();
     }
   }, []);
@@ -127,7 +127,7 @@ function Homepage() {
                   <Stack direction="horizontal">
                     <h2>Les meilleures recettes d&apos;entrées</h2>
                     <Button variant="outline-primary" className="p-2 ms-auto">
-                      <Link to="/recettes?category=28&name=Entrées">
+                      <Link to="/recettes?category=1&name=Entrées">
                         Voir toutes les recettes
                         {' '}
                         <FontAwesomeIcon icon={faAngleRight} />
@@ -143,7 +143,7 @@ function Homepage() {
                   <Stack direction="horizontal">
                     <h2>Les meilleures recettes de plat</h2>
                     <Button variant="outline-primary" className="p-2 ms-auto">
-                      <Link to="/recettes?category=29&name=Plat">
+                      <Link to="/recettes?category=2&name=Plat">
                         Voir toutes les recettes
                         {' '}
                         <FontAwesomeIcon icon={faAngleRight} />
@@ -159,7 +159,7 @@ function Homepage() {
                   <Stack direction="horizontal">
                     <h2>Les meilleures recettes de dessert</h2>
                     <Button variant="outline-primary" className="p-2 ms-auto">
-                      <Link to="/recettes?category=30&name=Dessert">
+                      <Link to="/recettes?category=3&name=Dessert">
                         Voir toutes les recettes
                         {' '}
                         <FontAwesomeIcon icon={faAngleRight} />
